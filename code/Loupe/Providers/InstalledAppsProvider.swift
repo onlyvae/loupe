@@ -65,7 +65,7 @@ struct InstalledAppsProvider: SignalProvider {
         Probe(name: "Lyft", scheme: "lyft"),
         Probe(name: "DoorDash", scheme: "doordash"),
         Probe(name: "Twitch", scheme: "twitch"),
-        Probe(name: "Steam", scheme: "steam"),
+        Probe(name: "Steam", scheme: "steammobile"),
         Probe(name: "Coinbase", scheme: "coinbase"),
         Probe(name: "ProtonVPN", scheme: "protonvpn"),
     ]
