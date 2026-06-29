@@ -149,7 +149,12 @@ final class PermissionCenter {
         if status != .notDetermined { return map(status) }
         let store = EKEventStore()
         do {
-            let granted = try await store.requestFullAccessToEvents()
+            let granted: Bool
+            if #available(iOS 17.0, macOS 14.0, *) {
+                granted = try await store.requestFullAccessToEvents()
+            } else {
+                granted = try await store.requestAccess(to: .event)
+            }
             return granted ? .authorized : .denied
         } catch {
             return .denied
@@ -163,7 +168,12 @@ final class PermissionCenter {
         if status != .notDetermined { return map(status) }
         let store = EKEventStore()
         do {
-            let granted = try await store.requestFullAccessToReminders()
+            let granted: Bool
+            if #available(iOS 17.0, macOS 14.0, *) {
+                granted = try await store.requestFullAccessToReminders()
+            } else {
+                granted = try await store.requestAccess(to: .reminder)
+            }
             return granted ? .authorized : .denied
         } catch {
             return .denied
@@ -465,4 +475,3 @@ final class BluetoothAuthCoordinator: NSObject, CBCentralManagerDelegate {
         }
     }
 }
-

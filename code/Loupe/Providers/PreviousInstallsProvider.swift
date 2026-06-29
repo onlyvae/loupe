@@ -19,6 +19,26 @@ struct PreviousInstallsProvider: SignalProvider {
         let dates = log.installDates()
         var signals: [FingerprintSignal] = []
 
+        if let stats = log.launchStats() {
+            let formatter = ISO8601DateFormatter()
+            signals.append(
+                .make(
+                    "launchCount",
+                    category: category,
+                    name: String(localized: "Open count", comment: "Signal card name in the Previous Installs Log category. Number of times Loupe has been launched."),
+                    value: String(stats.count),
+                    rationale:
+                        String(localized: "Number of times you've opened Loupe. This count is kept in the Keychain.", comment: "Signal card rationale beneath the Open count value.")))
+            signals.append(
+                .make(
+                    "latestLaunchDate",
+                    category: category,
+                    name: String(localized: "Latest open time", comment: "Signal card name in the Previous Installs Log category. Most recent time Loupe was launched."),
+                    value: formatter.string(from: stats.latestLaunchDate),
+                    rationale:
+                        String(localized: "The latest time you opened Loupe. This date is kept in the Keychain.", comment: "Signal card rationale beneath the Latest open time value.")))
+        }
+
         signals.append(
             .make(
                 "installCount",

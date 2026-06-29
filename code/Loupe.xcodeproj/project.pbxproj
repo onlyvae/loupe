@@ -229,7 +229,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(LOUPE_UITESTS_BUNDLE_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -253,7 +253,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(LOUPE_UITESTS_BUNDLE_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -324,7 +324,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -384,7 +384,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -401,8 +401,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = Loupe;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Loupe/Loupe.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = P54HCX53YR;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_INCOMING_NETWORK_CONNECTIONS = YES;
@@ -420,13 +422,25 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Loupe/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Loupe;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationQueriesSchemes = "whatsapp tg sgnl fb fb-messenger instagram barcelona twitter tiktok snapchat linkedin reddit discord slack zoomus msteams skype youtube spotify nflx comgooglemaps waze uber lyft careem deliveroo googlechrome firefox microsoft-edge ddgQuickLink googlegmail ms-outlook protonmail evernote onepassword lastpass github pinterest com.amazon.mobile.shopping";
+				INFOPLIST_KEY_NSAppleMusicUsageDescription = "Loupe counts songs, albums, and playlists, and shows your top genres and artists. It never plays back audio.";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Loupe runs a five-second Bluetooth LE scan for nearby peripherals. No identifiers are stored or sent anywhere.";
+				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Loupe counts calendars, sources and events in a 60-day window. It does not read event titles or notes.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Loupe enumerates camera hardware: lens type, zoom range, field of view. It never opens the camera sensor.";
+				INFOPLIST_KEY_NSContactsUsageDescription = "Loupe counts contacts and contact field labels. It does not display names, phone numbers, email addresses, or postal addresses.";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Loupe runs short Bonjour discovery of services on your local network. Service names are not stored.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Loupe reads one location fix to demonstrate coordinate-based fingerprinting. Nothing is recorded or transmitted.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Loupe reads microphone route information and data sources. It never records audio.";
+				INFOPLIST_KEY_NSMotionUsageDescription = "Loupe samples motion sensors and reads today's pedometer totals to show behavioral signals. Nothing is sent anywhere.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Loupe counts photo library assets and collections, and optionally looks up geotag locations. It never reads image data.";
+				INFOPLIST_KEY_NSRemindersFullAccessUsageDescription = "Loupe counts reminder lists, shows list titles, and counts incomplete reminders. It does not display reminder titles or notes.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -434,6 +448,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(LOUPE_BUNDLE_ID)";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = com.onlyvae.loupe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -455,8 +470,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = Loupe;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Loupe/Loupe.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = P54HCX53YR;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_INCOMING_NETWORK_CONNECTIONS = YES;
@@ -474,13 +491,25 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Loupe/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Loupe;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationQueriesSchemes = "whatsapp tg sgnl fb fb-messenger instagram barcelona twitter tiktok snapchat linkedin reddit discord slack zoomus msteams skype youtube spotify nflx comgooglemaps waze uber lyft careem deliveroo googlechrome firefox microsoft-edge ddgQuickLink googlegmail ms-outlook protonmail evernote onepassword lastpass github pinterest com.amazon.mobile.shopping";
+				INFOPLIST_KEY_NSAppleMusicUsageDescription = "Loupe counts songs, albums, and playlists, and shows your top genres and artists. It never plays back audio.";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Loupe runs a five-second Bluetooth LE scan for nearby peripherals. No identifiers are stored or sent anywhere.";
+				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Loupe counts calendars, sources and events in a 60-day window. It does not read event titles or notes.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Loupe enumerates camera hardware: lens type, zoom range, field of view. It never opens the camera sensor.";
+				INFOPLIST_KEY_NSContactsUsageDescription = "Loupe counts contacts and contact field labels. It does not display names, phone numbers, email addresses, or postal addresses.";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Loupe runs short Bonjour discovery of services on your local network. Service names are not stored.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Loupe reads one location fix to demonstrate coordinate-based fingerprinting. Nothing is recorded or transmitted.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Loupe reads microphone route information and data sources. It never records audio.";
+				INFOPLIST_KEY_NSMotionUsageDescription = "Loupe samples motion sensors and reads today's pedometer totals to show behavioral signals. Nothing is sent anywhere.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Loupe counts photo library assets and collections, and optionally looks up geotag locations. It never reads image data.";
+				INFOPLIST_KEY_NSRemindersFullAccessUsageDescription = "Loupe counts reminder lists, shows list titles, and counts incomplete reminders. It does not display reminder titles or notes.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -488,6 +517,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(LOUPE_BUNDLE_ID)";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = com.onlyvae.loupe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;

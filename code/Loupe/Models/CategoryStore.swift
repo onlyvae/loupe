@@ -6,13 +6,12 @@
 //  signal snapshot per category, and the permission states.
 //
 
+import Combine
 import Foundation
-import Observation
 import SwiftUI
 
-@Observable
 @MainActor
-final class CategoryStore {
+final class CategoryStore: ObservableObject {
     enum LoadState: Equatable, Sendable {
         case idle
         case loading
@@ -20,10 +19,10 @@ final class CategoryStore {
         case denied(String)
     }
 
-    private(set) var signals: [SignalCategory: [FingerprintSignal]] = [:]
-    private(set) var loadStates: [SignalCategory: LoadState] = [:]
-    private(set) var permissionStates: [PermissionKind: PermissionAuthorization] = [:]
-    private(set) var liveCategories: Set<SignalCategory> = []
+    @Published private(set) var signals: [SignalCategory: [FingerprintSignal]] = [:]
+    @Published private(set) var loadStates: [SignalCategory: LoadState] = [:]
+    @Published private(set) var permissionStates: [PermissionKind: PermissionAuthorization] = [:]
+    @Published private(set) var liveCategories: Set<SignalCategory> = []
 
     private let providers: [SignalCategory: any SignalProvider]
     private var liveTasks: [SignalCategory: Task<Void, Never>] = [:]

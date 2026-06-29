@@ -15,7 +15,7 @@ struct HomeView: View {
     @AppStorage("showOnboarding") private var showOnboarding = true
     @AppStorage("postOnboardingLaunchCount") private var postOnboardingLaunchCount = 0
     @AppStorage("lastReviewRequestDate") private var lastReviewRequestDate: Double = 0
-    @State private var store = ScreenshotMode.isActive
+    @StateObject private var store = ScreenshotMode.isActive
         ? CategoryStore(mockSignals: MockData.signals)
         : CategoryStore()
     @State private var collectingPassive = false
@@ -56,7 +56,13 @@ struct HomeView: View {
             .navigationSplitViewColumnWidth(min: 320, ideal: 380, max: 500)
             #endif
         } detail: {
-            ContentUnavailableView("Select a category from the sidebar", systemImage: "doc.text.image.fill")
+            VStack(spacing: 12) {
+                Image(systemName: "doc.text.image.fill")
+                    .font(.largeTitle)
+                    .foregroundStyle(.secondary)
+                Text("Select a category from the sidebar")
+                    .foregroundStyle(.secondary)
+            }
         }
         .platformInlineNavigationBarTitle()
         .sheet(isPresented: $showingAbout) {
@@ -72,7 +78,7 @@ struct HomeView: View {
                 await refreshPassive()
             }
         }
-        .onChange(of: scenePhase) { _, newPhase in
+        .onChange(of: scenePhase) { newPhase in
             maybeRequestReview(for: newPhase)
         }
     }
@@ -223,4 +229,3 @@ private struct IntroCardView: View {
         )
     }
 }
-

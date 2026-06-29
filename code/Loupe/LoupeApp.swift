@@ -9,6 +9,10 @@ import SwiftUI
 struct LoupeApp: App {
     @AppStorage("showOnboarding") private var showOnboarding = true
 
+    init() {
+        KeychainInstallLog.shared.recordLaunch()
+    }
+
     var body: some Scene {
         WindowGroup {
             HomeView()

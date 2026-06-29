@@ -30087,6 +30087,9 @@
         }
       }
     },
+    "Latest open time" : {
+      "comment" : "Signal card name in the Previous Installs Log category. Most recent time Loupe was launched."
+    },
     "left" : {
       "comment" : "Safe-area sub-label in the Display category — left inset.",
       "localizations" : {
@@ -40490,6 +40493,9 @@
         }
       }
     },
+    "Number of times you've opened Loupe. This count is kept in the Keychain." : {
+      "comment" : "Signal card rationale beneath the Open count value."
+    },
     "Number of videos accessible to the app." : {
       "comment" : "Signal card rationale beneath the Video count value.",
       "localizations" : {
@@ -40893,6 +40899,9 @@
           }
         }
       }
+    },
+    "Open count" : {
+      "comment" : "Signal card name in the Previous Installs Log category. Number of times Loupe has been launched."
     },
     "Open Settings" : {
       "localizations" : {
@@ -53028,6 +53037,9 @@
           }
         }
       }
+    },
+    "The latest time you opened Loupe. This date is kept in the Keychain." : {
+      "comment" : "Signal card rationale beneath the Latest open time value."
     },
     "The list of cameras on your %@, with their focal lengths and apertures, often pinpoints the exact model." : {
       "comment" : "Educational paragraph shown on the camera permission gate explaining what the permission can leak. %@ is the device model name (e.g., iPhone, iPad).",

@@ -15,11 +15,10 @@ struct CameraProvider: SignalProvider {
     let center: PermissionCenter
 
     func collect() async -> [FingerprintSignal] {
-        var types: [AVCaptureDevice.DeviceType] = [
-            .builtInWideAngleCamera,
-            .external,
-            .continuityCamera,
-        ]
+        var types: [AVCaptureDevice.DeviceType] = [.builtInWideAngleCamera]
+        if #available(iOS 17.0, macOS 14.0, *) {
+            types.append(contentsOf: [.external, .continuityCamera])
+        }
         #if os(iOS)
         types.append(contentsOf: [
             .builtInUltraWideCamera,

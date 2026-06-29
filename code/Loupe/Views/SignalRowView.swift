@@ -145,7 +145,7 @@ struct SignalRowView: View {
                     .font(.system(.caption, design: .monospaced))
                     .padding(.horizontal, 8)
                     .padding(.vertical, 4)
-                    .background(.fill.tertiary, in: Capsule())
+                    .background(Color.secondary.opacity(0.12), in: Capsule())
             }
         }
         .padding(.vertical, 2)

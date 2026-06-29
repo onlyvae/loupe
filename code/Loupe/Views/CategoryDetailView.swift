@@ -11,7 +11,7 @@ import SwiftUI
 
 struct CategoryDetailView: View {
     let category: SignalCategory
-    @Bindable var store: CategoryStore
+    @ObservedObject var store: CategoryStore
 
     @State private var showConsentPrompt = false
 
@@ -31,7 +31,7 @@ struct CategoryDetailView: View {
             }
         }
         .navigationTitle(category.title)
-        .toolbarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar { toolbarContent(loadState: loadState) }
         .alert(
             category.collectionConsent?.promptTitle ?? "",
@@ -54,7 +54,7 @@ struct CategoryDetailView: View {
             }
             updateLiveCollection()
         }
-        .onChange(of: loadState) {
+        .onChange(of: loadState) { _ in
             updateLiveCollection()
         }
         .onDisappear {
@@ -182,9 +182,9 @@ private struct ConsentToggleSection: View {
             Text(consent.toggleFooter)
                 .font(.caption)
         }
-        .onChange(of: isEnabled) {
+        .onChange(of: isEnabled) { newValue in
             consent.hasResponded = true
-            if isEnabled {
+            if newValue {
                 onEnable()
             }
         }
@@ -199,13 +199,6 @@ private struct LiveIndicator: View {
             Circle()
                 .fill(.red)
                 .frame(width: 7, height: 7)
-                .phaseAnimator([false, true]) { circle, pulsing in
-                    circle
-                        .scaleEffect(pulsing ? 1.3 : 1.0)
-                        .opacity(pulsing ? 0.7 : 1.0)
-                } animation: { _ in
-                    .easeInOut(duration: 0.8)
-                }
             Text("LIVE")
                 .font(.caption2.weight(.bold))
                 .foregroundStyle(.red)

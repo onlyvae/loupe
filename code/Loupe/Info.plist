@@ -55,8 +55,6 @@
 		<string>coinbase</string>
 		<string>protonvpn</string>
 	</array>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
 	<key>NSBonjourServices</key>
 	<array>
 		<string>_airplay._tcp</string>
@@ -105,27 +103,5 @@
 		<string>_dns-sd._udp</string>
 		<string>_loupe-probe._tcp</string>
 	</array>
-	<key>NSAppleMusicUsageDescription</key>
-	<string>Loupe counts songs, albums, and playlists, and shows your top genres and artists. It never plays back audio.</string>
-	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>Loupe runs a five-second Bluetooth LE scan for nearby peripherals. No identifiers are stored or sent anywhere.</string>
-	<key>NSCalendarsFullAccessUsageDescription</key>
-	<string>Loupe counts calendars, sources and events in a 60-day window. It does not read event titles or notes.</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Loupe enumerates camera hardware: lens type, zoom range, field of view. It never opens the camera sensor.</string>
-	<key>NSContactsUsageDescription</key>
-	<string>Loupe counts contacts and contact field labels. It does not display names, phone numbers, email addresses, or postal addresses.</string>
-	<key>NSLocalNetworkUsageDescription</key>
-	<string>Loupe runs short Bonjour discovery of services on your local network. Service names are not stored.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Loupe reads one location fix to demonstrate coordinate-based fingerprinting. Nothing is recorded or transmitted.</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Loupe reads microphone route information and data sources. It never records audio.</string>
-	<key>NSMotionUsageDescription</key>
-	<string>Loupe samples motion sensors and reads today's pedometer totals to show behavioral signals. Nothing is sent anywhere.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Loupe counts photo library assets and collections, and optionally looks up geotag locations. It never reads image data.</string>
-	<key>NSRemindersFullAccessUsageDescription</key>
-	<string>Loupe counts reminder lists, shows list titles, and counts incomplete reminders. It does not display reminder titles or notes.</string>
 </dict>
 </plist>

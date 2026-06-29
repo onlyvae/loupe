@@ -10,7 +10,7 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 struct ExportButton: View {
-    let store: CategoryStore
+    @ObservedObject var store: CategoryStore
 
     var body: some View {
         ShareLink(item: ExportPayload(snapshot: store.allSignalsSnapshot()), preview: SharePreview("Loupe report")) {
