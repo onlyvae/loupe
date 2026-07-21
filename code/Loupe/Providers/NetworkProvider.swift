@@ -41,6 +41,8 @@ final class NetworkProvider: SignalProvider, LiveSignalProvider {
     }
 
     @MainActor private static func buildSignals(path: NWPath?, category: SignalCategory) -> [FingerprintSignal] {
+        let interfaceNames = IfAddrsHelper.interfaceNames()
+        let upInterfaceNames = IfAddrsHelper.upInterfaceNames()
         let addresses = IfAddrsHelper.addresses()
         let hostname = IfAddrsHelper.hostname()
 
@@ -67,18 +69,51 @@ final class NetworkProvider: SignalProvider, LiveSignalProvider {
                     name: String(localized: "isConstrained", comment: "Signal card name in the Network category — NWPath.isConstrained (Low Data Mode)."),
                     value: String(path.isConstrained),
                     rationale: String(localized: "Whether Low Data Mode is on.", comment: "Signal card rationale beneath the isConstrained value.")))
-            let interfaceTypeNames = path.availableInterfaces.map { describeType($0.type) }
-            let interfaceTypes = interfaceTypeNames.joined(separator: ", ")
+            let availableInterfaceNames = path.availableInterfaces.map {
+                "\(describeType($0.type)): \($0.name)"
+            }
+            let availableInterfaces = availableInterfaceNames.joined(separator: ", ")
             signals.append(
                 .make(
                     "availableInterfaces",
                     category: category,
                     name: String(localized: "Available interfaces", comment: "Signal card name in the Network category — list of available NWInterface types."),
-                    value: interfaceTypes.isEmpty ? "(none)" : interfaceTypes,
+                    value: availableInterfaces.isEmpty ? "(none)" : availableInterfaces,
                     rationale: String(localized: "Network interface types present (e.g., cellular, Wi-Fi, wired).", comment: "Signal card rationale beneath the Available interfaces value."),
-                    displayHint: interfaceTypeNames.isEmpty ? .plain : .tags,
-                    entries: interfaceTypeNames.isEmpty ? nil : interfaceTypeNames.map { SignalEntry(label: $0, value: "") }))
+                    displayHint: availableInterfaceNames.isEmpty ? .plain : .tags,
+                    entries: availableInterfaceNames.isEmpty ? nil : availableInterfaceNames.map { SignalEntry(label: $0, value: "") }))
+            let activeInterfaceTypeNames = path.availableInterfaces
+                .filter { path.usesInterfaceType($0.type) }
+                .map { describeType($0.type) }
+            let activeInterfaceTypes = activeInterfaceTypeNames.joined(separator: ", ")
+            signals.append(
+                .make(
+                    "activeInterfaces",
+                    category: category,
+                    name: String(localized: "Active interface types", comment: "Signal card name in the Network category — NWInterface types used by the current NWPath."),
+                    value: activeInterfaceTypes.isEmpty ? "(none)" : activeInterfaceTypes,
+                    rationale: String(localized: "Network interface types used by the current connection.", comment: "Signal card rationale beneath the Active interface types value."),
+                    displayHint: activeInterfaceTypeNames.isEmpty ? .plain : .tags,
+                    entries: activeInterfaceTypeNames.isEmpty ? nil : activeInterfaceTypeNames.map { SignalEntry(label: $0, value: "") }))
         }
+        signals.append(
+            .make(
+                "getifaddrsInterfaces",
+                category: category,
+                name: String(localized: "System interfaces", comment: "Signal card name in the Network category — all interface names returned by getifaddrs."),
+                value: interfaceNames.isEmpty ? "(none)" : interfaceNames.joined(separator: ", "),
+                rationale: String(localized: "Every network interface name returned by getifaddrs.", comment: "Signal card rationale beneath the System interfaces value."),
+                displayHint: interfaceNames.isEmpty ? .plain : .tags,
+                entries: interfaceNames.isEmpty ? nil : interfaceNames.map { SignalEntry(label: $0, value: "") }))
+        signals.append(
+            .make(
+                "upInterfaces",
+                category: category,
+                name: String(localized: "Up interfaces", comment: "Signal card name in the Network category — interface names whose IFF_UP flag is set."),
+                value: upInterfaceNames.isEmpty ? "(none)" : upInterfaceNames.joined(separator: ", "),
+                rationale: String(localized: "Network interfaces marked as up by the system.", comment: "Signal card rationale beneath the Up interfaces value."),
+                displayHint: upInterfaceNames.isEmpty ? .plain : .tags,
+                entries: upInterfaceNames.isEmpty ? nil : upInterfaceNames.map { SignalEntry(label: $0, value: "") }))
         let vpn = vpnStatus()
         signals.append(
             .make(
@@ -97,6 +132,23 @@ final class NetworkProvider: SignalProvider, LiveSignalProvider {
                     rationale: String(localized: "Interface names that may indicate a VPN tunnel.", comment: "Signal card rationale beneath the VPN scoped proxy keys value."),
                     displayHint: .tags,
                     entries: vpn.interfaces.map { SignalEntry(label: $0, value: "") }))
+        }
+        let httpProxy = httpProxyStatus()
+        signals.append(
+            .make(
+                "httpProxyActive",
+                category: category,
+                name: String(localized: "HTTP proxy active", comment: "Signal card name in the Network category — whether the system HTTP proxy is turned on."),
+                value: httpProxy.active ? "true" : "false",
+                rationale: String(localized: "Checks whether a system HTTP proxy is turned on.", comment: "Signal card rationale beneath the HTTP proxy active value.")))
+        if let endpoint = httpProxy.endpoint {
+            signals.append(
+                .make(
+                    "httpProxyEndpoint",
+                    category: category,
+                    name: String(localized: "HTTP proxy server", comment: "Signal card name in the Network category — the configured HTTP proxy host and port."),
+                    value: endpoint,
+                    rationale: String(localized: "The server and port used by the system HTTP proxy.", comment: "Signal card rationale beneath the HTTP proxy server value.")))
         }
         for (index, iface) in addresses.enumerated() {
             signals.append(
@@ -158,6 +210,24 @@ final class NetworkProvider: SignalProvider, LiveSignalProvider {
         }
         interfaces.sort()
         return (!interfaces.isEmpty, interfaces)
+    }
+
+    nonisolated private static func httpProxyStatus() -> (active: Bool, endpoint: String?) {
+        guard let settings = CFNetworkCopySystemProxySettings()?.takeRetainedValue() as? [String: Any]
+        else {
+            return (false, nil)
+        }
+
+        let isEnabled = (settings[kCFNetworkProxiesHTTPEnable as String] as? NSNumber)?.boolValue == true
+        guard isEnabled else { return (false, nil) }
+
+        guard let host = settings[kCFNetworkProxiesHTTPProxy as String] as? String,
+              !host.isEmpty
+        else {
+            return (true, nil)
+        }
+        let port = (settings[kCFNetworkProxiesHTTPPort as String] as? NSNumber)?.intValue
+        return (true, port.map { "\(host):\($0)" } ?? host)
     }
 
     nonisolated private static func describeType(_ type: NWInterface.InterfaceType) -> String {

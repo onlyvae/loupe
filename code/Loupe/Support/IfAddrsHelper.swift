@@ -18,6 +18,35 @@ struct InterfaceAddress: Identifiable, Hashable, Sendable {
 }
 
 nonisolated enum IfAddrsHelper {
+    static func interfaceNames() -> [String] {
+        interfaceNames(requiredFlags: 0)
+    }
+
+    static func upInterfaceNames() -> [String] {
+        interfaceNames(requiredFlags: Int32(IFF_UP))
+    }
+
+    private static func interfaceNames(requiredFlags: Int32) -> [String] {
+        var head: UnsafeMutablePointer<ifaddrs>?
+        guard getifaddrs(&head) == 0, let first = head else { return [] }
+        defer { freeifaddrs(head) }
+
+        var names: [String] = []
+        var seen: Set<String> = []
+        var cursor: UnsafeMutablePointer<ifaddrs>? = first
+        while let node = cursor {
+            let flags = Int32(node.pointee.ifa_flags)
+            if (flags & requiredFlags) == requiredFlags {
+                let name = String(cString: node.pointee.ifa_name)
+                if seen.insert(name).inserted {
+                    names.append(name)
+                }
+            }
+            cursor = node.pointee.ifa_next
+        }
+        return names
+    }
+
     static func addresses() -> [InterfaceAddress] {
         var head: UnsafeMutablePointer<ifaddrs>?
         guard getifaddrs(&head) == 0, let first = head else { return [] }

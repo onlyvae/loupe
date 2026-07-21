@@ -59,6 +59,13 @@ struct WebViewFingerprintProvider: SignalProvider {
                 rationale: String(localized: "Approximate device memory as reported to JavaScript.", comment: "Signal card rationale beneath the navigator.deviceMemory value.")))
         signals.append(
             .make(
+                "timezoneIdentifier",
+                category: category,
+                name: String(localized: "Time zone identifier", comment: "Signal card name in the Locale & Region category — TimeZone.identifier (e.g., 'Europe/Berlin')."),
+                value: payload.timezoneIdentifier,
+                rationale: String(localized: "Time zone identifier (e.g., `Europe/Berlin`).", comment: "Signal card rationale beneath the Time zone identifier value.")))
+        signals.append(
+            .make(
                 "timezoneOffset",
                 category: category,
                 name: String(localized: "Date.getTimezoneOffset", comment: "Signal card name in the WebView Fingerprint category — JavaScript Date.getTimezoneOffset (minutes)."),
@@ -101,6 +108,7 @@ final class WebViewFingerprintHost {
         var languages: String = "?"
         var hardwareConcurrency: String = "?"
         var deviceMemory: String = "?"
+        var timezoneIdentifier: String = "?"
         var timezoneOffset: String = "?"
         var screen: String = "?"
         var canvasHash: String = "?"
@@ -126,6 +134,9 @@ final class WebViewFingerprintHost {
         }
         if let dm = try? await evaluate("String(navigator.deviceMemory || 'n/a')") as? String {
             payload.deviceMemory = dm
+        }
+        if let tzid = try? await evaluate("String(Intl.DateTimeFormat().resolvedOptions().timeZone || 'n/a')") as? String {
+            payload.timezoneIdentifier = tzid
         }
         if let tz = try? await evaluate("String(new Date().getTimezoneOffset())") as? String {
             payload.timezoneOffset = tz
