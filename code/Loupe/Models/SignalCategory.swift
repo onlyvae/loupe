@@ -12,6 +12,7 @@ import Foundation
 enum SignalCategory: String, Codable, Sendable, CaseIterable, Identifiable, Hashable {
     case deviceIdentity
     case systemInfo
+    case jailbreakDetection
     case battery
     case storage
     case display
@@ -48,6 +49,7 @@ enum SignalCategory: String, Codable, Sendable, CaseIterable, Identifiable, Hash
         case .deviceIdentity: return String(localized: "Device Identity", comment: "Category title shown in the home list, navigation bar, and as a heading on the per-category screen.")
         case .appleAccount: return String(localized: "Apple Account", comment: "Category title shown in the home list, navigation bar, and as a heading on the per-category screen.")
         case .systemInfo: return String(localized: "System Info", comment: "Category title shown in the home list, navigation bar, and as a heading on the per-category screen.")
+        case .jailbreakDetection: return String(localized: "Jailbreak Detection", comment: "Category title shown in the home list, navigation bar, and as a heading on the per-category screen.")
         case .display: return String(localized: "Display", comment: "Category title shown in the home list, navigation bar, and as a heading on the per-category screen.")
         case .locale: return String(localized: "Locale & Region", comment: "Category title shown in the home list, navigation bar, and as a heading on the per-category screen.")
         case .accessibility: return String(localized: "Accessibility", comment: "Category title shown in the home list, navigation bar, and as a heading on the per-category screen.")
@@ -84,6 +86,7 @@ enum SignalCategory: String, Codable, Sendable, CaseIterable, Identifiable, Hash
         case .deviceIdentity: return String(localized: "Vendor ID and hardware identifiers", comment: "Category subtitle shown beneath the title in the home list. Brief description of what the category covers.")
         case .appleAccount: return String(localized: "iCloud and App Store account signals", comment: "Category subtitle shown beneath the title in the home list. Brief description of what the category covers.")
         case .systemInfo: return String(localized: "Kernel, runtime, and OS state", comment: "Category subtitle shown beneath the title in the home list. Brief description of what the category covers.")
+        case .jailbreakDetection: return String(localized: "Checks for known jailbreak files", comment: "Category subtitle shown beneath the title in the home list. Brief description of what the category covers.")
         case .display: return String(localized: "Screen specs and rendering capabilities", comment: "Category subtitle shown beneath the title in the home list. Brief description of what the category covers.")
         case .locale: return String(localized: "Language, region, and time settings", comment: "Category subtitle shown beneath the title in the home list. Brief description of what the category covers.")
         case .accessibility: return String(localized: "System accessibility flags", comment: "Category subtitle shown beneath the title in the home list. Brief description of what the category covers.")
@@ -119,6 +122,7 @@ enum SignalCategory: String, Codable, Sendable, CaseIterable, Identifiable, Hash
         case .deviceIdentity: return "iphone.gen3"
         case .appleAccount: return "person.crop.circle.badge.checkmark"
         case .systemInfo: return "cpu"
+        case .jailbreakDetection: return "lock.open.trianglebadge.exclamationmark"
         case .display: return "display"
         case .locale: return "globe.badge.chevron.backward"
         case .accessibility: return "accessibility"

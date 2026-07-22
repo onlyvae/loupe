@@ -42,6 +42,7 @@ final class CategoryStore: ObservableObject {
             DeviceIdentityProvider(),
             AppleAccountProvider(),
             SystemInfoProvider(),
+            JailbreakDetectionProvider(),
             DisplayProvider(),
             LocaleProvider(),
             AccessibilityProvider(),

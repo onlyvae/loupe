@@ -138,6 +138,7 @@ enum MockData {
         result[.deviceIdentity] = deviceIdentity
         result[.appleAccount] = appleAccount
         result[.systemInfo] = systemInfo
+        result[.jailbreakDetection] = jailbreakDetection
         result[.display] = display
         result[.locale] = locale
         result[.accessibility] = accessibility
@@ -238,6 +239,15 @@ enum MockData {
                   name: String(localized: "Lockdown Mode"),
                   value: String(localized: "Not enabled", comment: "Lockdown Mode signal value when Lockdown Mode is turned off."),
                   rationale: String(localized: "Whether you have \(PlatformDevice.systemName) Lockdown Mode turned on.")),
+        ]
+    }
+
+    private static var jailbreakDetection: [FingerprintSignal] {
+        [
+            .make("knownPaths", category: .jailbreakDetection,
+                  name: String(localized: "Known jailbreak paths", comment: "Signal card name in the Jailbreak Detection category — known jailbreak filesystem paths visible to the app."),
+                  value: "0 / \(JailbreakDetectionProvider.knownPaths.count)",
+                  rationale: String(localized: "Any app can quietly check whether known jailbreak files are visible. A match can reveal that your \(PlatformDevice.localizedModel) has been modified.", comment: "Signal card rationale beneath Known jailbreak paths. %@ is the device model name (e.g., iPhone, iPad).")),
         ]
     }
 

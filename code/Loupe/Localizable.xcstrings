@@ -5541,6 +5541,107 @@
         }
       }
     },
+    "Any app can quietly check whether known jailbreak files are visible. A match can reveal that your %@ has been modified." : {
+      "comment" : "Signal card rationale beneath Known jailbreak paths. %@ is the device model name (e.g., iPhone, iPad).",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يمكن لأي تطبيق التحقق بصمت مما إذا كانت ملفات كسر الحماية المعروفة ظاهرة. قد تكشف المطابقة أن %@ الخاص بك قد عُدّل."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jede App kann unbemerkt prüfen, ob bekannte Jailbreak-Dateien sichtbar sind. Ein Treffer kann verraten, dass dein %@ verändert wurde."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cualquier app puede comprobar discretamente si hay archivos de jailbreak conocidos visibles. Una coincidencia puede revelar que tu %@ se ha modificado."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "N’importe quelle app peut vérifier discrètement si des fichiers de jailbreak connus sont visibles. Une correspondance peut révéler que votre %@ a été modifié."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qualsiasi app può controllare silenziosamente se sono visibili file di jailbreak noti. Una corrispondenza può rivelare che il tuo %@ è stato modificato."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "どのアプリも、既知の脱獄ファイルが見えるかどうかをひそかに確認できます。一致すると、お使いの%@が改変されていることが分かる可能性があります。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "어떤 앱이든 알려진 탈옥 파일이 보이는지 몰래 확인할 수 있어요. 일치하는 항목이 있으면 내 %@이 수정되었다는 사실이 드러날 수 있어요."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Każda aplikacja może po cichu sprawdzić, czy znane pliki jailbreaku są widoczne. Trafienie może ujawnić, że Twój %@ został zmodyfikowany."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qualquer app pode verificar discretamente se arquivos de jailbreak conhecidos estão visíveis. Uma correspondência pode revelar que seu %@ foi modificado."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qualquer app pode verificar discretamente se estão visíveis ficheiros de jailbreak conhecidos. Uma correspondência pode revelar que o teu %@ foi modificado."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Любое приложение может незаметно проверить, видны ли известные файлы джейлбрейка. Совпадение может показать, что твой %@ был модифицирован."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Her uygulama bilinen jailbreak dosyalarının görünür olup olmadığını sessizce kontrol edebilir. Bir eşleşme %@ aygıtının değiştirilmiş olduğunu ortaya çıkarabilir."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Будь-яка програма може непомітно перевірити, чи видно відомі файли джейлбрейка. Збіг може показати, що твій %@ було модифіковано."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bất kỳ ứng dụng nào cũng có thể âm thầm kiểm tra xem các tệp bẻ khóa đã biết có hiển thị hay không. Một kết quả khớp có thể tiết lộ rằng %@ của bạn đã bị sửa đổi."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "任何 App 都可以悄悄检查已知的越狱文件是否可见。匹配项可能会暴露你的 %@ 已被修改。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "任何 App 都可以悄悄檢查已知的越獄檔案是否可見。相符項目可能會暴露你的 %@ 已被修改。"
+          }
+        }
+      }
+    },
     "Any app can quietly check whether your screen is being recorded, mirrored, or sent over AirPlay." : {
       "comment" : "Signal card rationale beneath the isCaptured value.",
       "localizations" : {
@@ -12509,6 +12610,107 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "電量、電源與溫度狀態"
+          }
+        }
+      }
+    },
+    "Checks for known jailbreak files" : {
+      "comment" : "Category subtitle shown beneath the title in the home list. Brief description of what the category covers.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يتحقق من ملفات كسر الحماية المعروفة"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prüft auf bekannte Jailbreak-Dateien"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Busca archivos de jailbreak conocidos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recherche des fichiers de jailbreak connus"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Controlla i file di jailbreak noti"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "既知の脱獄ファイルを確認"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "알려진 탈옥 파일 확인"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprawdza znane pliki jailbreaku"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verifica arquivos de jailbreak conhecidos"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verifica ficheiros de jailbreak conhecidos"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Проверяет известные файлы джейлбрейка"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bilinen jailbreak dosyalarını kontrol eder"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Перевіряє відомі файли джейлбрейка"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kiểm tra các tệp bẻ khóa đã biết"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "检查已知的越狱文件"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "檢查已知的越獄檔案"
           }
         }
       }
@@ -29885,6 +30087,107 @@
         }
       }
     },
+    "Jailbreak Detection" : {
+      "comment" : "Category title shown in the home list, navigation bar, and as a heading on the per-category screen.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اكتشاف كسر الحماية"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jailbreak-Erkennung"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detección de jailbreak"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Détection du jailbreak"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rilevamento jailbreak"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "脱獄の検出"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "탈옥 감지"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wykrywanie jailbreaku"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detecção de jailbreak"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deteção de jailbreak"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Обнаружение джейлбрейка"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jailbreak Algılama"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Виявлення джейлбрейка"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Phát hiện bẻ khóa"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "越狱检测"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "越獄偵測"
+          }
+        }
+      }
+    },
     "Japanese" : {
       "comment" : "Calendar name used inside the region-mismatch narrative card on the fingerprint summary sheet.",
       "localizations" : {
@@ -30386,6 +30689,107 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "鍵盤語言"
+          }
+        }
+      }
+    },
+    "Known jailbreak paths" : {
+      "comment" : "Signal card name in the Jailbreak Detection category — known jailbreak filesystem paths visible to the app.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مسارات كسر الحماية المعروفة"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bekannte Jailbreak-Pfade"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rutas de jailbreak conocidas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chemins de jailbreak connus"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Percorsi di jailbreak noti"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "既知の脱獄パス"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "알려진 탈옥 경로"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Znane ścieżki jailbreaku"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Caminhos de jailbreak conhecidos"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Caminhos de jailbreak conhecidos"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Известные пути джейлбрейка"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bilinen jailbreak yolları"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Відомі шляхи джейлбрейка"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Các đường dẫn bẻ khóa đã biết"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已知的越狱路径"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已知的越獄路徑"
           }
         }
       }
