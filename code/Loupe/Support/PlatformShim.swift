@@ -454,6 +454,7 @@ enum PlatformScreen {
         var verticalSizeClass: String = "unspecified"
         var preferredContentSizeCategory: String = "UICTContentSizeCategoryL"
         var safeAreaInsets: (top: CGFloat, left: CGFloat, bottom: CGFloat, right: CGFloat) = (0, 0, 0, 0)
+        var isCaptured: Bool?
         var userInterfaceStyle: String = "unspecified"
         var accessibilityContrast: String = "normal"
     }
@@ -481,6 +482,7 @@ enum PlatformScreen {
             verticalSizeClass: describeSizeClass(traits.verticalSizeClass),
             preferredContentSizeCategory: traits.preferredContentSizeCategory.rawValue,
             safeAreaInsets: (insets.top, insets.left, insets.bottom, insets.right),
+            isCaptured: screen.isCaptured,
             userInterfaceStyle: describeStyle(traits.userInterfaceStyle),
             accessibilityContrast: describeContrast(traits.accessibilityContrast)
         )

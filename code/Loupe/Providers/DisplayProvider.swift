@@ -19,6 +19,20 @@ final class DisplayProvider: SignalProvider, LiveSignalProvider {
 
     func stream() -> AsyncStream<[FingerprintSignal]> {
         AsyncStream { continuation in
+            #if os(iOS)
+            let captureToken = NotificationCenter.default.addObserver(
+                forName: UIScreen.capturedDidChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                guard let self else { return }
+                Task { @MainActor in
+                    continuation.yield(await self.buildSignals())
+                }
+            }
+            nonisolated(unsafe) let token = captureToken
+            #endif
+
             let task = Task { @MainActor [weak self] in
                 guard let self else { continuation.finish(); return }
                 continuation.yield(await self.buildSignals())
@@ -29,7 +43,12 @@ final class DisplayProvider: SignalProvider, LiveSignalProvider {
                 }
                 continuation.finish()
             }
-            continuation.onTermination = { @Sendable _ in task.cancel() }
+            continuation.onTermination = { @Sendable _ in
+                task.cancel()
+                #if os(iOS)
+                NotificationCenter.default.removeObserver(token)
+                #endif
+            }
         }
     }
 
@@ -83,6 +102,15 @@ final class DisplayProvider: SignalProvider, LiveSignalProvider {
                     name: String(localized: "Brightness", comment: "Signal card name in the Display category — current screen brightness level."),
                     value: String(format: "%.2f", info.brightness),
                     rationale: String(localized: "Current screen brightness (0.0 to 1.0). Changes with your adjustments and ambient light.", comment: "Signal card rationale beneath the Brightness value.")))
+        }
+        if let isCaptured = info.isCaptured {
+            signals.append(
+                .make(
+                    "isCaptured",
+                    category: category,
+                    name: String(localized: "isCaptured", comment: "Signal card name in the Display category — UIScreen.isCaptured screen-capture state."),
+                    value: isCaptured ? "true" : "false",
+                    rationale: String(localized: "Any app can quietly check whether your screen is being recorded, mirrored, or sent over AirPlay.", comment: "Signal card rationale beneath the isCaptured value.")))
         }
         signals.append(
             .make(

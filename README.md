@@ -44,6 +44,16 @@ You'll need Xcode 26 or newer.
 
 The project uses Xcode's buildable folders (folder references), so new Swift files are picked up automatically with no need to edit the project file.
 
+### Exporting an IPA
+
+After configuring signing, export a development-signed IPA from the command line:
+
+```sh
+./scripts/export-ipa.sh
+```
+
+The IPA is written to `build/ipa/Loupe.ipa`, then copied to `build/ipa/Loupe.tipa` for tools that use the `.tipa` extension. Use `--method app-store`, `--method ad-hoc`, or `--method enterprise` for another distribution type. App Store export requires an Apple Distribution certificate and an App Store provisioning profile for the bundle identifier. If Xcode needs to create or download signing assets, sign in to the correct developer team in Xcode and add `--allow-provisioning-updates`. Run `./scripts/export-ipa.sh --help` for all options, including team ID, bundle ID, and output directory overrides.
+
 ### macOS
 
 Loupe also builds for macOS. The Mac version is mostly complete, but a few things still need work before it's polished.

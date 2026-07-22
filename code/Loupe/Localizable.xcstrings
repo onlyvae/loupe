@@ -5541,6 +5541,107 @@
         }
       }
     },
+    "Any app can quietly check whether your screen is being recorded, mirrored, or sent over AirPlay." : {
+      "comment" : "Signal card rationale beneath the isCaptured value.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يمكن لأي تطبيق التحقق بصمت مما إذا كانت شاشتك تُسجَّل أو تُعكس أو تُرسل عبر AirPlay."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jede App kann unbemerkt prüfen, ob dein Bildschirm aufgenommen, gespiegelt oder über AirPlay übertragen wird."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cualquier app puede comprobar discretamente si tu pantalla se está grabando, duplicando o enviando por AirPlay."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "N’importe quelle app peut vérifier discrètement si votre écran est enregistré, recopié ou diffusé via AirPlay."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qualsiasi app può controllare silenziosamente se lo schermo viene registrato, duplicato o trasmesso tramite AirPlay."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "どのアプリも、画面が収録中、ミラーリング中、またはAirPlayで送信中かどうかをひそかに確認できます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "어떤 앱이든 화면이 녹화되거나 미러링되거나 AirPlay로 전송 중인지 몰래 확인할 수 있어요."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Każda aplikacja może po cichu sprawdzić, czy ekran jest nagrywany, klonowany lub przesyłany przez AirPlay."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qualquer app pode verificar discretamente se a sua tela está sendo gravada, espelhada ou transmitida pelo AirPlay."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qualquer app pode verificar discretamente se o ecrã está a ser gravado, projetado ou transmitido por AirPlay."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Любое приложение может незаметно проверить, записывается ли экран, дублируется ли он или транслируется через AirPlay."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Her uygulama ekranınızın kaydedildiğini, yansıtıldığını veya AirPlay üzerinden aktarıldığını fark ettirmeden kontrol edebilir."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Будь-який застосунок може непомітно перевірити, чи записується екран, дублюється або транслюється через AirPlay."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bất kỳ ứng dụng nào cũng có thể âm thầm kiểm tra xem màn hình của bạn đang được ghi, phản chiếu hay truyền qua AirPlay."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "任何 App 都可以悄悄检查你的屏幕是否正在录制、镜像或通过 AirPlay 播放。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "任何 App 都可以悄悄檢查你的螢幕是否正在錄製、鏡像輸出或透過 AirPlay 播放。"
+          }
+        }
+      }
+    },
     "Any app on your %@ can quietly read these values without asking. Each one seems harmless on its own, but together they can be enough to single your %@ out." : {
       "localizations" : {
         "ar" : {
@@ -29376,6 +29477,107 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "isConstrained"
+          }
+        }
+      }
+    },
+    "isCaptured" : {
+      "comment" : "Signal card name in the Display category — UIScreen.isCaptured screen-capture state.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "isCaptured"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "isCaptured"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "isCaptured"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "isCaptured"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "isCaptured"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "isCaptured"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "isCaptured"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "isCaptured"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "isCaptured"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "isCaptured"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "isCaptured"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "isCaptured"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "isCaptured"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "isCaptured"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "isCaptured"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "isCaptured"
           }
         }
       }
