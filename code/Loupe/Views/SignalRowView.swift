@@ -81,6 +81,12 @@ struct SignalRowView: View {
             } else {
                 plainValue
             }
+        case .list:
+            if let entries = signal.entries, !entries.isEmpty {
+                listContent(entries)
+            } else {
+                plainValue
+            }
         case .compound:
             if let entries = signal.entries, !entries.isEmpty {
                 compoundContent(entries)
@@ -146,6 +152,31 @@ struct SignalRowView: View {
                     .padding(.horizontal, 8)
                     .padding(.vertical, 4)
                     .background(Color.secondary.opacity(0.12), in: Capsule())
+            }
+        }
+        .padding(.vertical, 2)
+    }
+
+    // MARK: - Long-Value List
+
+    private func listContent(_ entries: [SignalEntry]) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            ForEach(entries, id: \.self) { entry in
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(entry.label)
+                        .font(.system(.caption, design: .monospaced))
+                    if !entry.value.isEmpty {
+                        Text(entry.value)
+                            .font(.system(.caption2, design: .monospaced))
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
+                .textSelection(.enabled)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(8)
+                .background(Color.secondary.opacity(0.08), in: RoundedRectangle(cornerRadius: 8))
             }
         }
         .padding(.vertical, 2)

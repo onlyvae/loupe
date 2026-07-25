@@ -138,7 +138,7 @@ enum MockData {
         result[.deviceIdentity] = deviceIdentity
         result[.appleAccount] = appleAccount
         result[.systemInfo] = systemInfo
-        result[.jailbreakDetection] = jailbreakDetection
+        result[.securityDetection] = securityDetection
         result[.display] = display
         result[.locale] = locale
         result[.accessibility] = accessibility
@@ -242,12 +242,20 @@ enum MockData {
         ]
     }
 
-    private static var jailbreakDetection: [FingerprintSignal] {
+    private static var securityDetection: [FingerprintSignal] {
         [
-            .make("knownPaths", category: .jailbreakDetection,
-                  name: String(localized: "Known jailbreak paths", comment: "Signal card name in the Jailbreak Detection category — known jailbreak filesystem paths visible to the app."),
-                  value: "0 / \(JailbreakDetectionProvider.knownPaths.count)",
+            .make("knownPaths", category: .securityDetection,
+                  name: String(localized: "Known jailbreak paths", comment: "Signal card name in the Security Detection category — known jailbreak filesystem paths visible to the app."),
+                  value: "0 / \(SecurityDetectionProvider.knownPaths.count)",
                   rationale: String(localized: "Any app can quietly check whether known jailbreak files are visible. A match can reveal that your \(PlatformDevice.localizedModel) has been modified.", comment: "Signal card rationale beneath Known jailbreak paths. %@ is the device model name (e.g., iPhone, iPad).")),
+            .make("hookFrameworks", category: .securityDetection,
+                  name: String(localized: "Loaded hook frameworks", comment: "Signal card name in the Security Detection category — hook or instrumentation frameworks loaded into the app process."),
+                  value: "0",
+                  rationale: String(localized: "Any app can quietly inspect the libraries loaded into its own process. Names linked to Substrate, Frida, and other hook frameworks can reveal injected code. A hidden framework may not appear here.", comment: "Signal card rationale beneath Loaded hook frameworks. Explains both what a match means and the limits of this check.")),
+            .make("objectiveCRuntimeHooks", category: .securityDetection,
+                  name: String(localized: "Objective-C runtime hooks", comment: "Signal card name in the Security Detection category — Objective-C methods whose implementations point outside Apple's system libraries."),
+                  value: "0",
+                  rationale: String(localized: "Any app can quietly check where common Objective-C methods are implemented. If an implementation points outside Apple's system libraries, another component may have replaced or redirected it. Some hooks can hide from this check.", comment: "Signal card rationale beneath Objective-C runtime hooks. Explains how method implementation addresses can reveal hooks and the limits of this check.")),
         ]
     }
 
@@ -332,6 +340,10 @@ enum MockData {
                   name: String(localized: "Time zone identifier"),
                   value: "America/Toronto",
                   rationale: String(localized: "Time zone identifier (e.g., `Europe/Berlin`).")),
+            .make("currentTime", category: .locale,
+                  name: String(localized: "Current time"),
+                  value: "9:41:00 AM",
+                  rationale: String(localized: "The current time in your selected time zone and preferred time format.")),
             .make("calendar", category: .locale,
                   name: String(localized: "Calendar"),
                   value: "gregorian",

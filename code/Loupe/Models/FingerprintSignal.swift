@@ -19,6 +19,8 @@ enum DisplayHint: String, Hashable, Sendable, Codable {
     case axis
     /// Horizontally-wrapping capsule chips.
     case tags
+    /// Full-width rows for long values such as filesystem paths.
+    case list
     /// Side-by-side labeled parts for composite values.
     case compound
 }

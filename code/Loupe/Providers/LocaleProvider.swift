@@ -59,6 +59,13 @@ struct LocaleProvider: SignalProvider {
                 rationale: String(localized: "Time zone identifier (e.g., `Europe/Berlin`).", comment: "Signal card rationale beneath the Time zone identifier value.")))
         signals.append(
             .make(
+                "currentTime",
+                category: category,
+                name: String(localized: "Current time", comment: "Signal card name in the Locale & Region category — the current local time."),
+                value: Date().formatted(date: .omitted, time: .standard),
+                rationale: String(localized: "The current time in your selected time zone and preferred time format.", comment: "Signal card rationale beneath the Current time value.")))
+        signals.append(
+            .make(
                 "calendar",
                 category: category,
                 name: String(localized: "Calendar", comment: "Signal card name in the Locale & Region category — Calendar.identifier (preferred calendar system)."),

@@ -5743,6 +5743,128 @@
         }
       }
     },
+    "Any app can quietly inspect the libraries loaded into its own process. Names linked to Substrate, Frida, and other hook frameworks can reveal injected code. A hidden framework may not appear here." : {
+      "comment" : "Signal card rationale beneath Loaded hook frameworks. Explains both what a match means and the limits of this check.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يمكن لأي تطبيق فحص المكتبات المحمّلة في عمليته بصمت. قد تكشف الأسماء المرتبطة بـ Substrate وFrida وأطر الاعتراض الأخرى عن تعليمات برمجية محقونة. قد لا يظهر إطار عمل مخفي هنا."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jede App kann unbemerkt prüfen, welche Bibliotheken in ihren eigenen Prozess geladen sind. Namen mit Bezug zu Substrate, Frida und anderen Hook-Frameworks können eingeschleusten Code verraten. Ein verborgenes Framework erscheint hier möglicherweise nicht."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cualquier app puede inspeccionar discretamente las bibliotecas cargadas en su propio proceso. Los nombres vinculados a Substrate, Frida y otros frameworks de hooking pueden revelar código inyectado. Es posible que un framework oculto no aparezca aquí."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "N’importe quelle app peut inspecter discrètement les bibliothèques chargées dans son propre processus. Les noms liés à Substrate, Frida et à d’autres frameworks de hook peuvent révéler du code injecté. Un framework masqué peut ne pas apparaître ici."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qualsiasi app può controllare silenziosamente le librerie caricate nel proprio processo. I nomi legati a Substrate, Frida e altri framework di hooking possono rivelare codice iniettato. Un framework nascosto potrebbe non apparire qui."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "どのアプリも、自身のプロセスに読み込まれたライブラリをひそかに調べることができます。Substrate、Frida、その他のフックフレームワークに関連する名前から、挿入されたコードが分かる場合があります。隠されたフレームワークはここに表示されないことがあります。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "어떤 앱이든 자체 프로세스에 로드된 라이브러리를 몰래 확인할 수 있어요. Substrate, Frida 및 기타 후킹 프레임워크와 관련된 이름을 통해 삽입된 코드가 드러날 수 있어요. 숨겨진 프레임워크는 여기에 나타나지 않을 수 있어요."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Każda aplikacja może po cichu sprawdzić biblioteki załadowane do własnego procesu. Nazwy związane z Substrate, Frida i innymi frameworkami do hookowania mogą ujawnić wstrzyknięty kod. Ukryty framework może się tutaj nie pojawić."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qualquer app pode inspecionar discretamente as bibliotecas carregadas no próprio processo. Nomes ligados ao Substrate, Frida e outros frameworks de hooking podem revelar código injetado. Um framework oculto pode não aparecer aqui."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qualquer app pode inspecionar discretamente as bibliotecas carregadas no seu próprio processo. Os nomes associados ao Substrate, Frida e outros frameworks de hooking podem revelar código injetado. Um framework oculto pode não aparecer aqui."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Любое приложение может незаметно проверить библиотеки, загруженные в его собственный процесс. Имена, связанные с Substrate, Frida и другими фреймворками для хуков, могут выявить внедрённый код. Скрытый фреймворк может здесь не появиться."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Her uygulama kendi işlemine yüklenen kütüphaneleri sessizce inceleyebilir. Substrate, Frida ve diğer hook framework'leriyle bağlantılı adlar enjekte edilmiş kodu ortaya çıkarabilir. Gizlenmiş bir framework burada görünmeyebilir."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Будь-яка програма може непомітно перевірити бібліотеки, завантажені у власний процес. Назви, пов’язані із Substrate, Frida та іншими фреймворками для хуків, можуть виявити вставлений код. Прихований фреймворк може тут не з’явитися."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bất kỳ ứng dụng nào cũng có thể âm thầm kiểm tra các thư viện được tải vào tiến trình của chính mình. Những tên liên quan đến Substrate, Frida và các framework hook khác có thể làm lộ mã được chèn. Một framework bị ẩn có thể không xuất hiện ở đây."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "任何 App 都可以悄悄检查加载到自身进程中的程序库。与 Substrate、Frida 和其他 hook 框架相关的名称可能会暴露注入的代码。隐藏的框架可能不会显示在这里。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "任何 App 都可以悄悄檢查載入自身程序的程式庫。與 Substrate、Frida 和其他 hook 框架相關的名稱可能會暴露注入的程式碼。隱藏的框架可能不會顯示在這裡。"
+          }
+        }
+      }
+    },
+    "Any app can quietly check where common Objective-C methods are implemented. If an implementation points outside Apple's system libraries, another component may have replaced or redirected it. Some hooks can hide from this check." : {
+      "comment" : "Signal card rationale beneath Objective-C runtime hooks. Explains how method implementation addresses can reveal hooks and the limits of this check.",
+      "localizations" : {
+        "ar" : { "stringUnit" : { "state" : "machine_translated", "value" : "يمكن لأي تطبيق التحقق بصمت من مكان تنفيذ أساليب Objective-C الشائعة. إذا أشار تنفيذ إلى خارج مكتبات نظام Apple، فربما استبدله مكوّن آخر أو أعاد توجيهه. يمكن لبعض عمليات الاعتراض الاختباء من هذا الفحص." } },
+        "de" : { "stringUnit" : { "state" : "machine_translated", "value" : "Jede App kann unbemerkt prüfen, wo gängige Objective-C-Methoden implementiert sind. Verweist eine Implementierung auf einen Ort außerhalb der Systembibliotheken von Apple, könnte eine andere Komponente sie ersetzt oder umgeleitet haben. Manche Hooks können sich vor dieser Prüfung verbergen." } },
+        "es" : { "stringUnit" : { "state" : "machine_translated", "value" : "Cualquier app puede comprobar discretamente dónde se implementan métodos habituales de Objective-C. Si una implementación apunta fuera de las bibliotecas del sistema de Apple, es posible que otro componente la haya sustituido o redirigido. Algunos hooks pueden ocultarse de esta comprobación." } },
+        "fr" : { "stringUnit" : { "state" : "machine_translated", "value" : "N’importe quelle app peut vérifier discrètement où les méthodes Objective-C courantes sont mises en œuvre. Si une mise en œuvre pointe hors des bibliothèques système d’Apple, un autre composant peut l’avoir remplacée ou redirigée. Certains hooks peuvent échapper à cette vérification." } },
+        "it" : { "stringUnit" : { "state" : "machine_translated", "value" : "Qualsiasi app può controllare silenziosamente dove sono implementati i comuni metodi Objective-C. Se un'implementazione punta al di fuori delle librerie di sistema Apple, un altro componente potrebbe averla sostituita o reindirizzata. Alcuni hook possono eludere questo controllo." } },
+        "ja" : { "stringUnit" : { "state" : "machine_translated", "value" : "どのアプリも、一般的なObjective-Cメソッドがどこに実装されているかをひそかに確認できます。実装がAppleのシステムライブラリ外を指している場合、別のコンポーネントが置き換えたり転送したりした可能性があります。一部のフックはこの確認から隠れることができます。" } },
+        "ko" : { "stringUnit" : { "state" : "machine_translated", "value" : "어떤 앱이든 일반적인 Objective-C 메서드가 어디에 구현되어 있는지 몰래 확인할 수 있어요. 구현이 Apple 시스템 라이브러리 외부를 가리키면 다른 구성 요소가 이를 교체하거나 리디렉션했을 수 있어요. 일부 Hook은 이 검사에서 숨을 수 있어요." } },
+        "pl" : { "stringUnit" : { "state" : "machine_translated", "value" : "Każda aplikacja może po cichu sprawdzić, gdzie zaimplementowano popularne metody Objective-C. Jeśli implementacja wskazuje poza biblioteki systemowe Apple, inny składnik mógł ją zastąpić lub przekierować. Niektóre hooki mogą ukryć się przed tą kontrolą." } },
+        "pt-BR" : { "stringUnit" : { "state" : "machine_translated", "value" : "Qualquer app pode verificar discretamente onde métodos comuns de Objective-C são implementados. Se uma implementação apontar para fora das bibliotecas do sistema da Apple, outro componente pode tê-la substituído ou redirecionado. Alguns hooks podem se ocultar dessa verificação." } },
+        "pt-PT" : { "stringUnit" : { "state" : "machine_translated", "value" : "Qualquer app pode verificar discretamente onde são implementados métodos comuns de Objective-C. Se uma implementação apontar para fora das bibliotecas de sistema da Apple, outro componente poderá tê-la substituído ou redirecionado. Alguns hooks podem ocultar-se desta verificação." } },
+        "ru" : { "stringUnit" : { "state" : "machine_translated", "value" : "Любое приложение может незаметно проверить, где реализованы распространённые методы Objective-C. Если реализация указывает за пределы системных библиотек Apple, другой компонент мог заменить или перенаправить её. Некоторые хуки могут скрываться от этой проверки." } },
+        "tr" : { "stringUnit" : { "state" : "machine_translated", "value" : "Her uygulama yaygın Objective-C metotlarının nerede uygulandığını sessizce kontrol edebilir. Bir uygulama Apple'ın sistem kütüphanelerinin dışını gösteriyorsa başka bir bileşen onu değiştirmiş veya yönlendirmiş olabilir. Bazı hook'lar bu kontrolden gizlenebilir." } },
+        "uk" : { "stringUnit" : { "state" : "machine_translated", "value" : "Будь-який застосунок може непомітно перевірити, де реалізовано поширені методи Objective-C. Якщо реалізація вказує за межі системних бібліотек Apple, інший компонент міг замінити або переспрямувати її. Деякі хуки можуть приховуватися від цієї перевірки." } },
+        "vi" : { "stringUnit" : { "state" : "machine_translated", "value" : "Bất kỳ ứng dụng nào cũng có thể âm thầm kiểm tra nơi triển khai các phương thức Objective-C phổ biến. Nếu một phần triển khai trỏ ra ngoài thư viện hệ thống của Apple, một thành phần khác có thể đã thay thế hoặc chuyển hướng phần đó. Một số hook có thể ẩn khỏi phép kiểm tra này." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "machine_translated", "value" : "任何 App 都可以悄悄检查常见 Objective-C 方法的实现位置。如果实现指向 Apple 系统库之外，其他组件可能替换或重定向了它。某些 Hook 可以避开这项检测。" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "machine_translated", "value" : "任何 App 都可以悄悄檢查常見 Objective-C 方法的實作位置。如果實作指向 Apple 系統程式庫之外，其他元件可能已替換或重新導向它。某些 Hook 可以避開這項檢測。" } }
+      }
+    },
     "Any app on your %@ can quietly read these values without asking. Each one seems harmless on its own, but together they can be enough to single your %@ out." : {
       "localizations" : {
         "ar" : {
@@ -12614,107 +12736,6 @@
         }
       }
     },
-    "Checks for known jailbreak files" : {
-      "comment" : "Category subtitle shown beneath the title in the home list. Brief description of what the category covers.",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "يتحقق من ملفات كسر الحماية المعروفة"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Prüft auf bekannte Jailbreak-Dateien"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Busca archivos de jailbreak conocidos"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Recherche des fichiers de jailbreak connus"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Controlla i file di jailbreak noti"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "既知の脱獄ファイルを確認"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "알려진 탈옥 파일 확인"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sprawdza znane pliki jailbreaku"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Verifica arquivos de jailbreak conhecidos"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Verifica ficheiros de jailbreak conhecidos"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Проверяет известные файлы джейлбрейка"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bilinen jailbreak dosyalarını kontrol eder"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Перевіряє відомі файли джейлбрейка"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kiểm tra các tệp bẻ khóa đã biết"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "检查已知的越狱文件"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "檢查已知的越獄檔案"
-          }
-        }
-      }
-    },
     "Checks for VPN-related interface names (tap, tun, ipsec) in system proxy settings." : {
       "comment" : "Signal card rationale beneath the VPN active (heuristic) value.",
       "localizations" : {
@@ -15940,6 +15961,107 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "目前安裝日期"
+          }
+        }
+      }
+    },
+    "Current time" : {
+      "comment" : "Signal card name in the Locale & Region category — the current local time.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الوقت الحالي"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktuelle Uhrzeit"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hora actual"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heure actuelle"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ora attuale"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "現在時刻"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "현재 시간"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bieżący czas"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hora atual"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hora atual"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Текущее время"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geçerli saat"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поточний час"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giờ hiện tại"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当前时间"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "目前時間"
           }
         }
       }
@@ -30087,103 +30209,103 @@
         }
       }
     },
-    "Jailbreak Detection" : {
-      "comment" : "Category title shown in the home list, navigation bar, and as a heading on the per-category screen.",
+    "Jailbreak and hook indicators" : {
+      "comment" : "Category subtitle shown beneath the title in the home list. Brief description of what the category covers.",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "اكتشاف كسر الحماية"
+            "value" : "مؤشرات كسر الحماية والاعتراض"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jailbreak-Erkennung"
+            "value" : "Jailbreak- und Hook-Indikatoren"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Detección de jailbreak"
+            "value" : "Indicadores de jailbreak y hooking"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Détection du jailbreak"
+            "value" : "Indices de jailbreak et de hook"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rilevamento jailbreak"
+            "value" : "Indicatori di jailbreak e hooking"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "脱獄の検出"
+            "value" : "脱獄とフックの痕跡"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "탈옥 감지"
+            "value" : "탈옥 및 후킹 지표"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wykrywanie jailbreaku"
+            "value" : "Wskaźniki jailbreaku i hookowania"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Detecção de jailbreak"
+            "value" : "Indicadores de jailbreak e hooking"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deteção de jailbreak"
+            "value" : "Indicadores de jailbreak e hooking"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Обнаружение джейлбрейка"
+            "value" : "Признаки джейлбрейка и хуков"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jailbreak Algılama"
+            "value" : "Jailbreak ve hook göstergeleri"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Виявлення джейлбрейка"
+            "value" : "Ознаки джейлбрейка та хуків"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Phát hiện bẻ khóa"
+            "value" : "Dấu hiệu bẻ khóa và hook"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "越狱检测"
+            "value" : "越狱与 hook 迹象"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "越獄偵測"
+            "value" : "越獄與 hook 跡象"
           }
         }
       }
@@ -30694,7 +30816,7 @@
       }
     },
     "Known jailbreak paths" : {
-      "comment" : "Signal card name in the Jailbreak Detection category — known jailbreak filesystem paths visible to the app.",
+      "comment" : "Signal card name in the Security Detection category — known jailbreak filesystem paths visible to the app.",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -32506,6 +32628,107 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "即時更新"
+          }
+        }
+      }
+    },
+    "Loaded hook frameworks" : {
+      "comment" : "Signal card name in the Security Detection category — hook or instrumentation frameworks loaded into the app process.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أطر الاعتراض المحمّلة"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geladene Hook-Frameworks"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Frameworks de hooking cargados"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Frameworks de hook chargés"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Framework di hooking caricati"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "読み込まれたフックフレームワーク"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "로드된 후킹 프레임워크"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Załadowane frameworki do hookowania"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Frameworks de hooking carregados"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Frameworks de hooking carregados"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Загруженные фреймворки для хуков"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yüklenen hook framework'leri"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Завантажені фреймворки для хуків"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Các framework hook đã tải"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已加载的 hook 框架"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已載入的 hook 框架"
           }
         }
       }
@@ -42518,6 +42741,27 @@
         }
       }
     },
+    "Objective-C runtime hooks" : {
+      "comment" : "Signal card name in the Security Detection category — Objective-C methods whose implementations point outside Apple's system libraries.",
+      "localizations" : {
+        "ar" : { "stringUnit" : { "state" : "machine_translated", "value" : "اعتراضات وقت تشغيل Objective-C" } },
+        "de" : { "stringUnit" : { "state" : "machine_translated", "value" : "Objective-C-Runtime-Hooks" } },
+        "es" : { "stringUnit" : { "state" : "machine_translated", "value" : "Hooks del runtime de Objective-C" } },
+        "fr" : { "stringUnit" : { "state" : "machine_translated", "value" : "Hooks du runtime Objective-C" } },
+        "it" : { "stringUnit" : { "state" : "machine_translated", "value" : "Hook del runtime Objective-C" } },
+        "ja" : { "stringUnit" : { "state" : "machine_translated", "value" : "Objective-Cランタイムのフック" } },
+        "ko" : { "stringUnit" : { "state" : "machine_translated", "value" : "Objective-C 런타임 Hook" } },
+        "pl" : { "stringUnit" : { "state" : "machine_translated", "value" : "Hooki środowiska wykonawczego Objective-C" } },
+        "pt-BR" : { "stringUnit" : { "state" : "machine_translated", "value" : "Hooks do runtime de Objective-C" } },
+        "pt-PT" : { "stringUnit" : { "state" : "machine_translated", "value" : "Hooks do runtime de Objective-C" } },
+        "ru" : { "stringUnit" : { "state" : "machine_translated", "value" : "Хуки среды выполнения Objective-C" } },
+        "tr" : { "stringUnit" : { "state" : "machine_translated", "value" : "Objective-C çalışma zamanı hook'ları" } },
+        "uk" : { "stringUnit" : { "state" : "machine_translated", "value" : "Хуки середовища виконання Objective-C" } },
+        "vi" : { "stringUnit" : { "state" : "machine_translated", "value" : "Hook runtime Objective-C" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "machine_translated", "value" : "Objective-C 运行时 Hook" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "machine_translated", "value" : "Objective-C 執行階段 Hook" } }
+      }
+    },
     "OS version string" : {
       "comment" : "Signal card name in the System Info category — ProcessInfo.operatingSystemVersionString.",
       "localizations" : {
@@ -50114,6 +50358,107 @@
         }
       }
     },
+    "Security Detection" : {
+      "comment" : "Category title shown in the home list, navigation bar, and as a heading on the per-category screen.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فحص الأمان"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sicherheitsprüfung"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comprobación de seguridad"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contrôle de sécurité"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Controllo sicurezza"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "セキュリティチェック"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "보안 검사"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kontrola bezpieczeństwa"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verificação de segurança"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verificação de segurança"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Проверка безопасности"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Güvenlik Kontrolü"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Перевірка безпеки"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kiểm tra bảo mật"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "安全检测"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "安全偵測"
+          }
+        }
+      }
+    },
     "See Onboarding Again" : {
       "localizations" : {
         "ar" : {
@@ -54145,6 +54490,107 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "目前的硬體取樣率。"
+          }
+        }
+      }
+    },
+    "The current time in your selected time zone and preferred time format." : {
+      "comment" : "Signal card rationale beneath the Current time value.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الوقت الحالي في المنطقة الزمنية المحددة وبتنسيق الوقت المفضل لديك."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die aktuelle Uhrzeit in deiner ausgewählten Zeitzone und deinem bevorzugten Zeitformat."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La hora actual en la zona horaria seleccionada y con tu formato de hora preferido."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L’heure actuelle dans le fuseau horaire sélectionné et selon votre format d’heure préféré."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L’ora attuale nel fuso orario selezionato e nel formato che preferisci."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選択した時間帯と優先する時刻形式での現在時刻。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "선택한 시간대와 선호하는 시간 형식에 따른 현재 시간이에요."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bieżący czas w wybranej strefie czasowej i preferowanym formacie."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A hora atual no fuso horário selecionado e no formato de hora de sua preferência."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A hora atual no fuso horário selecionado e no formato de hora que preferes."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Текущее время в выбранном часовом поясе и предпочитаемом формате."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seçtiğin saat dilimindeki geçerli saat, tercih ettiğin saat biçiminde."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поточний час у вибраному часовому поясі та бажаному форматі."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giờ hiện tại theo múi giờ đã chọn và định dạng giờ bạn ưu tiên."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "以你所选的时区和首选时间格式显示的当前时间。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "以你所選的時區和偏好時間格式顯示的目前時間。"
           }
         }
       }
