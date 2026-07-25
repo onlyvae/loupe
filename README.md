@@ -2,79 +2,79 @@
   <img src="docs/images/loupe-icon.png" alt="Loupe" width="120">
 </p>
 
-# Loupe
+# Loupe Extended
 
-Loupe is an iOS and iPadOS app that gives you a hands-on tour of the device fingerprinting surface. It reads real values from public iOS APIs, the same ones any third-party app can call, and shows them to you raw. The point is simple: see what your iPhone quietly exposes, and why each reading helps an app recognize you again.
+这是一个基于 [Mysk Loupe](https://github.com/mysk-research/loupe) 二次开发的 iOS / iPadOS 设备信息与安全环境检测工具。
 
-Trackers don't need your name, email, or location to recognize you online. Each reading isn't necessarily unique on its own, but together they form a fingerprint that follows you across apps and websites.
+Loupe 会读取第三方 App 能通过公开系统 API 获取的真实数据，并直接展示原始值。你可以借此了解一台 iPhone 会暴露哪些可用于设备指纹识别的信息，以及常见的越狱、代码注入和网络环境特征。
 
-<p align="center">
-  <a href="https://apps.apple.com/app/id6766152470"><img src="docs/images/app-store-badge.svg" alt="Download Loupe on the App Store" height="48"></a>
-</p>
+所有检测均在本机完成。除非你主动导出报告，否则数据不会上传、同步或分享。
 
 <p align="center">
-  <img src="docs/images/iphone-1.png" alt="Loupe screenshot showing the passive signal category" width="200">
-  <img src="docs/images/iphone-2.png" alt="Loupe screenshot showing the needs permission signal category" width="200">
-  <img src="docs/images/iphone-3.png" alt="Loupe screenshot showing some highlights from what apps can see" width="200">
+  <img src="docs/images/iphone-1.png" alt="Loupe 的被动信号页面" width="200">
+  <img src="docs/images/iphone-2.png" alt="Loupe 的权限信号页面" width="200">
+  <img src="docs/images/iphone-3.png" alt="Loupe 的设备指纹摘要页面" width="200">
 </p>
 
-## How signals are organized
+## 本分支新增与扩展
 
-Loupe groups every reading into three tiers, reflecting the cost of access:
+在上游项目的设备指纹检测能力之外，本分支主要增加了以下内容：
 
-- **Passive** — visible to any app with no prompt at all (locale, time zone, screen, battery, and more).
-- **Needs Permission** — readings that trigger an iOS prompt (contacts, photos, location, calendars).
-- **Advanced** — clever side-channel uses of public APIs, such as URL-scheme probing via `canOpenURL` and Keychain persistence across reinstalls.
+- **越狱痕迹检测**：使用 `lstat`、`access` 和 `open` 检查常见越狱文件及目录。
+- **Hook 框架检测**：检查当前进程已加载的动态库，识别 Substrate、Frida、Substitute、libhooker、ElleKit 等常见标记。
+- **Objective-C Runtime Hook 检测**：检查部分系统方法的实现地址是否落在 Apple 系统库之外。
+- **屏幕捕获状态**：实时显示屏幕是否正在录制、镜像或通过 AirPlay 输出。
+- **网络环境信息**：展示活动接口、系统返回的网络接口、处于启用状态的接口，以及 HTTP 代理状态和端点。
+- **时间与时区信息**：补充当前时间和 WebView 暴露的时区标识符。
 
-## Privacy
+安全环境检测属于启发式检测，不应被视为完整的越狱证明或安全审计结果。iOS 沙盒、系统版本以及隐藏工具都可能造成漏报或误报。
 
-Nothing Loupe reads leaves your device unless you explicitly export it. Values are shown raw, without aggregation or hashing. Nothing is uploaded, synced, or shared.
+## 信号分类
 
-## A note on how this was built
+Loupe 按读取成本将信号分为三类：
 
-Loupe was written almost entirely by AI coding tools.
+- **Passive**：无需弹出系统授权提示即可读取，例如设备、系统、显示、电池、网络和安全环境信息。
+- **Needs Permission**：需要用户授权，例如联系人、照片、位置、日历和相机。
+- **Advanced**：利用公开 API 进行的进阶侧信道读取，例如通过 `canOpenURL` 探测已安装 App、使用隐藏的 `WKWebView` 获取 Canvas / WebGL 指纹，以及通过 Keychain 观察重新安装记录。
 
-## Building
+## 隐私
 
-You'll need Xcode 26 or newer.
+- 检测结果仅保存在当前设备上。
+- App 不包含账号系统或分析服务。
+- 原始值不会被聚合或哈希。
+- 只有你主动使用导出功能时，数据才会交给系统分享面板。
 
-1. Open `code/Loupe.xcodeproj`.
-2. Copy `code/Config/Signing.local.xcconfig.example` to `code/Config/Signing.local.xcconfig` and fill in your own `DEVELOPMENT_TEAM` and bundle identifiers. This file is gitignored and never published.
-3. Build and run on a device or simulator.
+## 构建
 
-The project uses Xcode's buildable folders (folder references), so new Swift files are picked up automatically with no need to edit the project file.
+### 环境要求
 
-### Exporting an IPA
+- macOS
+- Xcode 26 或更高版本
+- iOS / iPadOS 16.0 或更高版本，或 macOS 14.0 或更高版本
 
-After configuring signing, export a development-signed IPA from the command line:
+### 运行项目
+
+1. 克隆仓库并打开 `code/Loupe.xcodeproj`。
+2. 将 `code/Config/Signing.local.xcconfig.example` 复制为 `code/Config/Signing.local.xcconfig`。
+3. 在本地配置文件中填写自己的 `DEVELOPMENT_TEAM` 和 Bundle Identifier。
+4. 在 Xcode 中选择真机或模拟器，然后构建运行。
+
+项目使用 Xcode 的 buildable folders，新建 Swift 文件后无需手动添加到 Build Sources。
+
+### 导出 IPA
+
+完成签名配置后，可在仓库根目录执行：
 
 ```sh
 ./scripts/export-ipa.sh
 ```
 
-The IPA is written to `build/ipa/Loupe.ipa`, then copied to `build/ipa/Loupe.tipa` for tools that use the `.tipa` extension. Use `--method app-store`, `--method ad-hoc`, or `--method enterprise` for another distribution type. App Store export requires an Apple Distribution certificate and an App Store provisioning profile for the bundle identifier. If Xcode needs to create or download signing assets, sign in to the correct developer team in Xcode and add `--allow-provisioning-updates`. Run `./scripts/export-ipa.sh --help` for all options, including team ID, bundle ID, and output directory overrides.
+默认产物为 `build/ipa/Loupe.ipa`，并同时复制为 `build/ipa/Loupe.tipa`。脚本支持 `--method app-store`、`--method ad-hoc`、`--method enterprise` 等导出方式；执行 `./scripts/export-ipa.sh --help` 可查看完整参数。
 
-### macOS
+## 项目来源与许可
 
-Loupe also builds for macOS. The Mac version is mostly complete, but a few things still need work before it's polished.
+本项目是 [Mysk Loupe](https://github.com/mysk-research/loupe) 的非官方衍生版本，新增部分由本仓库维护者开发。原项目由 [Mysk](https://mysk.co) 创建。
 
-## Support the project
+源代码遵循 [MIT License](LICENSE)。请注意，Loupe 名称、Logo、App 图标、其他图片与设计源文件归 Mysk 所有，不属于 MIT 许可范围。分发自己的构建版本前，请按照许可证说明替换相关品牌素材。
 
-Loupe is free and open source. If it helped you see what apps can quietly learn about your device, the best way to support more work like this is to try [Psylo](https://apps.apple.com/app/psylo-private-browser-proxy/id6741358035), our privacy-first browser for iPhone and iPad. Psylo gives you proxy-backed browsing, isolated tabs, and anti-fingerprinting protections.
-
-You can also read [why we built Psylo](https://mysk.blog/2025/06/17/introducing-psylo/).
-
-## License
-
-The **source code** is released under the [MIT License](LICENSE).
-
-The Loupe name and logo, the app icon, all other images and icons, and the design source files are © Mysk, all rights reserved, and are not covered by the MIT license.
-
-## About
-
-Loupe is made by Mysk.
-
-- [Website](https://mysk.co)
-- [Blog](https://mysk.blog)
-- [X](https://x.com/mysk_co)
-- [Mastodon](https://mastodon.social/@mysk)
+本项目仅用于隐私教育、安全研究和测试。请仅在你拥有或获准测试的设备上使用。
