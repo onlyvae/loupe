@@ -6,20 +6,13 @@
 //  and SignalCategory.allCases; no strings are baked into this view.
 //
 
-import StoreKit
 import SwiftUI
 
 struct HomeView: View {
-    @Environment(\.requestReview) private var requestReview
-    @Environment(\.scenePhase) private var scenePhase
-    @AppStorage("showOnboarding") private var showOnboarding = true
-    @AppStorage("postOnboardingLaunchCount") private var postOnboardingLaunchCount = 0
-    @AppStorage("lastReviewRequestDate") private var lastReviewRequestDate: Double = 0
     @StateObject private var store = ScreenshotMode.isActive
         ? CategoryStore(mockSignals: MockData.signals)
         : CategoryStore()
     @State private var collectingPassive = false
-    @State private var showingAbout = false
     @State private var showingSummary = false
     @Namespace private var transitionNamespace
 
@@ -65,10 +58,6 @@ struct HomeView: View {
             }
         }
         .platformInlineNavigationBarTitle()
-        .sheet(isPresented: $showingAbout) {
-            AboutView()
-                .compatibleZoomNavigationTransition(sourceID: TransitionID.about, in: transitionNamespace)
-        }
         .sheet(isPresented: $showingSummary) {
             FingerprintSummaryView()
                 .compatibleZoomNavigationTransition(sourceID: TransitionID.highlights, in: transitionNamespace)
@@ -77,21 +66,6 @@ struct HomeView: View {
             if !collectingPassive && store.totalSignalCount == 0 {
                 await refreshPassive()
             }
-        }
-        .onChange(of: scenePhase) { newPhase in
-            maybeRequestReview(for: newPhase)
-        }
-    }
-
-    private func maybeRequestReview(for phase: ScenePhase) {
-        guard phase == .active,
-              !showOnboarding,
-              lastReviewRequestDate == 0
-        else { return }
-        postOnboardingLaunchCount += 1
-        if postOnboardingLaunchCount >= 2 {
-            requestReview()
-            lastReviewRequestDate = Date().timeIntervalSince1970
         }
     }
 
@@ -133,26 +107,10 @@ struct HomeView: View {
     @ToolbarContentBuilder
     private var toolbarContent: some ToolbarContent {
         #if os(iOS)
-        ToolbarItem(placement: .topBarLeading) {
-            Button {
-                showingAbout = true
-            } label: {
-                Label("About", systemImage: "info.circle")
-            }
-            .compatibleZoomTransitionSource(id: TransitionID.about, in: transitionNamespace)
-        }
         ToolbarItem(placement: .topBarTrailing) {
             ExportButton(store: store)
         }
         #else
-        ToolbarItem(placement: .navigation) {
-            Button {
-                showingAbout = true
-            } label: {
-                Label("About", systemImage: "info.circle")
-            }
-            .compatibleZoomTransitionSource(id: TransitionID.about, in: transitionNamespace)
-        }
         ToolbarItem(placement: .primaryAction) {
             ExportButton(store: store)
         }
@@ -184,7 +142,6 @@ struct HomeView: View {
 }
 
 private enum TransitionID: Hashable {
-    case about
     case highlights
 }
 
