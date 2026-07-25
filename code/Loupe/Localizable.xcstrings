@@ -2312,6 +2312,7 @@
       }
     },
     "About" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2412,6 +2413,7 @@
       }
     },
     "About Mysk" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3517,6 +3519,107 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "精確度授權"
+          }
+        }
+      }
+    },
+    "Active interface types" : {
+      "comment" : "Signal card name in the Network category — NWInterface types used by the current NWPath.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أنواع الواجهات النشطة"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktive Schnittstellentypen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tipos de interfaz activos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Types d'interfaces actives"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tipi di interfaccia attivi"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用中のインターフェースタイプ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "사용 중인 인터페이스 유형"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktywne typy interfejsów"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tipos de interface ativos"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tipos de interface ativos"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Активные типы интерфейсов"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Etkin arayüz türleri"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Активні типи інтерфейсів"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loại giao diện đang hoạt động"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在使用的接口类型"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在使用的介面類型"
           }
         }
       }
@@ -5541,6 +5644,107 @@
         }
       }
     },
+    "Any app can quietly check where common Objective-C methods are implemented. If an implementation points outside Apple's system libraries, another component may have replaced or redirected it. Some hooks can hide from this check." : {
+      "comment" : "Signal card rationale beneath Objective-C runtime hooks. Explains how method implementation addresses can reveal hooks and the limits of this check.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "يمكن لأي تطبيق التحقق بصمت من مكان تنفيذ أساليب Objective-C الشائعة. إذا أشار تنفيذ إلى خارج مكتبات نظام Apple، فربما استبدله مكوّن آخر أو أعاد توجيهه. يمكن لبعض عمليات الاعتراض الاختباء من هذا الفحص."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Jede App kann unbemerkt prüfen, wo gängige Objective-C-Methoden implementiert sind. Verweist eine Implementierung auf einen Ort außerhalb der Systembibliotheken von Apple, könnte eine andere Komponente sie ersetzt oder umgeleitet haben. Manche Hooks können sich vor dieser Prüfung verbergen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Cualquier app puede comprobar discretamente dónde se implementan métodos habituales de Objective-C. Si una implementación apunta fuera de las bibliotecas del sistema de Apple, es posible que otro componente la haya sustituido o redirigido. Algunos hooks pueden ocultarse de esta comprobación."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "N’importe quelle app peut vérifier discrètement où les méthodes Objective-C courantes sont mises en œuvre. Si une mise en œuvre pointe hors des bibliothèques système d’Apple, un autre composant peut l’avoir remplacée ou redirigée. Certains hooks peuvent échapper à cette vérification."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Qualsiasi app può controllare silenziosamente dove sono implementati i comuni metodi Objective-C. Se un'implementazione punta al di fuori delle librerie di sistema Apple, un altro componente potrebbe averla sostituita o reindirizzata. Alcuni hook possono eludere questo controllo."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "どのアプリも、一般的なObjective-Cメソッドがどこに実装されているかをひそかに確認できます。実装がAppleのシステムライブラリ外を指している場合、別のコンポーネントが置き換えたり転送したりした可能性があります。一部のフックはこの確認から隠れることができます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "어떤 앱이든 일반적인 Objective-C 메서드가 어디에 구현되어 있는지 몰래 확인할 수 있어요. 구현이 Apple 시스템 라이브러리 외부를 가리키면 다른 구성 요소가 이를 교체하거나 리디렉션했을 수 있어요. 일부 Hook은 이 검사에서 숨을 수 있어요."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Każda aplikacja może po cichu sprawdzić, gdzie zaimplementowano popularne metody Objective-C. Jeśli implementacja wskazuje poza biblioteki systemowe Apple, inny składnik mógł ją zastąpić lub przekierować. Niektóre hooki mogą ukryć się przed tą kontrolą."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Qualquer app pode verificar discretamente onde métodos comuns de Objective-C são implementados. Se uma implementação apontar para fora das bibliotecas do sistema da Apple, outro componente pode tê-la substituído ou redirecionado. Alguns hooks podem se ocultar dessa verificação."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Qualquer app pode verificar discretamente onde são implementados métodos comuns de Objective-C. Se uma implementação apontar para fora das bibliotecas de sistema da Apple, outro componente poderá tê-la substituído ou redirecionado. Alguns hooks podem ocultar-se desta verificação."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Любое приложение может незаметно проверить, где реализованы распространённые методы Objective-C. Если реализация указывает за пределы системных библиотек Apple, другой компонент мог заменить или перенаправить её. Некоторые хуки могут скрываться от этой проверки."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Her uygulama yaygın Objective-C metotlarının nerede uygulandığını sessizce kontrol edebilir. Bir uygulama Apple'ın sistem kütüphanelerinin dışını gösteriyorsa başka bir bileşen onu değiştirmiş veya yönlendirmiş olabilir. Bazı hook'lar bu kontrolden gizlenebilir."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Будь-який застосунок може непомітно перевірити, де реалізовано поширені методи Objective-C. Якщо реалізація вказує за межі системних бібліотек Apple, інший компонент міг замінити або переспрямувати її. Деякі хуки можуть приховуватися від цієї перевірки."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Bất kỳ ứng dụng nào cũng có thể âm thầm kiểm tra nơi triển khai các phương thức Objective-C phổ biến. Nếu một phần triển khai trỏ ra ngoài thư viện hệ thống của Apple, một thành phần khác có thể đã thay thế hoặc chuyển hướng phần đó. Một số hook có thể ẩn khỏi phép kiểm tra này."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "任何 App 都可以悄悄检查常见 Objective-C 方法的实现位置。如果实现指向 Apple 系统库之外，其他组件可能替换或重定向了它。某些 Hook 可以避开这项检测。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "任何 App 都可以悄悄檢查常見 Objective-C 方法的實作位置。如果實作指向 Apple 系統程式庫之外，其他元件可能已替換或重新導向它。某些 Hook 可以避開這項檢測。"
+          }
+        }
+      }
+    },
     "Any app can quietly check whether known jailbreak files are visible. A match can reveal that your %@ has been modified." : {
       "comment" : "Signal card rationale beneath Known jailbreak paths. %@ is the device model name (e.g., iPhone, iPad).",
       "localizations" : {
@@ -5842,27 +6046,6 @@
             "value" : "任何 App 都可以悄悄檢查載入自身程序的程式庫。與 Substrate、Frida 和其他 hook 框架相關的名稱可能會暴露注入的程式碼。隱藏的框架可能不會顯示在這裡。"
           }
         }
-      }
-    },
-    "Any app can quietly check where common Objective-C methods are implemented. If an implementation points outside Apple's system libraries, another component may have replaced or redirected it. Some hooks can hide from this check." : {
-      "comment" : "Signal card rationale beneath Objective-C runtime hooks. Explains how method implementation addresses can reveal hooks and the limits of this check.",
-      "localizations" : {
-        "ar" : { "stringUnit" : { "state" : "machine_translated", "value" : "يمكن لأي تطبيق التحقق بصمت من مكان تنفيذ أساليب Objective-C الشائعة. إذا أشار تنفيذ إلى خارج مكتبات نظام Apple، فربما استبدله مكوّن آخر أو أعاد توجيهه. يمكن لبعض عمليات الاعتراض الاختباء من هذا الفحص." } },
-        "de" : { "stringUnit" : { "state" : "machine_translated", "value" : "Jede App kann unbemerkt prüfen, wo gängige Objective-C-Methoden implementiert sind. Verweist eine Implementierung auf einen Ort außerhalb der Systembibliotheken von Apple, könnte eine andere Komponente sie ersetzt oder umgeleitet haben. Manche Hooks können sich vor dieser Prüfung verbergen." } },
-        "es" : { "stringUnit" : { "state" : "machine_translated", "value" : "Cualquier app puede comprobar discretamente dónde se implementan métodos habituales de Objective-C. Si una implementación apunta fuera de las bibliotecas del sistema de Apple, es posible que otro componente la haya sustituido o redirigido. Algunos hooks pueden ocultarse de esta comprobación." } },
-        "fr" : { "stringUnit" : { "state" : "machine_translated", "value" : "N’importe quelle app peut vérifier discrètement où les méthodes Objective-C courantes sont mises en œuvre. Si une mise en œuvre pointe hors des bibliothèques système d’Apple, un autre composant peut l’avoir remplacée ou redirigée. Certains hooks peuvent échapper à cette vérification." } },
-        "it" : { "stringUnit" : { "state" : "machine_translated", "value" : "Qualsiasi app può controllare silenziosamente dove sono implementati i comuni metodi Objective-C. Se un'implementazione punta al di fuori delle librerie di sistema Apple, un altro componente potrebbe averla sostituita o reindirizzata. Alcuni hook possono eludere questo controllo." } },
-        "ja" : { "stringUnit" : { "state" : "machine_translated", "value" : "どのアプリも、一般的なObjective-Cメソッドがどこに実装されているかをひそかに確認できます。実装がAppleのシステムライブラリ外を指している場合、別のコンポーネントが置き換えたり転送したりした可能性があります。一部のフックはこの確認から隠れることができます。" } },
-        "ko" : { "stringUnit" : { "state" : "machine_translated", "value" : "어떤 앱이든 일반적인 Objective-C 메서드가 어디에 구현되어 있는지 몰래 확인할 수 있어요. 구현이 Apple 시스템 라이브러리 외부를 가리키면 다른 구성 요소가 이를 교체하거나 리디렉션했을 수 있어요. 일부 Hook은 이 검사에서 숨을 수 있어요." } },
-        "pl" : { "stringUnit" : { "state" : "machine_translated", "value" : "Każda aplikacja może po cichu sprawdzić, gdzie zaimplementowano popularne metody Objective-C. Jeśli implementacja wskazuje poza biblioteki systemowe Apple, inny składnik mógł ją zastąpić lub przekierować. Niektóre hooki mogą ukryć się przed tą kontrolą." } },
-        "pt-BR" : { "stringUnit" : { "state" : "machine_translated", "value" : "Qualquer app pode verificar discretamente onde métodos comuns de Objective-C são implementados. Se uma implementação apontar para fora das bibliotecas do sistema da Apple, outro componente pode tê-la substituído ou redirecionado. Alguns hooks podem se ocultar dessa verificação." } },
-        "pt-PT" : { "stringUnit" : { "state" : "machine_translated", "value" : "Qualquer app pode verificar discretamente onde são implementados métodos comuns de Objective-C. Se uma implementação apontar para fora das bibliotecas de sistema da Apple, outro componente poderá tê-la substituído ou redirecionado. Alguns hooks podem ocultar-se desta verificação." } },
-        "ru" : { "stringUnit" : { "state" : "machine_translated", "value" : "Любое приложение может незаметно проверить, где реализованы распространённые методы Objective-C. Если реализация указывает за пределы системных библиотек Apple, другой компонент мог заменить или перенаправить её. Некоторые хуки могут скрываться от этой проверки." } },
-        "tr" : { "stringUnit" : { "state" : "machine_translated", "value" : "Her uygulama yaygın Objective-C metotlarının nerede uygulandığını sessizce kontrol edebilir. Bir uygulama Apple'ın sistem kütüphanelerinin dışını gösteriyorsa başka bir bileşen onu değiştirmiş veya yönlendirmiş olabilir. Bazı hook'lar bu kontrolden gizlenebilir." } },
-        "uk" : { "stringUnit" : { "state" : "machine_translated", "value" : "Будь-який застосунок може непомітно перевірити, де реалізовано поширені методи Objective-C. Якщо реалізація вказує за межі системних бібліотек Apple, інший компонент міг замінити або переспрямувати її. Деякі хуки можуть приховуватися від цієї перевірки." } },
-        "vi" : { "stringUnit" : { "state" : "machine_translated", "value" : "Bất kỳ ứng dụng nào cũng có thể âm thầm kiểm tra nơi triển khai các phương thức Objective-C phổ biến. Nếu một phần triển khai trỏ ra ngoài thư viện hệ thống của Apple, một thành phần khác có thể đã thay thế hoặc chuyển hướng phần đó. Một số hook có thể ẩn khỏi phép kiểm tra này." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "machine_translated", "value" : "任何 App 都可以悄悄检查常见 Objective-C 方法的实现位置。如果实现指向 Apple 系统库之外，其他组件可能替换或重定向了它。某些 Hook 可以避开这项检测。" } },
-        "zh-Hant" : { "stringUnit" : { "state" : "machine_translated", "value" : "任何 App 都可以悄悄檢查常見 Objective-C 方法的實作位置。如果實作指向 Apple 系統程式庫之外，其他元件可能已替換或重新導向它。某些 Hook 可以避開這項檢測。" } }
       }
     },
     "Any app on your %@ can quietly read these values without asking. Each one seems harmless on its own, but together they can be enough to single your %@ out." : {
@@ -8092,107 +8275,6 @@
         }
       }
     },
-    "Active interface types" : {
-      "comment" : "Signal card name in the Network category — NWInterface types used by the current NWPath.",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "أنواع الواجهات النشطة"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aktive Schnittstellentypen"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tipos de interfaz activos"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Types d'interfaces actives"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tipi di interfaccia attivi"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "使用中のインターフェースタイプ"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "사용 중인 인터페이스 유형"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aktywne typy interfejsów"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tipos de interface ativos"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tipos de interface ativos"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Активные типы интерфейсов"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Etkin arayüz türleri"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Активні типи інтерфейсів"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Loại giao diện đang hoạt động"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "正在使用的接口类型"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "正在使用的介面類型"
-          }
-        }
-      }
-    },
     "Available interfaces" : {
       "comment" : "Signal card name in the Network category — list of available NWInterface types.",
       "localizations" : {
@@ -9304,6 +9386,7 @@
       }
     },
     "Blog" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -15965,107 +16048,6 @@
         }
       }
     },
-    "Current time" : {
-      "comment" : "Signal card name in the Locale & Region category — the current local time.",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "الوقت الحالي"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aktuelle Uhrzeit"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hora actual"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Heure actuelle"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ora attuale"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "現在時刻"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "현재 시간"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bieżący czas"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hora atual"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hora atual"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Текущее время"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Geçerli saat"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Поточний час"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Giờ hiện tại"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "当前时间"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "目前時間"
-          }
-        }
-      }
-    },
     "Current outputs" : {
       "comment" : "Signal card name in the Audio category — currently routed audio output ports.",
       "localizations" : {
@@ -16668,6 +16650,107 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "目前的溫度狀態。可能反映工作負載或充電情形。"
+          }
+        }
+      }
+    },
+    "Current time" : {
+      "comment" : "Signal card name in the Locale & Region category — the current local time.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الوقت الحالي"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktuelle Uhrzeit"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hora actual"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heure actuelle"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ora attuale"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "現在時刻"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "현재 시간"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bieżący czas"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hora atual"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hora atual"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Текущее время"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geçerli saat"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поточний час"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giờ hiện tại"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当前时间"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "目前時間"
           }
         }
       }
@@ -29704,107 +29787,6 @@
         }
       }
     },
-    "isConstrained" : {
-      "comment" : "Signal card name in the Network category — NWPath.isConstrained (Low Data Mode).",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "isConstrained"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "isConstrained"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "isConstrained"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "isConstrained"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "isConstrained"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "isConstrained"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "isConstrained"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "isConstrained"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "isConstrained"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "isConstrained"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "isConstrained"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "isConstrained"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "isConstrained"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "isConstrained"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "isConstrained"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "isConstrained"
-          }
-        }
-      }
-    },
     "isCaptured" : {
       "comment" : "Signal card name in the Display category — UIScreen.isCaptured screen-capture state.",
       "localizations" : {
@@ -29902,6 +29884,107 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "isCaptured"
+          }
+        }
+      }
+    },
+    "isConstrained" : {
+      "comment" : "Signal card name in the Network category — NWPath.isConstrained (Low Data Mode).",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "isConstrained"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "isConstrained"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "isConstrained"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "isConstrained"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "isConstrained"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "isConstrained"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "isConstrained"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "isConstrained"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "isConstrained"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "isConstrained"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "isConstrained"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "isConstrained"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "isConstrained"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "isConstrained"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "isConstrained"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "isConstrained"
           }
         }
       }
@@ -32131,6 +32214,7 @@
       }
     },
     "Links" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -35368,6 +35452,7 @@
       }
     },
     "Made by Mysk" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -35771,6 +35856,7 @@
       }
     },
     "Mastodon" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -39203,107 +39289,6 @@
         }
       }
     },
-    "Network interfaces marked as up by the system." : {
-      "comment" : "Signal card rationale beneath the Up interfaces value.",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "واجهات الشبكة التي يحددها النظام على أنها مفعلة."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Netzwerkschnittstellen, die vom System als aktiv markiert sind."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Interfaces de red que el sistema marca como activas."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Interfaces réseau marquées comme actives par le système."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Interfacce di rete contrassegnate come attive dal sistema."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "システムによって稼働中とマークされたネットワークインターフェース。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "시스템에서 활성 상태로 표시한 네트워크 인터페이스예요."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Interfejsy sieciowe oznaczone przez system jako aktywne."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Interfaces de rede marcadas como ativas pelo sistema."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Interfaces de rede marcadas como ativas pelo sistema."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Сетевые интерфейсы, отмеченные системой как включённые."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sistem tarafından açık olarak işaretlenen ağ arayüzleri."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Мережеві інтерфейси, які система позначила як увімкнені."
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Các giao diện mạng được hệ thống đánh dấu là đang bật."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "系统标记为已启用的网络接口。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "系統標記為已啟用的網路介面。"
-          }
-        }
-      }
-    },
     "Network interface types present (e.g., cellular, Wi-Fi, wired)." : {
       "comment" : "Signal card rationale beneath the Available interfaces value.",
       "localizations" : {
@@ -39502,6 +39487,107 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "目前連線正在使用的網路介面類型。"
+          }
+        }
+      }
+    },
+    "Network interfaces marked as up by the system." : {
+      "comment" : "Signal card rationale beneath the Up interfaces value.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "واجهات الشبكة التي يحددها النظام على أنها مفعلة."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Netzwerkschnittstellen, die vom System als aktiv markiert sind."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interfaces de red que el sistema marca como activas."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interfaces réseau marquées comme actives par le système."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interfacce di rete contrassegnate come attive dal sistema."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "システムによって稼働中とマークされたネットワークインターフェース。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "시스템에서 활성 상태로 표시한 네트워크 인터페이스예요."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interfejsy sieciowe oznaczone przez system jako aktywne."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interfaces de rede marcadas como ativas pelo sistema."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interfaces de rede marcadas como ativas pelo sistema."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сетевые интерфейсы, отмеченные системой как включённые."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sistem tarafından açık olarak işaretlenen ağ arayüzleri."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мережеві інтерфейси, які система позначила як увімкнені."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Các giao diện mạng được hệ thống đánh dấu là đang bật."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统标记为已启用的网络接口。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系統標記為已啟用的網路介面。"
           }
         }
       }
@@ -42234,6 +42320,107 @@
         }
       }
     },
+    "Objective-C runtime hooks" : {
+      "comment" : "Signal card name in the Security Detection category — Objective-C methods whose implementations point outside Apple's system libraries.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "اعتراضات وقت تشغيل Objective-C"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Objective-C-Runtime-Hooks"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Hooks del runtime de Objective-C"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Hooks du runtime Objective-C"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Hook del runtime Objective-C"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Objective-Cランタイムのフック"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Objective-C 런타임 Hook"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Hooki środowiska wykonawczego Objective-C"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Hooks do runtime de Objective-C"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Hooks do runtime de Objective-C"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Хуки среды выполнения Objective-C"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Objective-C çalışma zamanı hook'ları"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Хуки середовища виконання Objective-C"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Hook runtime Objective-C"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Objective-C 运行时 Hook"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Objective-C 執行階段 Hook"
+          }
+        }
+      }
+    },
     "on/off switch labels" : {
       "comment" : "Accessibility-feature label used inside the reading/vision narrative card on the fingerprint summary sheet — appears in an Oxford-comma list.",
       "localizations" : {
@@ -42739,27 +42926,6 @@
             "value" : "依偏好排序的語言列表。"
           }
         }
-      }
-    },
-    "Objective-C runtime hooks" : {
-      "comment" : "Signal card name in the Security Detection category — Objective-C methods whose implementations point outside Apple's system libraries.",
-      "localizations" : {
-        "ar" : { "stringUnit" : { "state" : "machine_translated", "value" : "اعتراضات وقت تشغيل Objective-C" } },
-        "de" : { "stringUnit" : { "state" : "machine_translated", "value" : "Objective-C-Runtime-Hooks" } },
-        "es" : { "stringUnit" : { "state" : "machine_translated", "value" : "Hooks del runtime de Objective-C" } },
-        "fr" : { "stringUnit" : { "state" : "machine_translated", "value" : "Hooks du runtime Objective-C" } },
-        "it" : { "stringUnit" : { "state" : "machine_translated", "value" : "Hook del runtime Objective-C" } },
-        "ja" : { "stringUnit" : { "state" : "machine_translated", "value" : "Objective-Cランタイムのフック" } },
-        "ko" : { "stringUnit" : { "state" : "machine_translated", "value" : "Objective-C 런타임 Hook" } },
-        "pl" : { "stringUnit" : { "state" : "machine_translated", "value" : "Hooki środowiska wykonawczego Objective-C" } },
-        "pt-BR" : { "stringUnit" : { "state" : "machine_translated", "value" : "Hooks do runtime de Objective-C" } },
-        "pt-PT" : { "stringUnit" : { "state" : "machine_translated", "value" : "Hooks do runtime de Objective-C" } },
-        "ru" : { "stringUnit" : { "state" : "machine_translated", "value" : "Хуки среды выполнения Objective-C" } },
-        "tr" : { "stringUnit" : { "state" : "machine_translated", "value" : "Objective-C çalışma zamanı hook'ları" } },
-        "uk" : { "stringUnit" : { "state" : "machine_translated", "value" : "Хуки середовища виконання Objective-C" } },
-        "vi" : { "stringUnit" : { "state" : "machine_translated", "value" : "Hook runtime Objective-C" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "machine_translated", "value" : "Objective-C 运行时 Hook" } },
-        "zh-Hant" : { "stringUnit" : { "state" : "machine_translated", "value" : "Objective-C 執行階段 Hook" } }
       }
     },
     "OS version string" : {
@@ -46927,6 +47093,7 @@
       }
     },
     "Rate Loupe" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -50460,6 +50627,7 @@
       }
     },
     "See Onboarding Again" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -51972,6 +52140,7 @@
       }
     },
     "Source Code" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -58850,6 +59019,107 @@
         }
       }
     },
+    "Up interfaces" : {
+      "comment" : "Signal card name in the Network category — interface names whose IFF_UP flag is set.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الواجهات المفعلة"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktive Schnittstellen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interfaces activas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interfaces actives"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interfacce attive"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "稼働中のインターフェース"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "활성 인터페이스"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktywne interfejsy"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interfaces ativas"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interfaces ativas"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Включённые интерфейсы"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Açık arayüzler"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Увімкнені інтерфейси"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giao diện đang bật"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已启用的接口"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已啟用的介面"
+          }
+        }
+      }
+    },
     "use the %@ calendar instead of %@" : {
       "comment" : "Region-mismatch sub-clause about calendar systems on the fingerprint summary sheet. First %@ is the user's chosen calendar name; second %@ is the baseline calendar for their region. Will be joined with other clauses by Oxford comma.",
       "localizations" : {
@@ -58953,107 +59223,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "使用 %@ 行事曆而不是 %@"
-          }
-        }
-      }
-    },
-    "Up interfaces" : {
-      "comment" : "Signal card name in the Network category — interface names whose IFF_UP flag is set.",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "الواجهات المفعلة"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aktive Schnittstellen"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Interfaces activas"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Interfaces actives"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Interfacce attive"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "稼働中のインターフェース"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "활성 인터페이스"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aktywne interfejsy"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Interfaces ativas"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Interfaces ativas"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Включённые интерфейсы"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Açık arayüzler"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Увімкнені інтерфейси"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Giao diện đang bật"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已启用的接口"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已啟用的介面"
           }
         }
       }
@@ -59867,6 +60036,7 @@
       }
     },
     "Version %@ (Build %@)" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -61791,6 +61961,7 @@
       }
     },
     "Website" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {

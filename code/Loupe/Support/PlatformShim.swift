@@ -461,10 +461,26 @@ enum PlatformScreen {
 
     static func displayInfo() -> DisplayInfo? {
         #if os(iOS)
-        guard
-            let scene = UIApplication.shared.connectedScenes
-                .first(where: { $0.activationState != .unattached }) as? UIWindowScene,
-            let window = scene.windows.first
+        let windowScenes = UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+
+        // `connectedScenes` is an unordered set. Screen mirroring and external
+        // displays can change its contents, so selecting a scene before casting
+        // it to `UIWindowScene` can miss the app's real foreground window.
+        let scene = windowScenes.first {
+            $0.activationState == .foregroundActive && $0.windows.contains(where: \.isKeyWindow)
+        } ?? windowScenes.first {
+            $0.activationState == .foregroundActive && !$0.windows.isEmpty
+        } ?? windowScenes.first {
+            $0.windows.contains(where: \.isKeyWindow)
+        } ?? windowScenes.first {
+            !$0.windows.isEmpty
+        }
+
+        guard let scene else { return nil }
+        guard let window = scene.windows.first(where: \.isKeyWindow)
+            ?? scene.windows.first(where: { !$0.isHidden })
+            ?? scene.windows.first
         else { return nil }
 
         let screen = scene.screen
