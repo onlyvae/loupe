@@ -244,6 +244,10 @@ enum MockData {
 
     private static var securityDetection: [FingerprintSignal] {
         [
+            .make("debuggerAttached", category: .securityDetection,
+                  name: String(localized: "Debugger attached", comment: "Signal card name in the Security Detection category — whether a debugger is currently tracing the app process."),
+                  value: "false",
+                  rationale: String(localized: "This read-only check shows whether the app process is being traced. The system sets `P_TRACED` when a debugger attaches through `ptrace`.", comment: "Signal card rationale beneath Debugger attached. Explains that the read-only check detects the P_TRACED process flag set by ptrace-based debugging.")),
             .make("knownPaths", category: .securityDetection,
                   name: String(localized: "Known jailbreak paths", comment: "Signal card name in the Security Detection category — known jailbreak filesystem paths visible to the app."),
                   value: "0 / \(SecurityDetectionProvider.knownPaths.count)",

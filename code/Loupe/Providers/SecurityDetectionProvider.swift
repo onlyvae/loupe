@@ -16,6 +16,38 @@ import ObjectiveC.runtime
 struct SecurityDetectionProvider: SignalProvider {
     let category: SignalCategory = .securityDetection
 
+    private enum DebuggerState {
+        case attached(Bool)
+        case unavailable(Int32)
+
+        var displayValue: String {
+            switch self {
+            case let .attached(isAttached):
+                return isAttached ? "true" : "false"
+            case let .unavailable(errorNumber):
+                return "errno \(errorNumber)"
+            }
+        }
+
+        var details: [SignalEntry]? {
+            guard case let .unavailable(errorNumber) = self else { return nil }
+            return [SignalEntry(label: "errno", value: String(errorNumber))]
+        }
+    }
+
+    /// A debugger attached through ptrace marks the process with `P_TRACED`.
+    /// Reading that flag detects the current state without changing it.
+    private static func debuggerState() -> DebuggerState {
+        var processInfo = kinfo_proc()
+        var processInfoSize = MemoryLayout<kinfo_proc>.stride
+        var mib = [CTL_KERN, KERN_PROC, KERN_PROC_PID, getpid()]
+
+        errno = 0
+        let result = sysctl(&mib, u_int(mib.count), &processInfo, &processInfoSize, nil, 0)
+        guard result == 0 else { return .unavailable(errno) }
+        return .attached((processInfo.kp_proc.p_flag & P_TRACED) != 0)
+    }
+
     static let knownPaths = [
         "/.bootstrapped_electra",
         "/.cydia_no_stash",
@@ -122,6 +154,7 @@ struct SecurityDetectionProvider: SignalProvider {
     ]
 
     func collect() async -> [FingerprintSignal] {
+        let debuggerState = Self.debuggerState()
         let pathMatches = knownPathMatches()
         let hookMatches = loadedHookFrameworkMatches()
         let fridaMatches = fridaIndicatorMatches()
@@ -129,6 +162,13 @@ struct SecurityDetectionProvider: SignalProvider {
         let runtimeHookMatches = runtimeProbeResults.compactMap(\.suspiciousEntry)
 
         return [
+            .make(
+                "debuggerAttached",
+                category: category,
+                name: String(localized: "Debugger attached", comment: "Signal card name in the Security Detection category — whether a debugger is currently tracing the app process."),
+                value: debuggerState.displayValue,
+                rationale: String(localized: "This read-only check shows whether the app process is being traced. The system sets `P_TRACED` when a debugger attaches through `ptrace`.", comment: "Signal card rationale beneath Debugger attached. Explains that the read-only check detects the P_TRACED process flag set by ptrace-based debugging."),
+                details: debuggerState.details),
             .make(
                 "knownPaths",
                 category: category,

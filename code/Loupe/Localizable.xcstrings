@@ -5643,6 +5643,107 @@
         }
       }
     },
+    "Any app can quietly check for Frida-related files and loaded code, modified entry points, and unusual executable memory. These signs can have other causes, and Frida can hide them, so this check is not proof either way." : {
+      "comment" : "Signal card rationale beneath Frida indicators. Explains the local checks, possible false positives, and that they cannot rule out a hidden Frida installation.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "يمكن لأي تطبيق أن يفحص بصمت بحثًا عن ملفات وتعليمات برمجية محمّلة مرتبطة بـ Frida، ونقاط دخول معدلة، وذاكرة تنفيذية غير معتادة. قد تكون لهذه العلامات أسباب أخرى، ويمكن لـ Frida إخفاؤها، لذلك لا يُعد هذا الفحص دليلاً قاطعًا في الحالتين."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Jede App kann unbemerkt nach Frida-bezogenen Dateien und geladenem Code, veränderten Einsprungpunkten und ungewöhnlichem ausführbarem Speicher suchen. Diese Anzeichen können andere Ursachen haben und Frida kann sie verbergen. Die Prüfung ist daher in keiner Richtung ein Beweis."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Cualquier app puede buscar discretamente archivos y código cargado relacionados con Frida, puntos de entrada modificados y memoria ejecutable inusual. Estos indicios pueden tener otras causas y Frida puede ocultarlos, así que la comprobación no demuestra nada por sí sola."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "N’importe quelle app peut rechercher discrètement des fichiers et du code chargé liés à Frida, des points d’entrée modifiés et de la mémoire exécutable inhabituelle. Ces signes peuvent avoir d’autres causes, et Frida peut les masquer. Cette vérification ne constitue donc une preuve dans aucun sens."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Qualsiasi app può controllare silenziosamente la presenza di file e codice caricato legati a Frida, punti di ingresso modificati e memoria eseguibile insolita. Questi segnali possono avere altre cause e Frida può nasconderli, quindi il controllo non costituisce una prova in nessun caso."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "どのアプリも、Frida関連のファイルや読み込まれたコード、変更されたエントリポイント、不審な実行可能メモリをひそかに調べられます。こうした兆候には別の原因もあり、Fridaが隠すこともできるため、この確認だけではどちらとも断定できません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "어떤 앱이든 Frida 관련 파일과 로드된 코드, 변경된 진입점, 비정상적인 실행 가능 메모리를 몰래 확인할 수 있어요. 이런 흔적은 다른 원인으로 생길 수도 있고 Frida가 숨길 수도 있으므로, 이 확인만으로 어느 쪽도 단정할 수 없어요."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Każda aplikacja może po cichu sprawdzić pliki i załadowany kod związane z Frida, zmienione punkty wejścia oraz nietypową pamięć wykonywalną. Te ślady mogą mieć inne przyczyny, a Frida potrafi je ukryć, więc ten test nie stanowi dowodu w żadną stronę."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Qualquer app pode verificar discretamente arquivos e código carregado relacionados ao Frida, pontos de entrada modificados e memória executável incomum. Esses sinais podem ter outras causas, e o Frida pode ocultá-los, então a verificação não é uma prova em nenhum dos sentidos."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Qualquer app pode verificar discretamente ficheiros e código carregado relacionados com o Frida, pontos de entrada modificados e memória executável invulgar. Estes sinais podem ter outras causas, e o Frida pode ocultá-los, pelo que a verificação não constitui prova em nenhum dos sentidos."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Любое приложение может незаметно проверить файлы и загруженный код, связанные с Frida, изменённые точки входа и необычную исполняемую память. У этих признаков могут быть другие причины, а Frida умеет их скрывать, поэтому такая проверка ничего не доказывает сама по себе."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Her uygulama Frida ile ilgili dosyaları ve yüklenen kodları, değiştirilmiş giriş noktalarını ve olağandışı yürütülebilir belleği sessizce kontrol edebilir. Bu işaretlerin başka nedenleri olabilir ve Frida bunları gizleyebilir. Bu nedenle kontrol iki yönde de kesin kanıt değildir."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Будь-яка програма може непомітно перевірити файли й завантажений код, пов’язані з Frida, змінені точки входу та незвичну виконувану пам’ять. Ці ознаки можуть мати інші причини, а Frida вміє їх приховувати, тому така перевірка сама по собі нічого не доводить."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Bất kỳ ứng dụng nào cũng có thể âm thầm kiểm tra các tệp và mã đã tải liên quan đến Frida, điểm vào đã bị sửa đổi và vùng nhớ thực thi bất thường. Những dấu hiệu này có thể do nguyên nhân khác và Frida có thể ẩn chúng, vì vậy kiểm tra này không phải là bằng chứng theo cả hai hướng."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "任何 App 都可以悄悄检查 Frida 相关文件和已加载的代码、被修改的函数入口，以及异常的可执行内存。这些迹象也可能有其他原因，Frida 还能将其隐藏，因此无论检出与否都不能作为定论。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "任何 App 都可以悄悄檢查 Frida 相關檔案和已載入的程式碼、遭修改的函式入口，以及異常的可執行記憶體。這些跡象也可能有其他原因，Frida 還能將其隱藏，因此無論偵測到與否都不能作為定論。"
+          }
+        }
+      }
+    },
     "Any app can quietly check where common Objective-C methods are implemented. If an implementation falls outside its class's own image, another component may have replaced or redirected it. Some hooks can hide from this check." : {
       "comment" : "Signal card rationale beneath Objective-C IMP redirections. Explains how comparing an implementation address with its class's host image can reveal hooks, and notes the limits of the check.",
       "localizations" : {
@@ -5942,107 +6043,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "任何 App 都可以悄悄檢查你的螢幕是否正在錄製、鏡像輸出或透過 AirPlay 播放。"
-          }
-        }
-      }
-    },
-    "Any app can quietly check for Frida-related files and loaded code, modified entry points, and unusual executable memory. These signs can have other causes, and Frida can hide them, so this check is not proof either way." : {
-      "comment" : "Signal card rationale beneath Frida indicators. Explains the local checks, possible false positives, and that they cannot rule out a hidden Frida installation.",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "machine_translated",
-            "value" : "يمكن لأي تطبيق أن يفحص بصمت بحثًا عن ملفات وتعليمات برمجية محمّلة مرتبطة بـ Frida، ونقاط دخول معدلة، وذاكرة تنفيذية غير معتادة. قد تكون لهذه العلامات أسباب أخرى، ويمكن لـ Frida إخفاؤها، لذلك لا يُعد هذا الفحص دليلاً قاطعًا في الحالتين."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "machine_translated",
-            "value" : "Jede App kann unbemerkt nach Frida-bezogenen Dateien und geladenem Code, veränderten Einsprungpunkten und ungewöhnlichem ausführbarem Speicher suchen. Diese Anzeichen können andere Ursachen haben und Frida kann sie verbergen. Die Prüfung ist daher in keiner Richtung ein Beweis."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "machine_translated",
-            "value" : "Cualquier app puede buscar discretamente archivos y código cargado relacionados con Frida, puntos de entrada modificados y memoria ejecutable inusual. Estos indicios pueden tener otras causas y Frida puede ocultarlos, así que la comprobación no demuestra nada por sí sola."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "machine_translated",
-            "value" : "N’importe quelle app peut rechercher discrètement des fichiers et du code chargé liés à Frida, des points d’entrée modifiés et de la mémoire exécutable inhabituelle. Ces signes peuvent avoir d’autres causes, et Frida peut les masquer. Cette vérification ne constitue donc une preuve dans aucun sens."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "machine_translated",
-            "value" : "Qualsiasi app può controllare silenziosamente la presenza di file e codice caricato legati a Frida, punti di ingresso modificati e memoria eseguibile insolita. Questi segnali possono avere altre cause e Frida può nasconderli, quindi il controllo non costituisce una prova in nessun caso."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "machine_translated",
-            "value" : "どのアプリも、Frida関連のファイルや読み込まれたコード、変更されたエントリポイント、不審な実行可能メモリをひそかに調べられます。こうした兆候には別の原因もあり、Fridaが隠すこともできるため、この確認だけではどちらとも断定できません。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "machine_translated",
-            "value" : "어떤 앱이든 Frida 관련 파일과 로드된 코드, 변경된 진입점, 비정상적인 실행 가능 메모리를 몰래 확인할 수 있어요. 이런 흔적은 다른 원인으로 생길 수도 있고 Frida가 숨길 수도 있으므로, 이 확인만으로 어느 쪽도 단정할 수 없어요."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "machine_translated",
-            "value" : "Każda aplikacja może po cichu sprawdzić pliki i załadowany kod związane z Frida, zmienione punkty wejścia oraz nietypową pamięć wykonywalną. Te ślady mogą mieć inne przyczyny, a Frida potrafi je ukryć, więc ten test nie stanowi dowodu w żadną stronę."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "machine_translated",
-            "value" : "Qualquer app pode verificar discretamente arquivos e código carregado relacionados ao Frida, pontos de entrada modificados e memória executável incomum. Esses sinais podem ter outras causas, e o Frida pode ocultá-los, então a verificação não é uma prova em nenhum dos sentidos."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "machine_translated",
-            "value" : "Qualquer app pode verificar discretamente ficheiros e código carregado relacionados com o Frida, pontos de entrada modificados e memória executável invulgar. Estes sinais podem ter outras causas, e o Frida pode ocultá-los, pelo que a verificação não constitui prova em nenhum dos sentidos."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "machine_translated",
-            "value" : "Любое приложение может незаметно проверить файлы и загруженный код, связанные с Frida, изменённые точки входа и необычную исполняемую память. У этих признаков могут быть другие причины, а Frida умеет их скрывать, поэтому такая проверка ничего не доказывает сама по себе."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "machine_translated",
-            "value" : "Her uygulama Frida ile ilgili dosyaları ve yüklenen kodları, değiştirilmiş giriş noktalarını ve olağandışı yürütülebilir belleği sessizce kontrol edebilir. Bu işaretlerin başka nedenleri olabilir ve Frida bunları gizleyebilir. Bu nedenle kontrol iki yönde de kesin kanıt değildir."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "machine_translated",
-            "value" : "Будь-яка програма може непомітно перевірити файли й завантажений код, пов’язані з Frida, змінені точки входу та незвичну виконувану пам’ять. Ці ознаки можуть мати інші причини, а Frida вміє їх приховувати, тому така перевірка сама по собі нічого не доводить."
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "machine_translated",
-            "value" : "Bất kỳ ứng dụng nào cũng có thể âm thầm kiểm tra các tệp và mã đã tải liên quan đến Frida, điểm vào đã bị sửa đổi và vùng nhớ thực thi bất thường. Những dấu hiệu này có thể do nguyên nhân khác và Frida có thể ẩn chúng, vì vậy kiểm tra này không phải là bằng chứng theo cả hai hướng."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "machine_translated",
-            "value" : "任何 App 都可以悄悄检查 Frida 相关文件和已加载的代码、被修改的函数入口，以及异常的可执行内存。这些迹象也可能有其他原因，Frida 还能将其隐藏，因此无论检出与否都不能作为定论。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "machine_translated",
-            "value" : "任何 App 都可以悄悄檢查 Frida 相關檔案和已載入的程式碼、遭修改的函式入口，以及異常的可執行記憶體。這些跡象也可能有其他原因，Frida 還能將其隱藏，因此無論偵測到與否都不能作為定論。"
           }
         }
       }
@@ -17154,6 +17154,107 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Date.getTimezoneOffset"
+          }
+        }
+      }
+    },
+    "Debugger attached" : {
+      "comment" : "Signal card name in the Security Detection category — whether a debugger is currently tracing the app process.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "مصحح الأخطاء مرفق"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Debugger verbunden"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Depurador conectado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Débogueur connecté"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Debugger collegato"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "デバッガの接続"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "디버거 연결됨"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Podłączony debuger"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Depurador conectado"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Depurador ligado"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Отладчик подключён"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Hata ayıklayıcı bağlı"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Налагоджувач підключено"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Trình gỡ lỗi đã đính kèm"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "调试器已附加"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "偵錯器已附加"
           }
         }
       }
@@ -56692,6 +56793,107 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "這個 App 的建置資訊：版本、組建號，以及編譯時所用的 SDK。"
+          }
+        }
+      }
+    },
+    "This read-only check shows whether the app process is being traced. The system sets `P_TRACED` when a debugger attaches through `ptrace`." : {
+      "comment" : "Signal card rationale beneath Debugger attached. Explains that the read-only check detects the P_TRACED process flag set by ptrace-based debugging.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "يمكن لأي تطبيق التحقق بصمت مما إذا كانت عمليته قيد التتبع. يعيّن النظام `P_TRACED` عندما يُرفق مصحح أخطاء عبر `ptrace`."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Jede App kann unbemerkt prüfen, ob ihr Prozess verfolgt wird. Das System setzt `P_TRACED`, wenn sich ein Debugger über `ptrace` verbindet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Cualquier app puede comprobar discretamente si se está rastreando su proceso. El sistema activa `P_TRACED` cuando un depurador se conecta mediante `ptrace`."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "N’importe quelle app peut vérifier discrètement si son processus est suivi. Le système définit `P_TRACED` lorsqu’un débogueur se connecte via `ptrace`."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Qualsiasi app può controllare silenziosamente se il proprio processo viene tracciato. Il sistema imposta `P_TRACED` quando un debugger si collega tramite `ptrace`."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "どのアプリも、自身のプロセスが追跡されているかをひそかに確認できます。デバッガが`ptrace`経由で接続すると、システムは`P_TRACED`を設定します。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "모든 앱은 자체 프로세스가 추적되고 있는지 몰래 확인할 수 있어요. 디버거가 `ptrace`를 통해 연결되면 시스템이 `P_TRACED`를 설정해요."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Każda aplikacja może po cichu sprawdzić, czy jej proces jest śledzony. System ustawia `P_TRACED`, gdy debuger podłącza się przez `ptrace`."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Qualquer app pode verificar discretamente se o próprio processo está sendo rastreado. O sistema define `P_TRACED` quando um depurador se conecta por `ptrace`."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Qualquer app pode verificar discretamente se o respetivo processo está a ser seguido. O sistema define `P_TRACED` quando um depurador se liga através de `ptrace`."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Любое приложение может незаметно проверить, отслеживается ли его процесс. Система устанавливает `P_TRACED`, когда отладчик подключается через `ptrace`."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Her uygulama, işleminin izlenip izlenmediğini sessizce kontrol edebilir. Bir hata ayıklayıcı `ptrace` üzerinden bağlandığında sistem `P_TRACED` değerini ayarlar."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Будь-яка програма може непомітно перевірити, чи відстежується її процес. Система встановлює `P_TRACED`, коли налагоджувач підключається через `ptrace`."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Bất kỳ ứng dụng nào cũng có thể âm thầm kiểm tra xem tiến trình của mình có đang bị theo dõi hay không. Hệ thống đặt `P_TRACED` khi trình gỡ lỗi đính kèm qua `ptrace`."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "任何 App 都可以静默检查自己的进程是否正被跟踪。当调试器通过 `ptrace` 附加时，系统会设置 `P_TRACED`。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "任何 App 都可以安靜地檢查自己的程序是否正被追蹤。當偵錯器透過 `ptrace` 附加時，系統會設定 `P_TRACED`。"
           }
         }
       }
