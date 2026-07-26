@@ -14,6 +14,7 @@ struct SignalRowView: View {
 
     @State private var copied = false
     @State private var resetCopiedTask: Task<Void, Never>?
+    @State private var showingDetails = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
@@ -38,6 +39,13 @@ struct SignalRowView: View {
             copyValue()
         }
         .contextMenu {
+            if let details = signal.details, !details.isEmpty {
+                Button {
+                    showingDetails = true
+                } label: {
+                    Label("About", systemImage: "info.circle")
+                }
+            }
             Button {
                 copyValue()
             } label: {
@@ -49,6 +57,9 @@ struct SignalRowView: View {
             } label: {
                 Label("Copy as key: value", systemImage: "doc.on.clipboard")
             }
+        }
+        .sheet(isPresented: $showingDetails) {
+            SignalDetailsSheet(signal: signal)
         }
         .onDisappear {
             resetCopiedTask?.cancel()
@@ -216,6 +227,40 @@ struct SignalRowView: View {
             guard !Task.isCancelled else { return }
             withAnimation(.easeOut(duration: 0.2)) { copied = false }
             resetCopiedTask = nil
+        }
+    }
+}
+
+// MARK: - Signal Details
+
+private struct SignalDetailsSheet: View {
+    let signal: FingerprintSignal
+
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        NavigationStack {
+            List(signal.details ?? [], id: \.self) { entry in
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(entry.label)
+                        .font(.subheadline.weight(.semibold))
+                    Text(entry.value)
+                        .font(.system(.caption, design: .monospaced))
+                        .foregroundStyle(.secondary)
+                        .textSelection(.enabled)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .padding(.vertical, 4)
+            }
+            .navigationTitle(signal.name)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Done", systemImage: "checkmark") {
+                        dismiss()
+                    }
+                }
+            }
         }
     }
 }

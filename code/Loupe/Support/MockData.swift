@@ -252,10 +252,19 @@ enum MockData {
                   name: String(localized: "Loaded hook frameworks", comment: "Signal card name in the Security Detection category — hook or instrumentation frameworks loaded into the app process."),
                   value: "0",
                   rationale: String(localized: "Any app can quietly inspect the libraries loaded into its own process. Names linked to Substrate, Frida, and other hook frameworks can reveal injected code. A hidden framework may not appear here.", comment: "Signal card rationale beneath Loaded hook frameworks. Explains both what a match means and the limits of this check.")),
-            .make("objectiveCRuntimeHooks", category: .securityDetection,
-                  name: String(localized: "Objective-C runtime hooks", comment: "Signal card name in the Security Detection category — Objective-C methods whose implementations point outside Apple's system libraries."),
+            .make("fridaIndicators", category: .securityDetection,
+                  name: String(localized: "Frida indicators", comment: "Signal card name in the Security Detection category — evidence that Frida instrumentation may be attached to the app."),
                   value: "0",
-                  rationale: String(localized: "Any app can quietly check where common Objective-C methods are implemented. If an implementation points outside Apple's system libraries, another component may have replaced or redirected it. Some hooks can hide from this check.", comment: "Signal card rationale beneath Objective-C runtime hooks. Explains how method implementation addresses can reveal hooks and the limits of this check.")),
+                  rationale: String(localized: "Any app can quietly check for Frida-related files and loaded code, modified entry points, and unusual executable memory. These signs can have other causes, and Frida can hide them, so this check is not proof either way.", comment: "Signal card rationale beneath Frida indicators. Explains the local checks, possible false positives, and that they cannot rule out a hidden Frida installation.")),
+            .make("objectiveCRuntimeHooks", category: .securityDetection,
+                  name: String(localized: "Objective-C IMP redirections", comment: "Signal card name in the Security Detection category — Objective-C methods whose IMP addresses point outside the executable range of their class's host image."),
+                  value: "0",
+                  rationale: String(localized: "Any app can quietly check where common Objective-C methods are implemented. If an implementation falls outside its class's own image, another component may have replaced or redirected it. Some hooks can hide from this check.", comment: "Signal card rationale beneath Objective-C IMP redirections. Explains how comparing an implementation address with its class's host image can reveal hooks, and notes the limits of the check."),
+                  details: [
+                    SignalEntry(
+                        label: "NSProcessInfo.operatingSystemVersionString",
+                        value: "IMP: 0x18b9540c0\nclass_image: /System/Library/Frameworks/Foundation.framework/Foundation\nin_class_image: true\ndli_fname: /System/Library/Frameworks/Foundation.framework/Foundation\ndli_fbase: 0x18b800000\ndli_sname: -[NSProcessInfo operatingSystemVersionString]\ndli_saddr: 0x18b9540c0")
+                  ]),
         ]
     }
 

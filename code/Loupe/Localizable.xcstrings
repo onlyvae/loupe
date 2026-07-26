@@ -2,7 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "(none)" : {
-      "comment" : "Placeholder value shown for the Frequent locations card when no geotagged photos were found.\nPlaceholder value shown for the Recent locations card when no geotagged photos were found.",
+      "comment" : "Placeholder shown when a technical value is absent.\nPlaceholder value shown for the Frequent locations card when no geotagged photos were found.\nPlaceholder value shown for the Recent locations card when no geotagged photos were found.",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2312,7 +2312,6 @@
       }
     },
     "About" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5644,103 +5643,103 @@
         }
       }
     },
-    "Any app can quietly check where common Objective-C methods are implemented. If an implementation points outside Apple's system libraries, another component may have replaced or redirected it. Some hooks can hide from this check." : {
-      "comment" : "Signal card rationale beneath Objective-C runtime hooks. Explains how method implementation addresses can reveal hooks and the limits of this check.",
+    "Any app can quietly check where common Objective-C methods are implemented. If an implementation falls outside its class's own image, another component may have replaced or redirected it. Some hooks can hide from this check." : {
+      "comment" : "Signal card rationale beneath Objective-C IMP redirections. Explains how comparing an implementation address with its class's host image can reveal hooks, and notes the limits of the check.",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "machine_translated",
-            "value" : "يمكن لأي تطبيق التحقق بصمت من مكان تنفيذ أساليب Objective-C الشائعة. إذا أشار تنفيذ إلى خارج مكتبات نظام Apple، فربما استبدله مكوّن آخر أو أعاد توجيهه. يمكن لبعض عمليات الاعتراض الاختباء من هذا الفحص."
+            "value" : "يمكن لأي تطبيق التحقق بصمت من مكان تنفيذ أساليب Objective-C الشائعة. إذا وقع تنفيذ خارج صورة الفئة الخاصة به، فربما استبدله مكوّن آخر أو أعاد توجيهه. يمكن لبعض عمليات الاعتراض الاختباء من هذا الفحص."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "machine_translated",
-            "value" : "Jede App kann unbemerkt prüfen, wo gängige Objective-C-Methoden implementiert sind. Verweist eine Implementierung auf einen Ort außerhalb der Systembibliotheken von Apple, könnte eine andere Komponente sie ersetzt oder umgeleitet haben. Manche Hooks können sich vor dieser Prüfung verbergen."
+            "value" : "Jede App kann unbemerkt prüfen, wo gängige Objective-C-Methoden implementiert sind. Liegt eine Implementierung außerhalb des eigenen Images ihrer Klasse, könnte eine andere Komponente sie ersetzt oder umgeleitet haben. Manche Hooks können sich vor dieser Prüfung verbergen."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "machine_translated",
-            "value" : "Cualquier app puede comprobar discretamente dónde se implementan métodos habituales de Objective-C. Si una implementación apunta fuera de las bibliotecas del sistema de Apple, es posible que otro componente la haya sustituido o redirigido. Algunos hooks pueden ocultarse de esta comprobación."
+            "value" : "Cualquier app puede comprobar discretamente dónde se implementan métodos habituales de Objective-C. Si una implementación queda fuera de la imagen de su propia clase, es posible que otro componente la haya sustituido o redirigido. Algunos hooks pueden ocultarse de esta comprobación."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "machine_translated",
-            "value" : "N’importe quelle app peut vérifier discrètement où les méthodes Objective-C courantes sont mises en œuvre. Si une mise en œuvre pointe hors des bibliothèques système d’Apple, un autre composant peut l’avoir remplacée ou redirigée. Certains hooks peuvent échapper à cette vérification."
+            "value" : "N’importe quelle app peut vérifier discrètement où les méthodes Objective-C courantes sont mises en œuvre. Si une mise en œuvre se trouve hors de l’image de sa propre classe, un autre composant peut l’avoir remplacée ou redirigée. Certains hooks peuvent échapper à cette vérification."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "machine_translated",
-            "value" : "Qualsiasi app può controllare silenziosamente dove sono implementati i comuni metodi Objective-C. Se un'implementazione punta al di fuori delle librerie di sistema Apple, un altro componente potrebbe averla sostituita o reindirizzata. Alcuni hook possono eludere questo controllo."
+            "value" : "Qualsiasi app può controllare silenziosamente dove sono implementati i comuni metodi Objective-C. Se un'implementazione si trova fuori dall'immagine della propria classe, un altro componente potrebbe averla sostituita o reindirizzata. Alcuni hook possono eludere questo controllo."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "machine_translated",
-            "value" : "どのアプリも、一般的なObjective-Cメソッドがどこに実装されているかをひそかに確認できます。実装がAppleのシステムライブラリ外を指している場合、別のコンポーネントが置き換えたり転送したりした可能性があります。一部のフックはこの確認から隠れることができます。"
+            "value" : "どのアプリも、一般的なObjective-Cメソッドがどこに実装されているかをひそかに確認できます。実装がそのクラス自身のイメージ外にある場合、別のコンポーネントが置き換えたり転送したりした可能性があります。一部のフックはこの確認から隠れることができます。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "machine_translated",
-            "value" : "어떤 앱이든 일반적인 Objective-C 메서드가 어디에 구현되어 있는지 몰래 확인할 수 있어요. 구현이 Apple 시스템 라이브러리 외부를 가리키면 다른 구성 요소가 이를 교체하거나 리디렉션했을 수 있어요. 일부 Hook은 이 검사에서 숨을 수 있어요."
+            "value" : "어떤 앱이든 일반적인 Objective-C 메서드가 어디에 구현되어 있는지 몰래 확인할 수 있어요. 구현이 해당 클래스의 자체 이미지 밖에 있으면 다른 구성 요소가 이를 교체하거나 리디렉션했을 수 있어요. 일부 Hook은 이 검사에서 숨을 수 있어요."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "machine_translated",
-            "value" : "Każda aplikacja może po cichu sprawdzić, gdzie zaimplementowano popularne metody Objective-C. Jeśli implementacja wskazuje poza biblioteki systemowe Apple, inny składnik mógł ją zastąpić lub przekierować. Niektóre hooki mogą ukryć się przed tą kontrolą."
+            "value" : "Każda aplikacja może po cichu sprawdzić, gdzie zaimplementowano popularne metody Objective-C. Jeśli implementacja znajduje się poza obrazem własnej klasy, inny składnik mógł ją zastąpić lub przekierować. Niektóre hooki mogą ukryć się przed tą kontrolą."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "machine_translated",
-            "value" : "Qualquer app pode verificar discretamente onde métodos comuns de Objective-C são implementados. Se uma implementação apontar para fora das bibliotecas do sistema da Apple, outro componente pode tê-la substituído ou redirecionado. Alguns hooks podem se ocultar dessa verificação."
+            "value" : "Qualquer app pode verificar discretamente onde métodos comuns de Objective-C são implementados. Se uma implementação estiver fora da imagem da própria classe, outro componente pode tê-la substituído ou redirecionado. Alguns hooks podem se ocultar dessa verificação."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "machine_translated",
-            "value" : "Qualquer app pode verificar discretamente onde são implementados métodos comuns de Objective-C. Se uma implementação apontar para fora das bibliotecas de sistema da Apple, outro componente poderá tê-la substituído ou redirecionado. Alguns hooks podem ocultar-se desta verificação."
+            "value" : "Qualquer app pode verificar discretamente onde são implementados métodos comuns de Objective-C. Se uma implementação estiver fora da imagem da própria classe, outro componente poderá tê-la substituído ou redirecionado. Alguns hooks podem ocultar-se desta verificação."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "machine_translated",
-            "value" : "Любое приложение может незаметно проверить, где реализованы распространённые методы Objective-C. Если реализация указывает за пределы системных библиотек Apple, другой компонент мог заменить или перенаправить её. Некоторые хуки могут скрываться от этой проверки."
+            "value" : "Любое приложение может незаметно проверить, где реализованы распространённые методы Objective-C. Если реализация находится за пределами образа собственного класса, другой компонент мог заменить или перенаправить её. Некоторые хуки могут скрываться от этой проверки."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "machine_translated",
-            "value" : "Her uygulama yaygın Objective-C metotlarının nerede uygulandığını sessizce kontrol edebilir. Bir uygulama Apple'ın sistem kütüphanelerinin dışını gösteriyorsa başka bir bileşen onu değiştirmiş veya yönlendirmiş olabilir. Bazı hook'lar bu kontrolden gizlenebilir."
+            "value" : "Her uygulama yaygın Objective-C metotlarının nerede uygulandığını sessizce kontrol edebilir. Bir uygulama kendi sınıfının imajı dışında kalıyorsa başka bir bileşen onu değiştirmiş veya yönlendirmiş olabilir. Bazı hook'lar bu kontrolden gizlenebilir."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "machine_translated",
-            "value" : "Будь-який застосунок може непомітно перевірити, де реалізовано поширені методи Objective-C. Якщо реалізація вказує за межі системних бібліотек Apple, інший компонент міг замінити або переспрямувати її. Деякі хуки можуть приховуватися від цієї перевірки."
+            "value" : "Будь-який застосунок може непомітно перевірити, де реалізовано поширені методи Objective-C. Якщо реалізація перебуває за межами образу власного класу, інший компонент міг замінити або переспрямувати її. Деякі хуки можуть приховуватися від цієї перевірки."
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "machine_translated",
-            "value" : "Bất kỳ ứng dụng nào cũng có thể âm thầm kiểm tra nơi triển khai các phương thức Objective-C phổ biến. Nếu một phần triển khai trỏ ra ngoài thư viện hệ thống của Apple, một thành phần khác có thể đã thay thế hoặc chuyển hướng phần đó. Một số hook có thể ẩn khỏi phép kiểm tra này."
+            "value" : "Bất kỳ ứng dụng nào cũng có thể âm thầm kiểm tra nơi triển khai các phương thức Objective-C phổ biến. Nếu một phần triển khai nằm ngoài image của chính lớp đó, một thành phần khác có thể đã thay thế hoặc chuyển hướng phần này. Một số hook có thể ẩn khỏi phép kiểm tra này."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "machine_translated",
-            "value" : "任何 App 都可以悄悄检查常见 Objective-C 方法的实现位置。如果实现指向 Apple 系统库之外，其他组件可能替换或重定向了它。某些 Hook 可以避开这项检测。"
+            "value" : "任何 App 都可以悄悄检查常见 Objective-C 方法的实现位置。如果实现落在所属类的宿主镜像之外，其他组件可能替换或重定向了它。某些 Hook 可以避开这项检测。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "machine_translated",
-            "value" : "任何 App 都可以悄悄檢查常見 Objective-C 方法的實作位置。如果實作指向 Apple 系統程式庫之外，其他元件可能已替換或重新導向它。某些 Hook 可以避開這項檢測。"
+            "value" : "任何 App 都可以悄悄檢查常見 Objective-C 方法的實作位置。如果實作落在所屬類別的宿主映像之外，其他元件可能已替換或重新導向它。某些 Hook 可以避開這項檢測。"
           }
         }
       }
@@ -5943,6 +5942,107 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "任何 App 都可以悄悄檢查你的螢幕是否正在錄製、鏡像輸出或透過 AirPlay 播放。"
+          }
+        }
+      }
+    },
+    "Any app can quietly check for Frida-related files and loaded code, modified entry points, and unusual executable memory. These signs can have other causes, and Frida can hide them, so this check is not proof either way." : {
+      "comment" : "Signal card rationale beneath Frida indicators. Explains the local checks, possible false positives, and that they cannot rule out a hidden Frida installation.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "يمكن لأي تطبيق أن يفحص بصمت بحثًا عن ملفات وتعليمات برمجية محمّلة مرتبطة بـ Frida، ونقاط دخول معدلة، وذاكرة تنفيذية غير معتادة. قد تكون لهذه العلامات أسباب أخرى، ويمكن لـ Frida إخفاؤها، لذلك لا يُعد هذا الفحص دليلاً قاطعًا في الحالتين."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Jede App kann unbemerkt nach Frida-bezogenen Dateien und geladenem Code, veränderten Einsprungpunkten und ungewöhnlichem ausführbarem Speicher suchen. Diese Anzeichen können andere Ursachen haben und Frida kann sie verbergen. Die Prüfung ist daher in keiner Richtung ein Beweis."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Cualquier app puede buscar discretamente archivos y código cargado relacionados con Frida, puntos de entrada modificados y memoria ejecutable inusual. Estos indicios pueden tener otras causas y Frida puede ocultarlos, así que la comprobación no demuestra nada por sí sola."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "N’importe quelle app peut rechercher discrètement des fichiers et du code chargé liés à Frida, des points d’entrée modifiés et de la mémoire exécutable inhabituelle. Ces signes peuvent avoir d’autres causes, et Frida peut les masquer. Cette vérification ne constitue donc une preuve dans aucun sens."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Qualsiasi app può controllare silenziosamente la presenza di file e codice caricato legati a Frida, punti di ingresso modificati e memoria eseguibile insolita. Questi segnali possono avere altre cause e Frida può nasconderli, quindi il controllo non costituisce una prova in nessun caso."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "どのアプリも、Frida関連のファイルや読み込まれたコード、変更されたエントリポイント、不審な実行可能メモリをひそかに調べられます。こうした兆候には別の原因もあり、Fridaが隠すこともできるため、この確認だけではどちらとも断定できません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "어떤 앱이든 Frida 관련 파일과 로드된 코드, 변경된 진입점, 비정상적인 실행 가능 메모리를 몰래 확인할 수 있어요. 이런 흔적은 다른 원인으로 생길 수도 있고 Frida가 숨길 수도 있으므로, 이 확인만으로 어느 쪽도 단정할 수 없어요."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Każda aplikacja może po cichu sprawdzić pliki i załadowany kod związane z Frida, zmienione punkty wejścia oraz nietypową pamięć wykonywalną. Te ślady mogą mieć inne przyczyny, a Frida potrafi je ukryć, więc ten test nie stanowi dowodu w żadną stronę."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Qualquer app pode verificar discretamente arquivos e código carregado relacionados ao Frida, pontos de entrada modificados e memória executável incomum. Esses sinais podem ter outras causas, e o Frida pode ocultá-los, então a verificação não é uma prova em nenhum dos sentidos."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Qualquer app pode verificar discretamente ficheiros e código carregado relacionados com o Frida, pontos de entrada modificados e memória executável invulgar. Estes sinais podem ter outras causas, e o Frida pode ocultá-los, pelo que a verificação não constitui prova em nenhum dos sentidos."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Любое приложение может незаметно проверить файлы и загруженный код, связанные с Frida, изменённые точки входа и необычную исполняемую память. У этих признаков могут быть другие причины, а Frida умеет их скрывать, поэтому такая проверка ничего не доказывает сама по себе."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Her uygulama Frida ile ilgili dosyaları ve yüklenen kodları, değiştirilmiş giriş noktalarını ve olağandışı yürütülebilir belleği sessizce kontrol edebilir. Bu işaretlerin başka nedenleri olabilir ve Frida bunları gizleyebilir. Bu nedenle kontrol iki yönde de kesin kanıt değildir."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Будь-яка програма може непомітно перевірити файли й завантажений код, пов’язані з Frida, змінені точки входу та незвичну виконувану пам’ять. Ці ознаки можуть мати інші причини, а Frida вміє їх приховувати, тому така перевірка сама по собі нічого не доводить."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Bất kỳ ứng dụng nào cũng có thể âm thầm kiểm tra các tệp và mã đã tải liên quan đến Frida, điểm vào đã bị sửa đổi và vùng nhớ thực thi bất thường. Những dấu hiệu này có thể do nguyên nhân khác và Frida có thể ẩn chúng, vì vậy kiểm tra này không phải là bằng chứng theo cả hai hướng."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "任何 App 都可以悄悄检查 Frida 相关文件和已加载的代码、被修改的函数入口，以及异常的可执行内存。这些迹象也可能有其他原因，Frida 还能将其隐藏，因此无论检出与否都不能作为定论。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "任何 App 都可以悄悄檢查 Frida 相關檔案和已載入的程式碼、遭修改的函式入口，以及異常的可執行記憶體。這些跡象也可能有其他原因，Frida 還能將其隱藏，因此無論偵測到與否都不能作為定論。"
           }
         }
       }
@@ -22809,6 +22909,107 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "常去的地點"
+          }
+        }
+      }
+    },
+    "Frida indicators" : {
+      "comment" : "Signal card name in the Security Detection category — evidence that Frida instrumentation may be attached to the app.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "مؤشرات Frida"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Frida-Indikatoren"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Indicios de Frida"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Indicateurs Frida"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Indicatori di Frida"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Fridaの兆候"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Frida 흔적"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Wskaźniki Frida"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Indícios do Frida"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Indícios do Frida"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Признаки Frida"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Frida göstergeleri"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ознаки Frida"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Dấu hiệu Frida"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Frida 指标"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Frida 指標"
           }
         }
       }
@@ -42320,103 +42521,103 @@
         }
       }
     },
-    "Objective-C runtime hooks" : {
-      "comment" : "Signal card name in the Security Detection category — Objective-C methods whose implementations point outside Apple's system libraries.",
+    "Objective-C IMP redirections" : {
+      "comment" : "Signal card name in the Security Detection category — Objective-C methods whose IMP addresses point outside the executable range of their class's host image.",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "machine_translated",
-            "value" : "اعتراضات وقت تشغيل Objective-C"
+            "value" : "إعادة توجيه IMP في Objective-C"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "machine_translated",
-            "value" : "Objective-C-Runtime-Hooks"
+            "value" : "Objective-C-IMP-Umleitungen"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "machine_translated",
-            "value" : "Hooks del runtime de Objective-C"
+            "value" : "Redirecciones de IMP de Objective-C"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "machine_translated",
-            "value" : "Hooks du runtime Objective-C"
+            "value" : "Redirections d’IMP Objective-C"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "machine_translated",
-            "value" : "Hook del runtime Objective-C"
+            "value" : "Reindirizzamenti IMP di Objective-C"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "machine_translated",
-            "value" : "Objective-Cランタイムのフック"
+            "value" : "Objective-CのIMPリダイレクト"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "machine_translated",
-            "value" : "Objective-C 런타임 Hook"
+            "value" : "Objective-C IMP 리디렉션"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "machine_translated",
-            "value" : "Hooki środowiska wykonawczego Objective-C"
+            "value" : "Przekierowania IMP Objective-C"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "machine_translated",
-            "value" : "Hooks do runtime de Objective-C"
+            "value" : "Redirecionamentos de IMP do Objective-C"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "machine_translated",
-            "value" : "Hooks do runtime de Objective-C"
+            "value" : "Redirecionamentos de IMP do Objective-C"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "machine_translated",
-            "value" : "Хуки среды выполнения Objective-C"
+            "value" : "Перенаправления IMP Objective-C"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "machine_translated",
-            "value" : "Objective-C çalışma zamanı hook'ları"
+            "value" : "Objective-C IMP yönlendirmeleri"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "machine_translated",
-            "value" : "Хуки середовища виконання Objective-C"
+            "value" : "Переспрямування IMP Objective-C"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "machine_translated",
-            "value" : "Hook runtime Objective-C"
+            "value" : "Chuyển hướng IMP của Objective-C"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "machine_translated",
-            "value" : "Objective-C 运行时 Hook"
+            "value" : "Objective-C IMP 重定向"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "machine_translated",
-            "value" : "Objective-C 執行階段 Hook"
+            "value" : "Objective-C IMP 重新導向"
           }
         }
       }
@@ -45045,6 +45246,107 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "點對像素比例（也就是標準的 @2x / @3x 值）。"
+          }
+        }
+      }
+    },
+    "Possible Frida hook" : {
+      "comment" : "Assessment shown when an Objective-C IMP points to executable memory that dladdr cannot associate with an image.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "قد يكون اعتراض Frida"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Möglicherweise ein Frida-Hook"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Posible hook de Frida"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Hook Frida possible"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Possibile hook di Frida"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Fridaのフックの可能性"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Frida Hook일 수 있음"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Możliwy hook Frida"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Possível hook do Frida"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Possível hook do Frida"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Возможный хук Frida"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Olası Frida hook'u"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Можливий хук Frida"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Có thể là hook Frida"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "可能是 Frida Hook"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "可能是 Frida Hook"
           }
         }
       }

@@ -42,6 +42,7 @@ struct FingerprintSignal: Identifiable, Hashable, Sendable, Codable {
     let sensitivity: Sensitivity
     var displayHint: DisplayHint
     var entries: [SignalEntry]?
+    var details: [SignalEntry]?
 
     init(
         id: String,
@@ -50,7 +51,8 @@ struct FingerprintSignal: Identifiable, Hashable, Sendable, Codable {
         rationale: String,
         sensitivity: Sensitivity = .passive,
         displayHint: DisplayHint = .plain,
-        entries: [SignalEntry]? = nil
+        entries: [SignalEntry]? = nil,
+        details: [SignalEntry]? = nil
     ) {
         self.id = id
         self.name = name
@@ -59,6 +61,7 @@ struct FingerprintSignal: Identifiable, Hashable, Sendable, Codable {
         self.sensitivity = sensitivity
         self.displayHint = displayHint
         self.entries = entries
+        self.details = details
     }
 }
 
@@ -73,7 +76,8 @@ extension FingerprintSignal {
         value: String,
         rationale: String,
         displayHint: DisplayHint = .plain,
-        entries: [SignalEntry]? = nil
+        entries: [SignalEntry]? = nil,
+        details: [SignalEntry]? = nil
     ) -> FingerprintSignal {
         FingerprintSignal(
             id: "\(category.rawValue).\(key)",
@@ -82,7 +86,8 @@ extension FingerprintSignal {
             rationale: rationale,
             sensitivity: category.sensitivity,
             displayHint: displayHint,
-            entries: entries
+            entries: entries,
+            details: details
         )
     }
 }
