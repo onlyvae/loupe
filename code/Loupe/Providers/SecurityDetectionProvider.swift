@@ -48,6 +48,40 @@ struct SecurityDetectionProvider: SignalProvider {
         return .attached((processInfo.kp_proc.p_flag & P_TRACED) != 0)
     }
 
+    /// Reads the variable directly from the process environment. A present
+    /// value means the dynamic linker was asked to load additional libraries
+    /// when this process launched.
+    private static func insertedLibrariesValue() -> String? {
+        getenv("DYLD_INSERT_LIBRARIES").map { String(cString: $0) }
+    }
+
+    /// dyld may remove DYLD_* variables before app code starts. Libraries
+    /// loaded from outside the app bundle and outside the shared cache provide
+    /// a second, indirect signal that DYLD_INSERT_LIBRARIES was used.
+    private static func insertedLibraryCandidates() -> [String] {
+        let bundlePath = Bundle.main.bundlePath + "/"
+        var candidates = Set<String>()
+
+        // Image zero is the main executable, which is never in the shared
+        // cache and must not be treated as an injected library.
+        for index in 1..<_dyld_image_count() {
+            guard let imageName = _dyld_get_image_name(index) else { continue }
+            let path = String(cString: imageName)
+            guard path.hasSuffix(".dylib"),
+                  URL(fileURLWithPath: path).lastPathComponent != "libobjc-trampolines.dylib",
+                  !path.hasPrefix(bundlePath) else { continue }
+
+            let isInSharedCache = path.withCString {
+                _dyld_shared_cache_contains_path($0)
+            }
+            if !isInSharedCache {
+                candidates.insert(path)
+            }
+        }
+
+        return candidates.sorted()
+    }
+
     static let knownPaths = [
         "/.bootstrapped_electra",
         "/.cydia_no_stash",
@@ -117,6 +151,7 @@ struct SecurityDetectionProvider: SignalProvider {
         "ellekit",
         "cycript",
         "captainhook",
+        "systemhook",
     ]
 
     private static let fridaImageMarkers = [
@@ -155,6 +190,8 @@ struct SecurityDetectionProvider: SignalProvider {
 
     func collect() async -> [FingerprintSignal] {
         let debuggerState = Self.debuggerState()
+        let insertedLibrariesValue = Self.insertedLibrariesValue()
+        let insertedLibraryCandidates = Self.insertedLibraryCandidates()
         let pathMatches = knownPathMatches()
         let hookMatches = loadedHookFrameworkMatches()
         let fridaMatches = fridaIndicatorMatches()
@@ -169,6 +206,15 @@ struct SecurityDetectionProvider: SignalProvider {
                 value: debuggerState.displayValue,
                 rationale: String(localized: "This read-only check shows whether the app process is being traced. The system sets `P_TRACED` when a debugger attaches through `ptrace`.", comment: "Signal card rationale beneath Debugger attached. Explains that the read-only check detects the P_TRACED process flag set by ptrace-based debugging."),
                 details: debuggerState.details),
+            .make(
+                "dyldInsertLibraries",
+                category: category,
+                name: String(localized: "DYLD_INSERT_LIBRARIES", comment: "Signal card name in the Security Detection category. DYLD_INSERT_LIBRARIES is a code identifier and must not be translated."),
+                value: insertedLibrariesValue == nil && insertedLibraryCandidates.isEmpty ? "false" : "true",
+                rationale: String(localized: "Any app can quietly check whether `DYLD_INSERT_LIBRARIES` is set for its process. A value can reveal that extra libraries were injected when the app launched.", comment: "Signal card rationale beneath DYLD_INSERT_LIBRARIES. Explains that the environment variable requests library injection at process launch."),
+                details: insertedLibraryDetails(
+                    environmentValue: insertedLibrariesValue,
+                    candidates: insertedLibraryCandidates)),
             .make(
                 "knownPaths",
                 category: category,
@@ -216,6 +262,19 @@ struct SecurityDetectionProvider: SignalProvider {
             guard seen.insert(normalized).inserted else { return nil }
             return PathMatch(path: normalized, successfulProbes: successfulProbes)
         }
+    }
+
+    private func insertedLibraryDetails(
+        environmentValue: String?,
+        candidates: [String]
+    ) -> [SignalEntry]? {
+        var details = environmentValue.map {
+            [SignalEntry(label: "DYLD_INSERT_LIBRARIES", value: $0)]
+        } ?? []
+        details.append(contentsOf: candidates.map {
+            SignalEntry(label: "loaded image outside shared cache", value: $0)
+        })
+        return details.isEmpty ? nil : details
     }
 
     /// Uses independent POSIX calls so a hook on one filesystem API does not

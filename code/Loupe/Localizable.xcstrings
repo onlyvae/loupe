@@ -5845,6 +5845,107 @@
         }
       }
     },
+    "Any app can quietly check whether `DYLD_INSERT_LIBRARIES` is set for its process. A value can reveal that extra libraries were injected when the app launched." : {
+      "comment" : "Signal card rationale beneath DYLD_INSERT_LIBRARIES. Explains that the environment variable requests library injection at process launch.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "يمكن لأي تطبيق التحقق بصمت مما إذا كان `DYLD_INSERT_LIBRARIES` مضبوطًا لعمليته. يمكن أن تكشف القيمة عن حقن مكتبات إضافية عند تشغيل التطبيق."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Jede App kann unbemerkt prüfen, ob `DYLD_INSERT_LIBRARIES` für ihren Prozess gesetzt ist. Ein Wert kann zeigen, dass beim Start der App zusätzliche Bibliotheken eingeschleust wurden."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Cualquier app puede comprobar discretamente si `DYLD_INSERT_LIBRARIES` está definido para su proceso. Un valor puede revelar que se inyectaron bibliotecas adicionales al iniciar la app."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "N’importe quelle app peut vérifier discrètement si `DYLD_INSERT_LIBRARIES` est défini pour son processus. Une valeur peut révéler que des bibliothèques supplémentaires ont été injectées au lancement de l’app."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Qualsiasi app può controllare silenziosamente se `DYLD_INSERT_LIBRARIES` è impostata per il suo processo. Un valore può rivelare che sono state inserite librerie aggiuntive all’avvio dell’app."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "どのアプリも、そのプロセスに`DYLD_INSERT_LIBRARIES`が設定されているかをひそかに確認できます。値がある場合、アプリの起動時に追加のライブラリが挿入されたことがわかる可能性があります。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "어떤 앱이든 해당 프로세스에 `DYLD_INSERT_LIBRARIES`가 설정되어 있는지 몰래 확인할 수 있어요. 값이 있으면 앱이 실행될 때 추가 라이브러리가 삽입되었다는 사실이 드러날 수 있어요."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Każda aplikacja może po cichu sprawdzić, czy dla jej procesu ustawiono `DYLD_INSERT_LIBRARIES`. Wartość może ujawnić, że podczas uruchamiania aplikacji wstrzyknięto dodatkowe biblioteki."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Qualquer app pode verificar discretamente se `DYLD_INSERT_LIBRARIES` está definida para o próprio processo. Um valor pode revelar que bibliotecas adicionais foram injetadas quando o app foi iniciado."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Qualquer app pode verificar discretamente se `DYLD_INSERT_LIBRARIES` está definida para o seu processo. Um valor pode revelar que foram injetadas bibliotecas adicionais quando a app foi iniciada."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Любое приложение может незаметно проверить, задана ли переменная `DYLD_INSERT_LIBRARIES` для его процесса. Значение может показать, что при запуске приложения были внедрены дополнительные библиотеки."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Her uygulama kendi işlemi için `DYLD_INSERT_LIBRARIES` ayarlanıp ayarlanmadığını sessizce kontrol edebilir. Bir değer, uygulama başlatılırken ek kütüphanelerin enjekte edildiğini gösterebilir."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Будь-яка програма може непомітно перевірити, чи задано `DYLD_INSERT_LIBRARIES` для її процесу. Значення може показати, що під час запуску програми було впроваджено додаткові бібліотеки."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Bất kỳ ứng dụng nào cũng có thể âm thầm kiểm tra xem `DYLD_INSERT_LIBRARIES` có được đặt cho tiến trình của ứng dụng hay không. Một giá trị có thể cho biết các thư viện bổ sung đã được chèn khi ứng dụng khởi chạy."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "任何 App 都可以悄悄检查其进程是否设置了 `DYLD_INSERT_LIBRARIES`。该值可能会暴露 App 启动时注入了额外的库。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "任何 App 都可以悄悄檢查其程序是否設定了 `DYLD_INSERT_LIBRARIES`。這個值可能會暴露 App 啟動時注入了額外的程式庫。"
+          }
+        }
+      }
+    },
     "Any app can quietly check whether known jailbreak files are visible. A match can reveal that your %@ has been modified." : {
       "comment" : "Signal card rationale beneath Known jailbreak paths. %@ is the device model name (e.g., iPhone, iPad).",
       "localizations" : {
@@ -17157,6 +17258,10 @@
           }
         }
       }
+    },
+    "DYLD_INSERT_LIBRARIES" : {
+      "comment" : "Signal card name in the Security Detection category. DYLD_INSERT_LIBRARIES is a code identifier and must not be translated.",
+      "shouldTranslate" : false
     },
     "Debugger attached" : {
       "comment" : "Signal card name in the Security Detection category — whether a debugger is currently tracing the app process.",
