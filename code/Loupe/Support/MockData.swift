@@ -264,14 +264,41 @@ enum MockData {
                   name: String(localized: "Frida indicators", comment: "Signal card name in the Security Detection category — evidence that Frida instrumentation may be attached to the app."),
                   value: "0",
                   rationale: String(localized: "Any app can quietly check for Frida-related files and loaded code, modified entry points, and unusual executable memory. These signs can have other causes, and Frida can hide them, so this check is not proof either way.", comment: "Signal card rationale beneath Frida indicators. Explains the local checks, possible false positives, and that they cannot rule out a hidden Frida installation.")),
+            .make("osVersionConsistency", category: .securityDetection,
+                  name: String(localized: "OS version consistency", comment: "Signal card name in the Security Detection category — whether independent operating-system version readings agree."),
+                  value: "0",
+                  rationale: String(localized: "Any app can quietly read your operating system version in several ways. If those readings disagree, one path may have been replaced or filtered. Each source can still be hooked.", comment: "Signal card rationale beneath OS version consistency. Explains that comparing independent version sources can reveal selective hooks, while all sources remain bypassable."),
+                  details: [
+                    SignalEntry(label: "UIDevice.systemVersion", value: "26.4"),
+                    SignalEntry(label: "NSProcessInfo.operatingSystemVersion", value: "26.4.0"),
+                    SignalEntry(label: "NSProcessInfo.operatingSystemVersionString", value: "Version 26.4 (Build 23E5210)"),
+                    SignalEntry(label: "sysctl kern.osproductversion", value: "26.4"),
+                    SignalEntry(label: "sysctl kern.osversion", value: "23E5210"),
+                    SignalEntry(label: "sysctl kern.osrelease", value: "25.4.0"),
+                    SignalEntry(label: "uname release", value: "25.4.0"),
+                    SignalEntry(label: "SystemVersion.plist Data ProductVersion", value: "26.4"),
+                    SignalEntry(label: "SystemVersion.plist Data ProductBuildVersion", value: "23E5210"),
+                    SignalEntry(label: "SystemVersion.plist POSIX ProductVersion", value: "26.4"),
+                    SignalEntry(label: "SystemVersion.plist POSIX ProductBuildVersion", value: "23E5210"),
+                    SignalEntry(label: "NSProcessInfo.isOperatingSystemAtLeastVersion: 26.4.0", value: "current=true, next_patch=false"),
+                  ]),
             .make("objectiveCRuntimeHooks", category: .securityDetection,
                   name: String(localized: "Objective-C IMP redirections", comment: "Signal card name in the Security Detection category — Objective-C methods whose IMP addresses point outside the executable range of their class's host image."),
                   value: "0",
                   rationale: String(localized: "Any app can quietly check where common Objective-C methods are implemented. If an implementation falls outside its class's own image, another component may have replaced or redirected it. Some hooks can hide from this check.", comment: "Signal card rationale beneath Objective-C IMP redirections. Explains how comparing an implementation address with its class's host image can reveal hooks, and notes the limits of the check."),
                   details: [
                     SignalEntry(
+                        label: "NSProcessInfo.isOperatingSystemAtLeastVersion:",
+                        value: "IMP: 0x18b953f40\nmethod_list_imp: 0x18b953f40\nimp_matches_method_list: true\nclass_image: /System/Library/Frameworks/Foundation.framework/Foundation\nin_class_image: true\ndli_fname: /System/Library/Frameworks/Foundation.framework/Foundation\ndli_fbase: 0x18b800000\ndli_sname: -[NSProcessInfo isOperatingSystemAtLeastVersion:]\ndli_saddr: 0x18b953f40"),
+                    SignalEntry(
+                        label: "NSProcessInfo.operatingSystemVersion",
+                        value: "IMP: 0x18b953ff0\nmethod_list_imp: 0x18b953ff0\nimp_matches_method_list: true\nclass_image: /System/Library/Frameworks/Foundation.framework/Foundation\nin_class_image: true\ndli_fname: /System/Library/Frameworks/Foundation.framework/Foundation\ndli_fbase: 0x18b800000\ndli_sname: -[NSProcessInfo operatingSystemVersion]\ndli_saddr: 0x18b953ff0"),
+                    SignalEntry(
                         label: "NSProcessInfo.operatingSystemVersionString",
-                        value: "IMP: 0x18b9540c0\nclass_image: /System/Library/Frameworks/Foundation.framework/Foundation\nin_class_image: true\ndli_fname: /System/Library/Frameworks/Foundation.framework/Foundation\ndli_fbase: 0x18b800000\ndli_sname: -[NSProcessInfo operatingSystemVersionString]\ndli_saddr: 0x18b9540c0")
+                        value: "IMP: 0x18b9540c0\nmethod_list_imp: 0x18b9540c0\nimp_matches_method_list: true\nclass_image: /System/Library/Frameworks/Foundation.framework/Foundation\nin_class_image: true\ndli_fname: /System/Library/Frameworks/Foundation.framework/Foundation\ndli_fbase: 0x18b800000\ndli_sname: -[NSProcessInfo operatingSystemVersionString]\ndli_saddr: 0x18b9540c0"),
+                    SignalEntry(
+                        label: "UIDevice.systemVersion",
+                        value: "IMP: 0x18f314280\nmethod_list_imp: 0x18f314280\nimp_matches_method_list: true\nclass_image: /System/Library/PrivateFrameworks/UIKitCore.framework/UIKitCore\nin_class_image: true\ndli_fname: /System/Library/PrivateFrameworks/UIKitCore.framework/UIKitCore\ndli_fbase: 0x18e900000\ndli_sname: -[UIDevice systemVersion]\ndli_saddr: 0x18f314280")
                   ]),
         ]
     }

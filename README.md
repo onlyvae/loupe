@@ -25,7 +25,8 @@ Loupe 会读取第三方 App 能通过公开系统 API 获取的真实数据，�
 - **DYLD 注入检测**：直接读取当前进程的 `DYLD_INSERT_LIBRARIES`，并检查 App 包和 dyld 共享缓存之外加载的 `.dylib`。即使 dyld 在 App 代码运行前清除了环境变量，也能通过已加载镜像发现注入候选并显示原始路径。已排除系统库 `libobjc-trampolines.dylib` 造成的已知误报。
 - **Hook 框架检测**：检查当前进程已加载的动态库，识别 Substrate、Frida、Substitute、libhooker、ElleKit、systemhook 等常见标记。
 - **Frida 指标检测**：综合检查 Frida 相关文件与已加载代码、被修改的函数入口，以及异常的可写可执行内存区域。
-- **Objective-C Runtime Hook 检测**：检查部分系统方法的实现地址是否落在 Apple 系统库之外。
+- **Objective-C Runtime Hook 检测**：检查部分系统方法的实现地址是否落在 Apple 系统库之外，并对比 `method_getImplementation` 与 Runtime method list 中直接解析出的 IMP。
+- **系统版本一致性检测**：交叉比较 `UIDevice`、`NSProcessInfo`、`sysctl`、`uname` 和 `SystemVersion.plist` 返回的系统版本与构建版本，并使用 Foundation 与 POSIX 两条独立文件读取路径发现选择性 Hook。
 - **屏幕捕获状态**：实时显示屏幕是否正在录制、镜像或通过 AirPlay 输出。
 - **网络环境信息**：展示活动接口、系统返回的网络接口、处于启用状态的接口，以及 HTTP 代理状态和端点。
 - **时间与时区信息**：补充当前时间和 WebView 暴露的时区标识符。

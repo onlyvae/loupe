@@ -12,6 +12,7 @@ import Foundation
 import Darwin
 import MachO
 import ObjectiveC.runtime
+import UIKit
 
 struct SecurityDetectionProvider: SignalProvider {
     let category: SignalCategory = .securityDetection
@@ -184,8 +185,27 @@ struct SecurityDetectionProvider: SignalProvider {
         let suspiciousEntry: SignalEntry?
     }
 
+    private struct OSVersionReading {
+        let source: String
+        let rawValue: String
+        let version: OperatingSystemVersion
+    }
+
+    private struct OSVersionConsistencyResult {
+        let details: [SignalEntry]
+        let mismatches: [SignalEntry]
+    }
+
+    /// objc4 stores the method representation in the low two bits of a
+    /// `Method` pointer. The remaining bits can include pointer-authentication
+    /// data, while iOS user-space addresses fit in the low 47 bits.
+    private static let objectiveCPointerAddressMask: UInt = 0x0000_7fff_ffff_ffff
+
     private static let runtimeProbes = [
+        RuntimeProbe(type: ProcessInfo.self, selector: NSSelectorFromString("isOperatingSystemAtLeastVersion:")),
+        RuntimeProbe(type: ProcessInfo.self, selector: NSSelectorFromString("operatingSystemVersion")),
         RuntimeProbe(type: ProcessInfo.self, selector: NSSelectorFromString("operatingSystemVersionString")),
+        RuntimeProbe(type: UIDevice.self, selector: NSSelectorFromString("systemVersion")),
     ]
 
     func collect() async -> [FingerprintSignal] {
@@ -195,6 +215,7 @@ struct SecurityDetectionProvider: SignalProvider {
         let pathMatches = knownPathMatches()
         let hookMatches = loadedHookFrameworkMatches()
         let fridaMatches = fridaIndicatorMatches()
+        let osVersionConsistency = operatingSystemVersionConsistency()
         let runtimeProbeResults = objectiveCRuntimeProbeResults()
         let runtimeHookMatches = runtimeProbeResults.compactMap(\.suspiciousEntry)
 
@@ -241,6 +262,15 @@ struct SecurityDetectionProvider: SignalProvider {
                 rationale: String(localized: "Any app can quietly check for Frida-related files and loaded code, modified entry points, and unusual executable memory. These signs can have other causes, and Frida can hide them, so this check is not proof either way.", comment: "Signal card rationale beneath Frida indicators. Explains the local checks, possible false positives, and that they cannot rule out a hidden Frida installation."),
                 displayHint: fridaMatches.isEmpty ? .plain : .keyValue,
                 entries: fridaMatches.isEmpty ? nil : fridaMatches),
+            .make(
+                "osVersionConsistency",
+                category: category,
+                name: String(localized: "OS version consistency", comment: "Signal card name in the Security Detection category — whether independent operating-system version readings agree."),
+                value: String(osVersionConsistency.mismatches.count),
+                rationale: String(localized: "Any app can quietly read your operating system version in several ways. If those readings disagree, one path may have been replaced or filtered. Each source can still be hooked.", comment: "Signal card rationale beneath OS version consistency. Explains that comparing independent version sources can reveal selective hooks, while all sources remain bypassable."),
+                displayHint: osVersionConsistency.mismatches.isEmpty ? .plain : .keyValue,
+                entries: osVersionConsistency.mismatches.isEmpty ? nil : osVersionConsistency.mismatches,
+                details: osVersionConsistency.details),
             .make(
                 "objectiveCRuntimeHooks",
                 category: category,
@@ -439,12 +469,222 @@ struct SecurityDetectionProvider: SignalProvider {
         return nil
     }
 
+    private func operatingSystemVersionConsistency() -> OSVersionConsistencyResult {
+        let processInfo = ProcessInfo.processInfo
+        var readings: [OSVersionReading] = []
+        var details: [SignalEntry] = []
+        var buildReadings: [SignalEntry] = []
+
+        appendVersionReading(
+            source: "UIDevice.systemVersion",
+            rawValue: UIDevice.current.systemVersion,
+            to: &readings,
+            details: &details)
+
+        let processVersion = processInfo.operatingSystemVersion
+        let processVersionValue = formattedVersion(processVersion)
+        readings.append(OSVersionReading(
+            source: "NSProcessInfo.operatingSystemVersion",
+            rawValue: processVersionValue,
+            version: processVersion))
+        details.append(SignalEntry(
+            label: "NSProcessInfo.operatingSystemVersion",
+            value: processVersionValue))
+
+        let processVersionString = processInfo.operatingSystemVersionString
+        appendVersionReading(
+            source: "NSProcessInfo.operatingSystemVersionString",
+            rawValue: processVersionString,
+            to: &readings,
+            details: &details)
+        if let build = buildVersion(in: processVersionString) {
+            buildReadings.append(SignalEntry(
+                label: "NSProcessInfo.operatingSystemVersionString build",
+                value: build))
+        }
+
+        if let productVersion = SysctlHelper.string("kern.osproductversion") {
+            appendVersionReading(
+                source: "sysctl kern.osproductversion",
+                rawValue: productVersion,
+                to: &readings,
+                details: &details)
+        }
+        if let buildVersion = SysctlHelper.string("kern.osversion") {
+            let entry = SignalEntry(label: "sysctl kern.osversion", value: buildVersion)
+            details.append(entry)
+            buildReadings.append(entry)
+        }
+        if let kernelRelease = SysctlHelper.string("kern.osrelease") {
+            details.append(SignalEntry(label: "sysctl kern.osrelease", value: kernelRelease))
+        }
+
+        let uname = SysctlHelper.uname()
+        if let release = uname["release"] {
+            details.append(SignalEntry(label: "uname release", value: release))
+        }
+        if let systemVersion = foundationSystemVersionPropertyList() {
+            if let productVersion = systemVersion["ProductVersion"] as? String {
+                appendVersionReading(
+                    source: "SystemVersion.plist Data ProductVersion",
+                    rawValue: productVersion,
+                    to: &readings,
+                    details: &details)
+            }
+            if let productBuildVersion = systemVersion["ProductBuildVersion"] as? String {
+                let entry = SignalEntry(
+                    label: "SystemVersion.plist Data ProductBuildVersion",
+                    value: productBuildVersion)
+                details.append(entry)
+                buildReadings.append(entry)
+            }
+        }
+        if let systemVersion = posixSystemVersionPropertyList() {
+            if let productVersion = systemVersion["ProductVersion"] as? String {
+                appendVersionReading(
+                    source: "SystemVersion.plist POSIX ProductVersion",
+                    rawValue: productVersion,
+                    to: &readings,
+                    details: &details)
+            }
+            if let productBuildVersion = systemVersion["ProductBuildVersion"] as? String {
+                let entry = SignalEntry(
+                    label: "SystemVersion.plist POSIX ProductBuildVersion",
+                    value: productBuildVersion)
+                details.append(entry)
+                buildReadings.append(entry)
+            }
+        }
+
+        var mismatches: [SignalEntry] = []
+        let versionGroups = Dictionary(grouping: readings) { formattedVersion($0.version) }
+        if versionGroups.count > 1 {
+            mismatches.append(contentsOf: readings.map {
+                SignalEntry(label: $0.source, value: "\($0.rawValue) [\(formattedVersion($0.version))]")
+            })
+        }
+
+        let buildGroups = Dictionary(grouping: buildReadings) { $0.value.lowercased() }
+        if buildGroups.count > 1 {
+            mismatches.append(contentsOf: buildReadings)
+        }
+
+        let distinctVersions = versionGroups.values.compactMap(\.first).map(\.version).sorted {
+            if $0.majorVersion != $1.majorVersion { return $0.majorVersion < $1.majorVersion }
+            if $0.minorVersion != $1.minorVersion { return $0.minorVersion < $1.minorVersion }
+            return $0.patchVersion < $1.patchVersion
+        }
+        for version in distinctVersions {
+            let nextPatch = OperatingSystemVersion(
+                majorVersion: version.majorVersion,
+                minorVersion: version.minorVersion,
+                patchVersion: version.patchVersion + 1)
+            let atLeastVersion = processInfo.isOperatingSystemAtLeast(version)
+            let atLeastNextPatch = processInfo.isOperatingSystemAtLeast(nextPatch)
+            let label = "NSProcessInfo.isOperatingSystemAtLeastVersion: \(formattedVersion(version))"
+            let value = "current=\(atLeastVersion), next_patch=\(atLeastNextPatch)"
+            details.append(SignalEntry(label: label, value: value))
+            if !atLeastVersion || atLeastNextPatch {
+                mismatches.append(SignalEntry(label: label, value: value))
+            }
+        }
+
+        return OSVersionConsistencyResult(
+            details: details,
+            mismatches: Array(Set(mismatches)).sorted {
+                $0.label == $1.label ? $0.value < $1.value : $0.label < $1.label
+            })
+    }
+
+    private func appendVersionReading(
+        source: String,
+        rawValue: String,
+        to readings: inout [OSVersionReading],
+        details: inout [SignalEntry]
+    ) {
+        details.append(SignalEntry(label: source, value: rawValue))
+        guard let version = parsedVersion(rawValue) else { return }
+        readings.append(OSVersionReading(source: source, rawValue: rawValue, version: version))
+    }
+
+    private func parsedVersion(_ value: String) -> OperatingSystemVersion? {
+        for token in value.split(whereSeparator: { !$0.isNumber && $0 != "." }) {
+            let components = token.split(separator: ".", omittingEmptySubsequences: false)
+            guard (2...3).contains(components.count),
+                  let major = Int(components[0]),
+                  let minor = Int(components[1]),
+                  let patch = components.count == 3 ? Int(components[2]) : 0 else { continue }
+            return OperatingSystemVersion(
+                majorVersion: major,
+                minorVersion: minor,
+                patchVersion: patch)
+        }
+        return nil
+    }
+
+    private func formattedVersion(_ version: OperatingSystemVersion) -> String {
+        "\(version.majorVersion).\(version.minorVersion).\(version.patchVersion)"
+    }
+
+    private func buildVersion(in versionString: String) -> String? {
+        guard let buildRange = versionString.range(of: "Build ") else { return nil }
+        let suffix = versionString[buildRange.upperBound...]
+        let build = suffix.prefix { $0 != ")" && !$0.isWhitespace }
+        return build.isEmpty ? nil : String(build)
+    }
+
+    private func foundationSystemVersionPropertyList() -> [String: Any]? {
+        let url = URL(fileURLWithPath: "/System/Library/CoreServices/SystemVersion.plist")
+        guard let data = try? Data(contentsOf: url) else { return nil }
+        return propertyListDictionary(from: data)
+    }
+
+    private func posixSystemVersionPropertyList() -> [String: Any]? {
+        let path = "/System/Library/CoreServices/SystemVersion.plist"
+        let descriptor = path.withCString { Darwin.open($0, O_RDONLY | O_CLOEXEC) }
+        guard descriptor >= 0 else { return nil }
+        defer { Darwin.close(descriptor) }
+
+        var metadata = stat()
+        guard Darwin.fstat(descriptor, &metadata) == 0,
+              metadata.st_size > 0,
+              metadata.st_size <= 1_048_576 else { return nil }
+
+        var data = Data(count: Int(metadata.st_size))
+        let readSucceeded = data.withUnsafeMutableBytes { buffer -> Bool in
+            guard let baseAddress = buffer.baseAddress else { return false }
+            var offset = 0
+            while offset < buffer.count {
+                let count = Darwin.pread(
+                    descriptor,
+                    baseAddress.advanced(by: offset),
+                    buffer.count - offset,
+                    off_t(offset))
+                guard count > 0 else { return false }
+                offset += count
+            }
+            return true
+        }
+        guard readSucceeded else { return nil }
+        return propertyListDictionary(from: data)
+    }
+
+    private func propertyListDictionary(from data: Data) -> [String: Any]? {
+        guard let propertyList = try? PropertyListSerialization.propertyList(from: data, format: nil),
+              let dictionary = propertyList as? [String: Any] else { return nil }
+        return dictionary
+    }
+
     private func objectiveCRuntimeProbeResults() -> [RuntimeProbeResult] {
         Self.runtimeProbes.compactMap { probe -> RuntimeProbeResult? in
             guard let method = class_getInstanceMethod(probe.type, probe.selector) else { return nil }
 
             let implementation = method_getImplementation(method)
             let implementationAddress = unsafeBitCast(implementation, to: UnsafeRawPointer.self)
+            let methodListImplementationAddress = directMethodListImplementationAddress(for: probe)
+            let implementationAddressesMatch = methodListImplementationAddress.map {
+                comparableAddress(implementationAddress) == comparableAddress($0)
+            }
             let className = NSStringFromClass(probe.type)
             let methodName = NSStringFromSelector(probe.selector)
             let label = "\(className).\(methodName)"
@@ -460,7 +700,9 @@ struct SecurityDetectionProvider: SignalProvider {
                 comment: "Assessment shown when an Objective-C IMP points to executable memory that dladdr cannot associate with an image.")
             let suspiciousValue: String?
 
-            if let imagePath = dladdrInfo.imagePath {
+            if implementationAddressesMatch == false, let methodListImplementationAddress {
+                suspiciousValue = "method_getImplementation \(pointerString(implementationAddress)) ≠ method_list \(pointerString(methodListImplementationAddress))"
+            } else if let imagePath = dladdrInfo.imagePath {
                 let actualImageName = URL(fileURLWithPath: imagePath).lastPathComponent
                 if isInClassImage == false, let classImagePath {
                     let expectedImageName = URL(fileURLWithPath: classImagePath).lastPathComponent
@@ -480,6 +722,8 @@ struct SecurityDetectionProvider: SignalProvider {
             let missingValue = String(localized: "(none)", comment: "Placeholder shown when a technical value is absent.")
             let detailValue = [
                 "IMP: \(pointerString(implementationAddress))",
+                "method_list_imp: \(pointerString(methodListImplementationAddress))",
+                "imp_matches_method_list: \(implementationAddressesMatch.map(String.init) ?? missingValue)",
                 "class_image: \(classImagePath ?? missingValue)",
                 "in_class_image: \(isInClassImage.map(String.init) ?? missingValue)",
                 "dli_fname: \(dladdrInfo.imagePath ?? (isAnonymousExecutable ? possibleFridaHook : missingValue))",
@@ -493,6 +737,59 @@ struct SecurityDetectionProvider: SignalProvider {
                 suspiciousEntry: suspiciousValue.map { SignalEntry(label: label, value: $0) })
         }
         .sorted { $0.detail.label < $1.detail.label }
+    }
+
+    /// Reads the IMP field from objc4's method-list storage instead of asking
+    /// `method_getImplementation`. This provides an independent value when the
+    /// runtime API itself has been hooked or a small method has been remapped.
+    private func directMethodListImplementationAddress(
+        for probe: RuntimeProbe
+    ) -> UnsafeRawPointer? {
+        var methodCount: UInt32 = 0
+        guard let methods = class_copyMethodList(probe.type, &methodCount) else { return nil }
+        defer { free(methods) }
+
+        for index in 0..<Int(methodCount) {
+            let method = methods[index]
+            guard method_getName(method) == probe.selector else { continue }
+            return storedImplementationAddress(in: method)
+        }
+        return nil
+    }
+
+    private func storedImplementationAddress(in method: Method) -> UnsafeRawPointer? {
+        let taggedAddress = UInt(bitPattern: method)
+        let methodKind = taggedAddress & 0x3
+        let storageAddress = taggedAddress & Self.objectiveCPointerAddressMask & ~UInt(0x3)
+        guard let storage = UnsafeRawPointer(bitPattern: storageAddress) else { return nil }
+
+        switch methodKind {
+        case 0, 2:
+            // Big and big-signed methods store SEL, types, and IMP pointers.
+            let impField = storage.advanced(by: 2 * MemoryLayout<UnsafeRawPointer>.size)
+            let signedIMP = impField.load(as: UInt.self)
+            return UnsafeRawPointer(bitPattern: signedIMP & Self.objectiveCPointerAddressMask)
+        case 1:
+            // Small methods store name, types, and IMP as Int32 offsets from
+            // the address of their respective fields.
+            let impField = storage.advanced(by: 2 * MemoryLayout<Int32>.size)
+            let relativeOffset = impField.load(as: Int32.self)
+            let fieldAddress = UInt(bitPattern: impField)
+            let result: (partialValue: UInt, overflow: Bool)
+            if relativeOffset >= 0 {
+                result = fieldAddress.addingReportingOverflow(UInt(relativeOffset))
+            } else {
+                result = fieldAddress.subtractingReportingOverflow(UInt(-Int64(relativeOffset)))
+            }
+            guard !result.overflow else { return nil }
+            return UnsafeRawPointer(bitPattern: result.partialValue)
+        default:
+            return nil
+        }
+    }
+
+    private func comparableAddress(_ address: UnsafeRawPointer) -> UInt {
+        UInt(bitPattern: address) & Self.objectiveCPointerAddressMask
     }
 
     private func dynamicLinkerInfo(for address: UnsafeRawPointer) -> (

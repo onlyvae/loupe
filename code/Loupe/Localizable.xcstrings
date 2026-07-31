@@ -6249,6 +6249,107 @@
         }
       }
     },
+    "Any app can quietly read your operating system version in several ways. If those readings disagree, one path may have been replaced or filtered. Each source can still be hooked." : {
+      "comment" : "Signal card rationale beneath OS version consistency. Explains that comparing independent version sources can reveal selective hooks, while all sources remain bypassable.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "يمكن لأي تطبيق قراءة إصدار نظام التشغيل لديك بصمت بطرق متعددة. إذا اختلفت هذه القراءات، فقد يكون أحد المسارات قد استُبدل أو تمت تصفيته. ومع ذلك، لا يزال من الممكن اعتراض كل مصدر."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Jede App kann deine Betriebssystemversion auf mehrere Arten unbemerkt lesen. Wenn diese Werte voneinander abweichen, wurde möglicherweise ein Pfad ersetzt oder gefiltert. Jede Quelle kann dennoch gehookt werden."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Cualquier app puede leer discretamente la versión de tu sistema operativo de varias formas. Si las lecturas no coinciden, es posible que una ruta se haya sustituido o filtrado. Aun así, cada fuente puede estar sometida a hooking."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "N’importe quelle app peut lire discrètement la version de votre système de plusieurs façons. Si les valeurs diffèrent, un chemin a peut-être été remplacé ou filtré. Chaque source peut toutefois être interceptée."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Qualsiasi app può leggere silenziosamente la versione del tuo sistema operativo in diversi modi. Se le letture non coincidono, un percorso potrebbe essere stato sostituito o filtrato. Ogni fonte può comunque essere sottoposta a hook."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "どのアプリも、複数の方法でOSのバージョンをひそかに読み取れます。読み取り結果が一致しない場合、いずれかの経路が置き換えられたか、フィルタされた可能性があります。どの取得元もフックされる可能性は残ります。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "어떤 앱이든 여러 방법으로 OS 버전을 몰래 읽을 수 있어요. 읽은 값이 서로 다르면 한 경로가 교체되었거나 필터링되었을 수 있어요. 각 출처도 여전히 후킹될 수 있어요."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Każda aplikacja może po cichu odczytać wersję systemu operacyjnego na kilka sposobów. Jeśli odczyty się różnią, jedna ze ścieżek mogła zostać zastąpiona lub przefiltrowana. Każde źródło nadal może być hookowane."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Qualquer app pode ler discretamente a versão do sistema operacional de várias formas. Se as leituras divergirem, um caminho pode ter sido substituído ou filtrado. Cada fonte ainda pode sofrer hooking."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Qualquer app pode ler discretamente a versão do sistema operativo de várias formas. Se as leituras divergirem, um caminho pode ter sido substituído ou filtrado. Cada fonte ainda pode sofrer hooking."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Любое приложение может незаметно узнать версию операционной системы несколькими способами. Если показания различаются, один из путей мог быть заменён или отфильтрован. Каждый источник всё равно можно перехватить."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Her uygulama işletim sistemi sürümünüzü çeşitli yollarla sessizce okuyabilir. Okumalar uyuşmuyorsa yollardan biri değiştirilmiş veya filtrelenmiş olabilir. Her kaynak yine de hook'lanabilir."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Будь-який застосунок може непомітно прочитати версію операційної системи кількома способами. Якщо показники різняться, один зі шляхів могли замінити або відфільтрувати. Кожне джерело все одно можна перехопити."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Bất kỳ ứng dụng nào cũng có thể âm thầm đọc phiên bản hệ điều hành của bạn theo nhiều cách. Nếu các kết quả không khớp, một đường đọc có thể đã bị thay thế hoặc lọc. Mỗi nguồn vẫn có thể bị hook."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "任何 App 都可以通过多种方式悄悄读取你的操作系统版本。如果这些读数不一致，其中一条路径可能已被替换或过滤。每个来源仍有可能被 Hook。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "任何 App 都可以透過多種方式悄悄讀取你的作業系統版本。如果這些讀數不一致，其中一條路徑可能已被替換或過濾。每個來源仍有可能被 Hook。"
+          }
+        }
+      }
+    },
     "Any app on your %@ can quietly read these values without asking. Each one seems harmless on its own, but together they can be enough to single your %@ out." : {
       "localizations" : {
         "ar" : {
@@ -43331,6 +43432,107 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "依偏好排序的語言列表。"
+          }
+        }
+      }
+    },
+    "OS version consistency" : {
+      "comment" : "Signal card name in the Security Detection category — whether independent operating-system version readings agree.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "اتساق إصدار نظام التشغيل"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Konsistenz der Betriebssystemversion"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Coherencia de la versión del sistema operativo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Cohérence de la version du système"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Coerenza della versione del sistema operativo"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "OSバージョンの整合性"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "OS 버전 일치 여부"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Spójność wersji systemu"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Consistência da versão do sistema"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Consistência da versão do sistema operativo"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Согласованность версии ОС"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "İşletim sistemi sürümü tutarlılığı"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Узгодженість версії ОС"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Tính nhất quán của phiên bản hệ điều hành"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "系统版本一致性"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "作業系統版本一致性"
           }
         }
       }
