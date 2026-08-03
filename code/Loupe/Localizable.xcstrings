@@ -6249,6 +6249,108 @@
         }
       }
     },
+    "Any app can quietly read CrashReporter messages in its own loaded code. The dynamic linker records accepted `DYLD_*` settings here, even if they are later removed from the process environment." : {
+      "comment" : "Signal card rationale beneath CrashReporter annotations. Explains that dyld leaves accepted DYLD environment settings in in-process crash-report annotations.",
+      "extractionState" : "stale",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يمكن لأي تطبيق قراءة رسائل CrashReporter بصمت في التعليمات البرمجية المحمّلة الخاصة به. يسجل الرابط الديناميكي إعدادات `DYLD_*` المقبولة هنا، حتى إذا أزيلت لاحقًا من بيئة العملية."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jede App kann CrashReporter-Meldungen im eigenen geladenen Code unbemerkt lesen. Der dynamische Linker zeichnet hier akzeptierte `DYLD_*`-Einstellungen auf, selbst wenn sie später aus der Prozessumgebung entfernt werden."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cualquier app puede leer discretamente los mensajes de CrashReporter en su propio código cargado. El enlazador dinámico registra aquí los ajustes `DYLD_*` aceptados, aunque luego se eliminen del entorno del proceso."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "N’importe quelle app peut lire discrètement les messages CrashReporter dans son propre code chargé. L’éditeur de liens dynamique y enregistre les réglages `DYLD_*` acceptés, même s’ils sont ensuite retirés de l’environnement du processus."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qualsiasi app può leggere silenziosamente i messaggi di CrashReporter nel proprio codice caricato. Il linker dinamico registra qui le impostazioni `DYLD_*` accettate, anche se in seguito vengono rimosse dall’ambiente del processo."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "どのアプリも、自身に読み込まれたコード内のCrashReporterメッセージをひそかに読み取れます。ダイナミックリンカは、受け入れた`DYLD_*`設定を、後でプロセス環境から削除する場合でもここに記録します。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "어떤 앱이든 자체 로드된 코드에서 CrashReporter 메시지를 몰래 읽을 수 있어요. 동적 링커는 허용된 `DYLD_*` 설정이 나중에 프로세스 환경에서 제거되더라도 여기에 기록해요."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Każda aplikacja może po cichu odczytać komunikaty CrashReporter we własnym załadowanym kodzie. Konsolidator dynamiczny zapisuje tutaj zaakceptowane ustawienia `DYLD_*`, nawet jeśli później zostaną usunięte ze środowiska procesu."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qualquer app pode ler discretamente as mensagens do CrashReporter no próprio código carregado. O vinculador dinâmico registra aqui os ajustes `DYLD_*` aceitos, mesmo que eles sejam removidos depois do ambiente do processo."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qualquer app pode ler discretamente as mensagens do CrashReporter no seu próprio código carregado. O linker dinâmico regista aqui as definições `DYLD_*` aceites, mesmo que sejam posteriormente removidas do ambiente do processo."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Любое приложение может незаметно прочитать сообщения CrashReporter в загруженном в него коде. Динамический компоновщик записывает здесь принятые настройки `DYLD_*`, даже если позже они удаляются из окружения процесса."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Her uygulama kendi yüklenmiş kodundaki CrashReporter iletilerini sessizce okuyabilir. Dinamik bağlayıcı, daha sonra işlem ortamından kaldırılsalar bile kabul edilen `DYLD_*` ayarlarını buraya kaydeder."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Будь-який застосунок може непомітно прочитати повідомлення CrashReporter у завантаженому в нього коді. Динамічний компонувальник записує тут прийняті параметри `DYLD_*`, навіть якщо згодом їх видалено з середовища процесу."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bất kỳ ứng dụng nào cũng có thể âm thầm đọc thông báo CrashReporter trong mã đã tải của chính mình. Trình liên kết động ghi lại các cài đặt `DYLD_*` được chấp nhận tại đây, ngay cả khi chúng bị xóa khỏi môi trường tiến trình sau đó."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "任何 App 都可以悄悄读取自身已加载代码中的 CrashReporter 信息。动态链接器会在此记录已接受的 `DYLD_*` 设置，即使这些设置稍后从进程环境中移除。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "任何 App 都可以悄悄讀取自身已載入程式碼中的 CrashReporter 資訊。動態連結器會在此記錄已接受的 `DYLD_*` 設定，即使這些設定稍後從程序環境中移除。"
+          }
+        }
+      }
+    },
     "Any app can quietly read your operating system version in several ways. If those readings disagree, one path may have been replaced or filtered. Each source can still be hooked." : {
       "comment" : "Signal card rationale beneath OS version consistency. Explains that comparing independent version sources can reveal selective hooks, while all sources remain bypassable.",
       "localizations" : {
@@ -12414,6 +12516,108 @@
         }
       }
     },
+    "Cancel" : {
+      "comment" : "Cancel button in the deliberate test-crash confirmation alert.",
+      "extractionState" : "stale",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إلغاء"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abbrechen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancelar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annuler"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annulla"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "キャンセル"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "취소"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anuluj"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancelar"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancelar"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отмена"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vazgeç"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скасувати"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hủy"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消"
+          }
+        }
+      }
+    },
     "Canvas fingerprint" : {
       "comment" : "Signal card name in the WebView Fingerprint category — SHA-256 hash of a rendered 2D canvas.",
       "localizations" : {
@@ -15845,6 +16049,312 @@
         }
       }
     },
+    "Crash Loupe now?" : {
+      "comment" : "Confirmation alert title before deliberately terminating Loupe with the test crash probe.",
+      "extractionState" : "stale",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هل تريد إنهاء Loupe الآن؟"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loupe jetzt abstürzen lassen?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Provocar el cierre de Loupe ahora?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Faire planter Loupe maintenant ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrestare Loupe ora?"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loupeを今すぐクラッシュさせますか？"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "지금 Loupe를 충돌시킬까요?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spowodować teraz awarię Loupe?"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Provocar uma falha no Loupe agora?"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Provocar uma falha no Loupe agora?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вызвать сбой Loupe сейчас?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loupe şimdi çökertilsin mi?"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Спричинити збій Loupe зараз?"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Làm Loupe gặp sự cố ngay bây giờ?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "现在让 Loupe 崩溃吗？"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "現在讓 Loupe 當機嗎？"
+          }
+        }
+      }
+    },
+    "Crash now" : {
+      "comment" : "Destructive confirmation button that deliberately terminates Loupe to test crash capture.",
+      "extractionState" : "stale",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إنهاء الآن"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jetzt abstürzen lassen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cerrar ahora"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Faire planter"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arresta ora"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今すぐクラッシュ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "지금 충돌"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wywołaj awarię"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Provocar falha"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Provocar falha"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вызвать сбой"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şimdi çökert"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Спричинити збій"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gây sự cố ngay"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "立即崩溃"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "立即當機"
+          }
+        }
+      }
+    },
+    "CrashReporter annotations" : {
+      "comment" : "Signal card name in the Security Detection category — messages embedded by loaded Mach-O images for inclusion in a future crash report. CrashReporter is a system component name and must not be translated.",
+      "extractionState" : "stale",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تعليقات CrashReporter"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CrashReporter-Anmerkungen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anotaciones de CrashReporter"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annotations CrashReporter"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annotazioni di CrashReporter"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CrashReporter注釈"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CrashReporter 주석"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adnotacje CrashReporter"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anotações do CrashReporter"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anotações do CrashReporter"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Аннотации CrashReporter"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CrashReporter ek açıklamaları"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Анотації CrashReporter"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chú thích CrashReporter"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CrashReporter 注释"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CrashReporter 註解"
+          }
+        }
+      }
+    },
     "Creation date of the app's Documents folder. Indicates when the app was installed." : {
       "comment" : "Signal card rationale beneath the Install date value.",
       "localizations" : {
@@ -17359,10 +17869,6 @@
           }
         }
       }
-    },
-    "DYLD_INSERT_LIBRARIES" : {
-      "comment" : "Signal card name in the Security Detection category. DYLD_INSERT_LIBRARIES is a code identifier and must not be translated.",
-      "shouldTranslate" : false
     },
     "Debugger attached" : {
       "comment" : "Signal card name in the Security Detection category — whether a debugger is currently tracing the app process.",
@@ -31911,8 +32417,211 @@
         }
       }
     },
+    "Last test crash" : {
+      "comment" : "Signal card name in the Security Detection category — the most recent crash deliberately triggered by Loupe's crash probe.",
+      "extractionState" : "stale",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "آخر تعطل اختباري"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Letzter Testabsturz"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Último cierre de prueba"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dernier plantage de test"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ultimo arresto di prova"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "前回のテストクラッシュ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "마지막 테스트 충돌"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ostatnia awaria testowa"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Última falha de teste"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Última falha de teste"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Последний тестовый сбой"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Son test çökmesi"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Останній тестовий збій"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sự cố thử nghiệm gần nhất"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上次测试崩溃"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上次測試當機"
+          }
+        }
+      }
+    },
     "Latest open time" : {
       "comment" : "Signal card name in the Previous Installs Log category. Most recent time Loupe was launched."
+    },
+    "Launch-time library injection" : {
+      "comment" : "Signal card name in the Security Detection category for evidence that libraries were injected when the app launched.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حقن المكتبات عند التشغيل"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bibliotheksinjektion beim Start"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inyección de bibliotecas al iniciar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Injection de bibliothèques au lancement"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iniezione di librerie all’avvio"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "起動時のライブラリ注入"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "실행 시 라이브러리 삽입"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wstrzykiwanie bibliotek podczas uruchamiania"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Injeção de bibliotecas na inicialização"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Injeção de bibliotecas no arranque"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Внедрение библиотек при запуске"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Başlatma sırasında kitaplık enjeksiyonu"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Впровадження бібліотек під час запуску"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chèn thư viện khi khởi chạy"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启动时动态库注入"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "啟動時動態程式庫注入"
+          }
+        }
+      }
     },
     "left" : {
       "comment" : "Safe-area sub-label in the Display category — left inset.",
@@ -35142,6 +35851,108 @@
         }
       }
     },
+    "Loupe can deliberately trigger a protection-failure crash and save its signal, code, and fault address. Open Loupe again to read the result." : {
+      "comment" : "Signal card rationale beneath Last test crash. Explains the two-launch deliberate crash probe.",
+      "extractionState" : "stale",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يمكن لـ Loupe التسبب عمدًا في تعطل بسبب فشل الحماية وحفظ الإشارة والرمز وعنوان الخطأ. افتح Loupe مرة أخرى لقراءة النتيجة."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loupe kann absichtlich einen Absturz durch einen Schutzfehler auslösen und Signal, Code und Fehleradresse speichern. Öffne Loupe erneut, um das Ergebnis zu lesen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loupe puede provocar deliberadamente un cierre por fallo de protección y guardar la señal, el código y la dirección del fallo. Abre Loupe de nuevo para leer el resultado."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loupe peut provoquer volontairement un plantage dû à un défaut de protection et enregistrer son signal, son code et l’adresse fautive. Ouvrez Loupe à nouveau pour lire le résultat."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loupe può provocare deliberatamente un arresto per errore di protezione e salvare il segnale, il codice e l’indirizzo dell’errore. Riapri Loupe per leggere il risultato."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loupeは保護違反によるクラッシュを意図的に発生させ、シグナル、コード、障害アドレスを保存できます。Loupeをもう一度開くと結果を確認できます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loupe는 보호 실패 충돌을 의도적으로 유발하고 신호, 코드, 오류 주소를 저장할 수 있어요. Loupe를 다시 열어 결과를 확인하세요."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loupe może celowo wywołać awarię z powodu naruszenia ochrony oraz zapisać sygnał, kod i adres błędu. Otwórz Loupe ponownie, aby odczytać wynik."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O Loupe pode provocar deliberadamente uma falha de proteção e salvar o sinal, o código e o endereço da falha. Abra o Loupe novamente para ler o resultado."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O Loupe pode provocar deliberadamente uma falha de proteção e guardar o sinal, o código e o endereço da falha. Abra o Loupe novamente para ler o resultado."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loupe может намеренно вызвать сбой защиты и сохранить сигнал, код и адрес ошибки. Открой Loupe снова, чтобы прочитать результат."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loupe kasıtlı olarak bir koruma hatası çökmesi tetikleyebilir ve sinyali, kodu ve hata adresini kaydedebilir. Sonucu okumak için Loupe’u tekrar aç."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loupe може навмисно спричинити збій захисту та зберегти сигнал, код і адресу помилки. Відкрий Loupe знову, щоб прочитати результат."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loupe có thể chủ động gây ra sự cố do lỗi bảo vệ và lưu tín hiệu, mã cùng địa chỉ lỗi. Hãy mở lại Loupe để đọc kết quả."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loupe 可以主动触发保护失败崩溃，并保存信号、代码和故障地址。再次打开 Loupe 即可读取结果。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loupe 可以主動觸發保護失敗當機，並儲存訊號、代碼和故障位址。再次開啟 Loupe 即可讀取結果。"
+          }
+        }
+      }
+    },
     "Loupe can turn the geotags in your photos into place names using an Apple service. Only the raw coordinates are sent, never your photos. You can change this anytime with the switch on this screen." : {
       "comment" : "Body of the consent dialog shown after granting Photos access, explaining that reverse geocoding sends coordinates to Apple.",
       "localizations" : {
@@ -35854,6 +36665,108 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Loupe 使用 Apple 的服務將你照片中的地理標記轉換為地點名稱。只會傳送座標，絕不會傳送你的照片。"
+          }
+        }
+      }
+    },
+    "Loupe will close immediately. Open it again to read the saved crash details." : {
+      "comment" : "Warning shown before the deliberate crash probe. Explains that the app terminates and the result appears on the next launch.",
+      "extractionState" : "stale",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سيُغلق Loupe فورًا. افتحه مرة أخرى لقراءة تفاصيل التعطل المحفوظة."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loupe wird sofort beendet. Öffne es erneut, um die gespeicherten Absturzdetails zu lesen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loupe se cerrará inmediatamente. Ábrelo de nuevo para leer los detalles guardados."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loupe va se fermer immédiatement. Ouvrez-le à nouveau pour lire les détails enregistrés."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loupe si chiuderà immediatamente. Riaprilo per leggere i dettagli dell’arresto salvati."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loupeはすぐに終了します。もう一度開くと、保存されたクラッシュの詳細を確認できます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loupe가 즉시 종료돼요. 다시 열어 저장된 충돌 세부 정보를 확인하세요."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loupe natychmiast się zamknie. Otwórz go ponownie, aby odczytać zapisane szczegóły awarii."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O Loupe será fechado imediatamente. Abra-o novamente para ler os detalhes da falha salvos."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O Loupe será fechado imediatamente. Abra-o novamente para ler os detalhes da falha guardados."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loupe немедленно закроется. Открой его снова, чтобы прочитать сохранённые сведения о сбое."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loupe hemen kapanır. Kaydedilen çökme ayrıntılarını okumak için tekrar aç."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loupe негайно закриється. Відкрий його знову, щоб прочитати збережені відомості про збій."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loupe sẽ đóng ngay lập tức. Hãy mở lại để đọc chi tiết sự cố đã lưu."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loupe 会立即关闭。再次打开即可读取已保存的崩溃详情。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loupe 會立即關閉。再次開啟即可讀取已儲存的當機詳細資訊。"
           }
         }
       }
@@ -40499,6 +41412,108 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "無預設裝置"
+          }
+        }
+      }
+    },
+    "No test crash recorded" : {
+      "comment" : "Signal value shown before the user has run Loupe's deliberate crash probe.",
+      "extractionState" : "stale",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم يُسجل أي تعطل اختباري"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kein Testabsturz aufgezeichnet"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se ha registrado ningún cierre de prueba"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucun plantage de test enregistré"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nessun arresto di prova registrato"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "テストクラッシュは記録されていません"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "기록된 테스트 충돌 없음"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie zarejestrowano awarii testowej"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nenhuma falha de teste registrada"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nenhuma falha de teste registada"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тестовые сбои не записаны"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Test çökmesi kaydedilmedi"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тестовий збій не записано"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chưa ghi nhận sự cố thử nghiệm"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未记录测试崩溃"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "尚未記錄測試當機"
           }
         }
       }
@@ -59326,6 +60341,108 @@
         }
       }
     },
+    "Trigger test crash" : {
+      "comment" : "Button in the Security Detection category that starts the deliberate two-launch crash probe.",
+      "extractionState" : "stale",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تشغيل تعطل اختباري"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Testabsturz auslösen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Provocar cierre de prueba"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Déclencher un plantage de test"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attiva arresto di prova"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "テストクラッシュを発生"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "테스트 충돌 유발"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wywołaj awarię testową"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Provocar falha de teste"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Provocar falha de teste"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вызвать тестовый сбой"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Test çökmesini tetikle"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Спричинити тестовий збій"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kích hoạt sự cố thử nghiệm"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "触发测试崩溃"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "觸發測試當機"
+          }
+        }
+      }
+    },
     "Try again" : {
       "localizations" : {
         "ar" : {
@@ -59523,6 +60640,107 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "星期二"
+          }
+        }
+      }
+    },
+    "Tweak plug-ins" : {
+      "comment" : "Signal card name in the Security Detection category for Tweak plug-ins currently loaded into the app process.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إضافات Tweak"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tweak-Plug-ins"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plugins de Tweak"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modules Tweak"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plug-in Tweak"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tweakプラグイン"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tweak 플러그인"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wtyczki Tweak"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plugins do Tweak"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plugins do Tweak"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Плагины Tweak"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tweak eklentileri"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Плагіни Tweak"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trình cắm Tweak"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tweak 插件"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tweak 外掛程式"
           }
         }
       }

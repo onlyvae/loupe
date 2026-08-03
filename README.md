@@ -22,16 +22,18 @@ Loupe 会读取第三方 App 能通过公开系统 API 获取的真实数据，�
 
 - **越狱痕迹检测**：使用 `lstat`、`access` 和 `open` 检查常见越狱文件及目录。
 - **调试器检测**：读取当前进程的 `P_TRACED` 状态，显示 App 是否正被 `ptrace` 类调试器跟踪。
-- **DYLD 注入检测**：直接读取当前进程的 `DYLD_INSERT_LIBRARIES`，并检查 App 包和 dyld 共享缓存之外加载的 `.dylib`。即使 dyld 在 App 代码运行前清除了环境变量，也能通过已加载镜像发现注入候选并显示原始路径。已排除系统库 `libobjc-trampolines.dylib` 造成的已知误报。
-- **Hook 框架检测**：检查当前进程已加载的动态库，识别 Substrate、Frida、Substitute、libhooker、ElleKit、systemhook 等常见标记。
-- **Frida 指标检测**：综合检查 Frida 相关文件与已加载代码、被修改的函数入口，以及异常的可写可执行内存区域。
+- **启动时动态库注入检测**：综合读取当前进程环境、dyld 启动信息和已加载 Mach-O 中的 CrashReporter `__crash_info` 注释。即使 `DYLD_INSERT_LIBRARIES` 在 App 代码运行前从环境中被清除，dyld 留下的启动配置仍可能揭示 systemhook 等注入库。
+- **运行时镜像检查**：先读取 dyld 公开镜像，再扫描当前进程的可执行 VM 映射，解析被 dyld 列表隐藏的 Mach-O 地址、UUID 和安装路径。RootHide 的 `@loader_path/.jbroot/...` 安装名会结合 systemhook 哈希还原为本次启动使用的完整 `.jbroot-<hash>` 路径。
+- **Hook 框架检测**：复用同一份运行时镜像快照，识别 Substrate、Frida、Substitute、libhooker、ElleKit、systemhook 等常见标记。通过 VM 映射发现的隐藏镜像也会参与判断。
+- **Tweak 插件检测**：从实际加载的镜像中识别 `TweakInject` 和 MobileSubstrate `DynamicLibraries` 目录下的插件，并显示名称、完整路径、UUID，以及镜像来自 dyld 还是 VM 扫描。此项不会枚举目录或展示未加载的候选文件。
+- **Frida 指标检测**：复用运行时镜像快照，并综合检查 Frida 相关文件、被修改的函数入口，以及异常的可写可执行内存区域。
 - **Objective-C Runtime Hook 检测**：检查部分系统方法的实现地址是否落在 Apple 系统库之外，并对比 `method_getImplementation` 与 Runtime method list 中直接解析出的 IMP。
 - **系统版本一致性检测**：交叉比较 `UIDevice`、`NSProcessInfo`、`sysctl`、`uname` 和 `SystemVersion.plist` 返回的系统版本与构建版本，并使用 Foundation 与 POSIX 两条独立文件读取路径发现选择性 Hook。
 - **屏幕捕获状态**：实时显示屏幕是否正在录制、镜像或通过 AirPlay 输出。
 - **网络环境信息**：展示活动接口、系统返回的网络接口、处于启用状态的接口，以及 HTTP 代理状态和端点。
 - **时间与时区信息**：补充当前时间和 WebView 暴露的时区标识符。
 
-安全环境检测属于只读的启发式检测，不会尝试阻止调试、注入或越狱环境。检测结果不应被视为完整的越狱证明或安全审计结论。iOS 沙盒、系统版本、其他合法软件以及工具的隐藏能力都可能造成漏报或误报。崩溃报告中的 `dyld config` 由系统在进程启动早期记录，普通 App 无法通过公开 API 直接读取，因此 DYLD 检测会结合环境变量与已加载镜像进行判断。
+安全环境检测属于只读的启发式检测，不会尝试阻止调试、注入或越狱环境。检测结果不应被视为完整的越狱证明或安全审计结论。iOS 沙盒、系统版本、其他合法软件以及工具的隐藏能力都可能造成漏报或误报。Loupe 不需要主动触发崩溃，也不会读取系统 CrashReporter 目录。它在 App 运行时直接读取自身进程里的 CrashReporter 注释、dyld 镜像和可执行 VM 映射，再由启动注入、Hook、Tweak 与 Frida 检测复用这些数据。
 
 ## 信号分类
 

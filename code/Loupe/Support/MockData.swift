@@ -249,7 +249,7 @@ enum MockData {
                   value: "false",
                   rationale: String(localized: "This read-only check shows whether the app process is being traced. The system sets `P_TRACED` when a debugger attaches through `ptrace`.", comment: "Signal card rationale beneath Debugger attached. Explains that the read-only check detects the P_TRACED process flag set by ptrace-based debugging.")),
             .make("dyldInsertLibraries", category: .securityDetection,
-                  name: String(localized: "DYLD_INSERT_LIBRARIES", comment: "Signal card name in the Security Detection category. DYLD_INSERT_LIBRARIES is a code identifier and must not be translated."),
+                  name: String(localized: "Launch-time library injection", comment: "Signal card name in the Security Detection category for evidence that libraries were injected when the app launched."),
                   value: "false",
                   rationale: String(localized: "Any app can quietly check whether `DYLD_INSERT_LIBRARIES` is set for its process. A value can reveal that extra libraries were injected when the app launched.", comment: "Signal card rationale beneath DYLD_INSERT_LIBRARIES. Explains that the environment variable requests library injection at process launch.")),
             .make("knownPaths", category: .securityDetection,
@@ -260,6 +260,16 @@ enum MockData {
                   name: String(localized: "Loaded hook frameworks", comment: "Signal card name in the Security Detection category — hook or instrumentation frameworks loaded into the app process."),
                   value: "0",
                   rationale: String(localized: "Any app can quietly inspect the libraries loaded into its own process. Names linked to Substrate, Frida, and other hook frameworks can reveal injected code. A hidden framework may not appear here.", comment: "Signal card rationale beneath Loaded hook frameworks. Explains both what a match means and the limits of this check.")),
+            .make("tweakPlugins", category: .securityDetection,
+                  name: String(localized: "Tweak plug-ins", comment: "Signal card name in the Security Detection category for Tweak plug-ins currently loaded into the app process."),
+                  value: "1",
+                  rationale: String(localized: "Any app can quietly inspect the libraries loaded into its own process. Names linked to Substrate, Frida, and other hook frameworks can reveal injected code. A hidden framework may not appear here.", comment: "Signal card rationale beneath Loaded hook frameworks. Explains both what a match means and the limits of this check."),
+                  displayHint: .list,
+                  entries: [
+                    SignalEntry(
+                        label: "0000CrossOverIPC.dylib",
+                        value: "/private/var/containers/Bundle/Application/.jbroot-508BDCB34ED35D74/usr/lib/TweakInject/0000CrossOverIPC.dylib\nVM mapping · f8719fbaf6973c79b7f0f64ce801c8dd")
+                  ]),
             .make("fridaIndicators", category: .securityDetection,
                   name: String(localized: "Frida indicators", comment: "Signal card name in the Security Detection category — evidence that Frida instrumentation may be attached to the app."),
                   value: "0",

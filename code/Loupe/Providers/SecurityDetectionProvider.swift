@@ -185,6 +185,13 @@ struct SecurityDetectionProvider: SignalProvider {
         let suspiciousEntry: SignalEntry?
     }
 
+    struct CrashReporterAnnotation {
+        let imagePath: String
+        let version: UInt64
+        let field: String
+        let message: String
+    }
+
     private struct OSVersionReading {
         let source: String
         let rawValue: String
@@ -201,6 +208,13 @@ struct SecurityDetectionProvider: SignalProvider {
     /// data, while iOS user-space addresses fit in the low 47 bits.
     private static let objectiveCPointerAddressMask: UInt = 0x0000_7fff_ffff_ffff
 
+    /// CrashReporterClient stores its annotations in a Mach-O section with
+    /// this name. The first five fields of versions 4, 5, and 7 share the
+    /// same layout: version, message, signature, backtrace, and message2.
+    private static let crashInfoSectionName = "__crash_info"
+    private static let supportedCrashInfoVersions: Set<UInt64> = [4, 5, 7]
+    private static let maximumCrashReporterMessageLength = 4_096
+
     private static let runtimeProbes = [
         RuntimeProbe(type: ProcessInfo.self, selector: NSSelectorFromString("isOperatingSystemAtLeastVersion:")),
         RuntimeProbe(type: ProcessInfo.self, selector: NSSelectorFromString("operatingSystemVersion")),
@@ -212,9 +226,16 @@ struct SecurityDetectionProvider: SignalProvider {
         let debuggerState = Self.debuggerState()
         let insertedLibrariesValue = Self.insertedLibrariesValue()
         let insertedLibraryCandidates = Self.insertedLibraryCandidates()
+        let crashReporterAnnotations = Self.crashReporterAnnotations()
+        let runtimeImageReport = RuntimeImageReport.capture(
+            annotationMessages: crashReporterAnnotations.map(\.message))
+        let crashReporterDyldConfiguration = crashReporterAnnotations.filter {
+            $0.message.contains("DYLD_INSERT_LIBRARIES=")
+        }
         let pathMatches = knownPathMatches()
-        let hookMatches = loadedHookFrameworkMatches()
-        let fridaMatches = fridaIndicatorMatches()
+        let hookMatches = loadedHookFrameworkMatches(in: runtimeImageReport.images)
+        let tweakPluginMatches = loadedTweakPluginMatches(in: runtimeImageReport.images)
+        let fridaMatches = fridaIndicatorMatches(in: runtimeImageReport.images)
         let osVersionConsistency = operatingSystemVersionConsistency()
         let runtimeProbeResults = objectiveCRuntimeProbeResults()
         let runtimeHookMatches = runtimeProbeResults.compactMap(\.suspiciousEntry)
@@ -230,12 +251,15 @@ struct SecurityDetectionProvider: SignalProvider {
             .make(
                 "dyldInsertLibraries",
                 category: category,
-                name: String(localized: "DYLD_INSERT_LIBRARIES", comment: "Signal card name in the Security Detection category. DYLD_INSERT_LIBRARIES is a code identifier and must not be translated."),
-                value: insertedLibrariesValue == nil && insertedLibraryCandidates.isEmpty ? "false" : "true",
+                name: String(localized: "Launch-time library injection", comment: "Signal card name in the Security Detection category for evidence that libraries were injected when the app launched."),
+                value: insertedLibrariesValue == nil
+                    && insertedLibraryCandidates.isEmpty
+                    && crashReporterDyldConfiguration.isEmpty ? "false" : "true",
                 rationale: String(localized: "Any app can quietly check whether `DYLD_INSERT_LIBRARIES` is set for its process. A value can reveal that extra libraries were injected when the app launched.", comment: "Signal card rationale beneath DYLD_INSERT_LIBRARIES. Explains that the environment variable requests library injection at process launch."),
                 details: insertedLibraryDetails(
                     environmentValue: insertedLibrariesValue,
-                    candidates: insertedLibraryCandidates)),
+                    candidates: insertedLibraryCandidates,
+                    crashReporterAnnotations: crashReporterDyldConfiguration)),
             .make(
                 "knownPaths",
                 category: category,
@@ -254,6 +278,14 @@ struct SecurityDetectionProvider: SignalProvider {
                 rationale: String(localized: "Any app can quietly inspect the libraries loaded into its own process. Names linked to Substrate, Frida, and other hook frameworks can reveal injected code. A hidden framework may not appear here.", comment: "Signal card rationale beneath Loaded hook frameworks. Explains both what a match means and the limits of this check."),
                 displayHint: hookMatches.isEmpty ? .plain : .list,
                 entries: hookMatches.isEmpty ? nil : hookMatches.map { SignalEntry(label: $0, value: "") }),
+            .make(
+                "tweakPlugins",
+                category: category,
+                name: String(localized: "Tweak plug-ins", comment: "Signal card name in the Security Detection category for Tweak plug-ins currently loaded into the app process."),
+                value: String(tweakPluginMatches.count),
+                rationale: String(localized: "Any app can quietly inspect the libraries loaded into its own process. Names linked to Substrate, Frida, and other hook frameworks can reveal injected code. A hidden framework may not appear here.", comment: "Signal card rationale beneath Loaded hook frameworks. Explains both what a match means and the limits of this check."),
+                displayHint: tweakPluginMatches.isEmpty ? .plain : .list,
+                entries: tweakPluginMatches.isEmpty ? nil : tweakPluginMatches),
             .make(
                 "fridaIndicators",
                 category: category,
@@ -296,7 +328,8 @@ struct SecurityDetectionProvider: SignalProvider {
 
     private func insertedLibraryDetails(
         environmentValue: String?,
-        candidates: [String]
+        candidates: [String],
+        crashReporterAnnotations: [CrashReporterAnnotation]
     ) -> [SignalEntry]? {
         var details = environmentValue.map {
             [SignalEntry(label: "DYLD_INSERT_LIBRARIES", value: $0)]
@@ -304,7 +337,231 @@ struct SecurityDetectionProvider: SignalProvider {
         details.append(contentsOf: candidates.map {
             SignalEntry(label: "loaded image outside shared cache", value: $0)
         })
+        details.append(contentsOf: crashReporterAnnotations.map {
+            SignalEntry(label: "CrashReporter \($0.field)", value: $0.message)
+        })
         return details.isEmpty ? nil : details
+    }
+
+    /// Reads CrashReporterClient annotations directly from the `__crash_info`
+    /// section of every Mach-O image loaded into this process. This is the
+    /// same in-process data that ReportCrash later copies into crash_info_N
+    /// fields. dyld uses message2 to retain accepted DYLD_* launch settings.
+    static func crashReporterAnnotations() -> [CrashReporterAnnotation] {
+        var annotations: [CrashReporterAnnotation] = []
+        var images: [(header: UnsafePointer<mach_header>, path: String, slide: Int)] = []
+
+        for imageIndex in 0..<_dyld_image_count() {
+            guard let header = _dyld_get_image_header(imageIndex),
+                  let imageName = _dyld_get_image_name(imageIndex) else { continue }
+            images.append((
+                header: header,
+                path: String(cString: imageName),
+                slide: _dyld_get_image_vmaddr_slide(imageIndex)))
+        }
+
+        // dyld is the component that records the launch configuration, but
+        // it deliberately does not appear in _dyld_image_count(). Resolve a
+        // public dyld function back to its host image and scan that header too.
+        if let dyldImage = dyldImage(),
+           !images.contains(where: { $0.header == dyldImage.header }) {
+            images.append(dyldImage)
+        }
+
+        for image in images {
+            let header = image.header
+            guard header.pointee.magic == MH_MAGIC_64 else { continue }
+            let imagePath = image.path
+            let slide = image.slide
+            var commandPointer = UnsafeRawPointer(header)
+                .advanced(by: MemoryLayout<mach_header_64>.size)
+            let commandsEnd = commandPointer.advanced(by: Int(header.pointee.sizeofcmds))
+
+            for _ in 0..<header.pointee.ncmds {
+                guard commandPointer.advanced(by: MemoryLayout<load_command>.size) <= commandsEnd else { break }
+                let loadCommand = commandPointer.load(as: load_command.self)
+                guard loadCommand.cmdsize >= MemoryLayout<load_command>.size,
+                      commandPointer.advanced(by: Int(loadCommand.cmdsize)) <= commandsEnd else { break }
+                defer { commandPointer = commandPointer.advanced(by: Int(loadCommand.cmdsize)) }
+                guard loadCommand.cmd == LC_SEGMENT_64,
+                      loadCommand.cmdsize >= MemoryLayout<segment_command_64>.size else { continue }
+
+                let segment = commandPointer.load(as: segment_command_64.self)
+                let sectionsSize = Int(segment.nsects) * MemoryLayout<section_64>.stride
+                guard sectionsSize <= Int(loadCommand.cmdsize) - MemoryLayout<segment_command_64>.size else { continue }
+
+                var sectionPointer = commandPointer.advanced(by: MemoryLayout<segment_command_64>.size)
+                for _ in 0..<segment.nsects {
+                    let section = sectionPointer.load(as: section_64.self)
+                    sectionPointer = sectionPointer.advanced(by: MemoryLayout<section_64>.stride)
+                    guard fixedMachOName(section.sectname) == crashInfoSectionName,
+                          section.size >= 5 * MemoryLayout<UInt64>.size,
+                          let sectionAddress = slidAddress(section.addr, slide: slide),
+                          readableByteCount(from: sectionAddress) >= 5 * MemoryLayout<UInt64>.size else { continue }
+
+                    let version = sectionAddress.load(as: UInt64.self)
+                    guard supportedCrashInfoVersions.contains(version) else { continue }
+                    let messageAddress = sectionAddress.load(fromByteOffset: MemoryLayout<UInt64>.size, as: UInt64.self)
+                    let message2Address = sectionAddress.load(fromByteOffset: 4 * MemoryLayout<UInt64>.size, as: UInt64.self)
+
+                    if let message = crashReporterString(at: messageAddress) {
+                        annotations.append(CrashReporterAnnotation(
+                            imagePath: imagePath,
+                            version: version,
+                            field: "message",
+                            message: message))
+                    }
+                    if let message = crashReporterString(at: message2Address) {
+                        annotations.append(CrashReporterAnnotation(
+                            imagePath: imagePath,
+                            version: version,
+                            field: "message2",
+                            message: message))
+                    }
+                }
+            }
+        }
+
+        return annotations
+    }
+
+    private static func dyldImage() -> (
+        header: UnsafePointer<mach_header>,
+        path: String,
+        slide: Int
+    )? {
+        // `_dyld_image_count` can resolve to the libdyld entry layer on
+        // recent iOS releases. The actual dyld image is deliberately absent
+        // from that list, so ask the kernel for dyld_all_image_infos and use
+        // its dyldImageLoadAddress, the same route used by crash reporters.
+        var taskDyldInfo = task_dyld_info_data_t()
+        var taskDyldInfoCount = mach_msg_type_number_t(
+            MemoryLayout<task_dyld_info_data_t>.size / MemoryLayout<natural_t>.size)
+        let taskInfoResult = withUnsafeMutablePointer(to: &taskDyldInfo) { infoPointer in
+            infoPointer.withMemoryRebound(to: integer_t.self, capacity: Int(taskDyldInfoCount)) {
+                task_info(
+                    mach_task_self_,
+                    task_flavor_t(TASK_DYLD_INFO),
+                    $0,
+                    &taskDyldInfoCount)
+            }
+        }
+        if taskInfoResult == KERN_SUCCESS,
+           let allImageInfos = UnsafePointer<dyld_all_image_infos>(
+               bitPattern: UInt(taskDyldInfo.all_image_info_addr)),
+           let header = allImageInfos.pointee.dyldImageLoadAddress,
+           let slide = imageSlide(for: header) {
+            var info = Dl_info()
+            let path: String
+            if dladdr(UnsafeRawPointer(header), &info) != 0,
+               let imagePath = info.dli_fname {
+                path = String(cString: imagePath)
+            } else {
+                path = "/usr/lib/dyld"
+            }
+            return (header, path, slide)
+        }
+
+        // Compatibility fallback for systems where the public dyld entry
+        // point still resolves directly into the dyld image.
+        guard let functionAddress = dlsym(
+            UnsafeMutableRawPointer(bitPattern: -2),
+            "_dyld_image_count"
+        ) else { return nil }
+        var info = Dl_info()
+        guard dladdr(functionAddress, &info) != 0,
+              let imageBase = info.dli_fbase,
+              let imagePath = info.dli_fname else { return nil }
+        let header = UnsafePointer(imageBase.assumingMemoryBound(to: mach_header.self))
+        guard let slide = imageSlide(for: header) else { return nil }
+        return (header, String(cString: imagePath), slide)
+    }
+
+    private static func imageSlide(for header: UnsafePointer<mach_header>) -> Int? {
+        guard header.pointee.magic == MH_MAGIC_64 else { return nil }
+        var commandPointer = UnsafeRawPointer(header)
+            .advanced(by: MemoryLayout<mach_header_64>.size)
+
+        for _ in 0..<header.pointee.ncmds {
+            let loadCommand = commandPointer.load(as: load_command.self)
+            guard loadCommand.cmdsize >= MemoryLayout<load_command>.size else { return nil }
+            defer { commandPointer = commandPointer.advanced(by: Int(loadCommand.cmdsize)) }
+            guard loadCommand.cmd == LC_SEGMENT_64 else { continue }
+            let segment = commandPointer.load(as: segment_command_64.self)
+            guard fixedMachOName(segment.segname) == "__TEXT",
+                  let preferredAddress = UInt(exactly: segment.vmaddr) else { continue }
+            let runtimeAddress = UInt(bitPattern: header)
+            let difference = runtimeAddress.subtractingReportingOverflow(preferredAddress)
+            guard !difference.overflow, difference.partialValue <= UInt(Int.max) else { return nil }
+            return Int(difference.partialValue)
+        }
+        return nil
+    }
+
+    private static func fixedMachOName<T>(_ value: T) -> String {
+        var value = value
+        return withUnsafeBytes(of: &value) { bytes in
+            let end = bytes.firstIndex(of: 0) ?? bytes.endIndex
+            return String(decoding: bytes[..<end], as: UTF8.self)
+        }
+    }
+
+    private static func slidAddress(_ address: UInt64, slide: Int) -> UnsafeRawPointer? {
+        guard let base = UInt(exactly: address) else { return nil }
+        let result: (partialValue: UInt, overflow: Bool)
+        if slide >= 0 {
+            result = base.addingReportingOverflow(UInt(slide))
+        } else {
+            result = base.subtractingReportingOverflow(UInt(-Int64(slide)))
+        }
+        guard !result.overflow else { return nil }
+        return UnsafeRawPointer(bitPattern: result.partialValue)
+    }
+
+    private static func crashReporterString(at rawAddress: UInt64) -> String? {
+        guard rawAddress != 0,
+              let address = UnsafeRawPointer(bitPattern: UInt(rawAddress) & objectiveCPointerAddressMask) else { return nil }
+        let readableCount = min(readableByteCount(from: address), maximumCrashReporterMessageLength)
+        guard readableCount > 0 else { return nil }
+
+        let bytes = address.assumingMemoryBound(to: UInt8.self)
+        var length = 0
+        while length < readableCount, bytes[length] != 0 {
+            length += 1
+        }
+        guard length > 0 else { return nil }
+        return String(decoding: UnsafeBufferPointer(start: bytes, count: length), as: UTF8.self)
+    }
+
+    private static func readableByteCount(from pointer: UnsafeRawPointer) -> Int {
+        let requestedAddress = vm_address_t(UInt(bitPattern: pointer))
+        var regionAddress = requestedAddress
+        var regionSize: vm_size_t = 0
+        var info = vm_region_basic_info_data_64_t()
+        var infoCount = mach_msg_type_number_t(
+            MemoryLayout<vm_region_basic_info_data_64_t>.size / MemoryLayout<integer_t>.size)
+        var objectName = mach_port_t(MACH_PORT_NULL)
+
+        let result = withUnsafeMutablePointer(to: &info) { infoPointer in
+            infoPointer.withMemoryRebound(to: integer_t.self, capacity: Int(infoCount)) {
+                vm_region_64(
+                    mach_task_self_,
+                    &regionAddress,
+                    &regionSize,
+                    VM_REGION_BASIC_INFO_64,
+                    $0,
+                    &infoCount,
+                    &objectName)
+            }
+        }
+        if objectName != MACH_PORT_NULL {
+            mach_port_deallocate(mach_task_self_, objectName)
+        }
+        guard result == KERN_SUCCESS,
+              (info.protection & VM_PROT_READ) != 0,
+              requestedAddress >= regionAddress,
+              requestedAddress - regionAddress < regionSize else { return 0 }
+        return Int(regionSize - (requestedAddress - regionAddress))
     }
 
     /// Uses independent POSIX calls so a hook on one filesystem API does not
@@ -334,35 +591,52 @@ struct SecurityDetectionProvider: SignalProvider {
         }
     }
 
-    private func loadedHookFrameworkMatches() -> [String] {
+    private func loadedHookFrameworkMatches(
+        in images: [RuntimeImageReport.Image]
+    ) -> [String] {
         var seen = Set<String>()
         var matches: [String] = []
 
-        for index in 0..<_dyld_image_count() {
-            guard let imageName = _dyld_get_image_name(index) else { continue }
-            let path = String(cString: imageName)
-            let lowercasePath = path.lowercased()
+        for image in images {
+            let lowercasePath = image.path.lowercased()
             guard Self.hookFrameworkMarkers.contains(where: lowercasePath.contains),
-                  seen.insert(path).inserted else { continue }
-            matches.append(path)
+                  seen.insert(image.path).inserted else { continue }
+            matches.append(image.path)
         }
 
         return matches.sorted()
     }
 
-    private func fridaIndicatorMatches() -> [SignalEntry] {
+    private func loadedTweakPluginMatches(
+        in images: [RuntimeImageReport.Image]
+    ) -> [SignalEntry] {
+        let directoryMarkers = [
+            "/tweakinject/",
+            "/mobilesubstrate/dynamiclibraries/",
+        ]
+        var seen = Set<String>()
+        return images.compactMap { image in
+            let lowercasePath = image.path.lowercased()
+            guard directoryMarkers.contains(where: lowercasePath.contains),
+                  seen.insert(image.path).inserted else { return nil }
+            let source = image.source == .hiddenVM ? "VM mapping" : "dyld"
+            return SignalEntry(label: image.name, value: "\(image.path)\n\(source) · \(image.uuid)")
+        }.sorted { $0.label.localizedStandardCompare($1.label) == .orderedAscending }
+    }
+
+    private func fridaIndicatorMatches(
+        in images: [RuntimeImageReport.Image]
+    ) -> [SignalEntry] {
         var matches = Set<SignalEntry>()
 
         for path in Self.fridaPaths where !successfulPathProbes(path).isEmpty {
             matches.insert(SignalEntry(label: "path", value: path))
         }
 
-        for index in 0..<_dyld_image_count() {
-            guard let imageName = _dyld_get_image_name(index) else { continue }
-            let path = String(cString: imageName)
-            let lowercasePath = path.lowercased()
+        for image in images {
+            let lowercasePath = image.path.lowercased()
             if Self.fridaImageMarkers.contains(where: lowercasePath.contains) {
-                matches.insert(SignalEntry(label: "image", value: path))
+                matches.insert(SignalEntry(label: "image", value: image.path))
             }
         }
 
