@@ -280,6 +280,8 @@ struct SecurityDetectionProvider: SignalProvider {
         let tweakPluginMatches = loadedTweakPluginMatches(in: runtimeImageReport.images)
             + hiddenRuntimeMetadataMatches()
         let fridaMatches = fridaIndicatorMatches(in: runtimeImageReport.images)
+        let inlineHookMatches = inlineHookIndicatorMatches()
+        let executableMemoryMatches = suspiciousExecutableRegions()
         let osVersionConsistency = operatingSystemVersionConsistency()
         let runtimeProbeResults = objectiveCRuntimeProbeResults()
         let runtimeHookMatches = runtimeProbeResults.compactMap(\.suspiciousEntry)
@@ -335,9 +337,25 @@ struct SecurityDetectionProvider: SignalProvider {
                 category: category,
                 name: String(localized: "Frida indicators", comment: "Signal card name in the Security Detection category — evidence that Frida instrumentation may be attached to the app."),
                 value: String(fridaMatches.count),
-                rationale: String(localized: "Any app can quietly check for Frida-related files and loaded code, modified entry points, and unusual executable memory. These signs can have other causes, and Frida can hide them, so this check is not proof either way.", comment: "Signal card rationale beneath Frida indicators. Explains the local checks, possible false positives, and that they cannot rule out a hidden Frida installation."),
+                rationale: String(localized: "Any app can quietly check for Frida-related files and loaded code. Frida can hide these signs, so finding nothing does not prove it is absent.", comment: "Signal card rationale beneath Frida indicators. Explains the Frida-specific checks and that a hidden Frida installation may evade them."),
                 displayHint: fridaMatches.isEmpty ? .plain : .keyValue,
                 entries: fridaMatches.isEmpty ? nil : fridaMatches),
+            .make(
+                "inlineHookIndicators",
+                category: category,
+                name: String(localized: "Inline hook indicators", comment: "Signal card name in the Security Detection category — function entry points that begin with an unusual branch and may have been inline hooked."),
+                value: String(inlineHookMatches.count),
+                rationale: String(localized: "Any app can quietly inspect the first instructions of functions it uses. An unexpected branch may mean another component changed the function's entry point. This can reveal inline hooks from Frida or other tools, but it is not proof on its own.", comment: "Signal card rationale beneath Inline hook indicators. Explains function-entry inspection, that many tools can create inline hooks, and the possibility of false positives."),
+                displayHint: inlineHookMatches.isEmpty ? .plain : .keyValue,
+                entries: inlineHookMatches.isEmpty ? nil : inlineHookMatches),
+            .make(
+                "unusualExecutableMemory",
+                category: category,
+                name: String(localized: "Unusual executable memory", comment: "Signal card name in the Security Detection category — writable memory regions that are also executable."),
+                value: String(executableMemoryMatches.count),
+                rationale: String(localized: "Any app can quietly inspect its own memory protections. Memory that is writable and executable can be used for injected code, trampolines, or runtime-generated code. It can have legitimate causes, so this is only an indicator.", comment: "Signal card rationale beneath Unusual executable memory. Explains why writable and executable memory can be suspicious and notes legitimate causes."),
+                displayHint: executableMemoryMatches.isEmpty ? .plain : .keyValue,
+                entries: executableMemoryMatches.isEmpty ? nil : executableMemoryMatches),
             .make(
                 "osVersionConsistency",
                 category: category,
@@ -820,6 +838,14 @@ struct SecurityDetectionProvider: SignalProvider {
             }
         }
 
+        return matches.sorted {
+            $0.label == $1.label ? $0.value < $1.value : $0.label < $1.label
+        }
+    }
+
+    private func inlineHookIndicatorMatches() -> [SignalEntry] {
+        var matches = Set<SignalEntry>()
+
         for symbol in Self.hookSensitiveAPISymbols {
             guard let symbolAddress = dlsym(
                 UnsafeMutableRawPointer(bitPattern: -2),
@@ -830,10 +856,6 @@ struct SecurityDetectionProvider: SignalProvider {
             matches.insert(SignalEntry(
                 label: "API entry branch",
                 value: "\(symbol): \(pattern)"))
-        }
-
-        for region in suspiciousExecutableRegions() {
-            matches.insert(region)
         }
 
         for probe in Self.runtimeProbes {
