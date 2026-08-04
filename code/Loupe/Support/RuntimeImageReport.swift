@@ -24,14 +24,24 @@ private func loupeMachVMRegion(
     _ objectName: UnsafeMutablePointer<mach_port_t>
 ) -> kern_return_t
 
-// A separate MIG entry point that walks the VM map hierarchy. Keeping this
-// independent from mach_vm_region makes the report resilient when an injected
-// library intercepts only the flat region enumerator.
+// A separate MIG entry point that walks the VM map hierarchy. Keeping several
+// region APIs in the report makes it resilient when an injected library
+// intercepts only one family of VM entry points.
 @_silgen_name("mach_vm_region_recurse")
 private func loupeMachVMRegionRecurse(
     _ targetTask: vm_map_read_t,
     _ address: UnsafeMutablePointer<mach_vm_address_t>,
     _ size: UnsafeMutablePointer<mach_vm_size_t>,
+    _ nestingDepth: UnsafeMutablePointer<natural_t>,
+    _ info: UnsafeMutablePointer<integer_t>,
+    _ infoCount: UnsafeMutablePointer<mach_msg_type_number_t>
+) -> kern_return_t
+
+@_silgen_name("vm_region_recurse_64")
+private func loupeVMRegionRecurse64(
+    _ targetTask: vm_map_read_t,
+    _ address: UnsafeMutablePointer<vm_address_t>,
+    _ size: UnsafeMutablePointer<vm_size_t>,
     _ nestingDepth: UnsafeMutablePointer<natural_t>,
     _ info: UnsafeMutablePointer<integer_t>,
     _ infoCount: UnsafeMutablePointer<mach_msg_type_number_t>
@@ -151,9 +161,9 @@ enum RuntimeImageReport {
     }
 
     /// Some injection loaders remove images from dyld's public image array.
-    /// Walk executable VM mappings through two independent kernel entry points
-    /// and parse Mach-O headers directly. A hook that filters only one region
-    /// API cannot hide the mapping from both passes.
+    /// Walk executable VM mappings through the mach_vm and legacy vm entry
+    /// points, then parse Mach-O headers directly. A hook that filters only
+    /// one API family cannot hide the mapping from every pass.
     private static func hiddenMappedBinaryImages(annotations: [String]) -> [Image] {
         let dyldHeaders = Set((0..<_dyld_image_count()).compactMap { index in
             _dyld_get_image_header(index).map { UInt64(UInt(bitPattern: $0)) }
@@ -161,7 +171,9 @@ enum RuntimeImageReport {
         let jailbreakRoots = jailbreakRootPaths(annotations: annotations)
 
         let regions = executableRegionsUsingMachVMRegion()
+            + executableRegionsUsingVMRegion64()
             + executableRegionsUsingMachVMRegionRecurse()
+            + executableRegionsUsingVMRegionRecurse64()
         let regionSizes = regions.reduce(into: [UInt64: UInt64]()) { sizes, region in
             sizes[region.address] = max(sizes[region.address] ?? 0, region.size)
         }
@@ -221,6 +233,49 @@ enum RuntimeImageReport {
         return regions
     }
 
+    private static func executableRegionsUsingVMRegion64() -> [ExecutableRegion] {
+        var nextAddress: vm_address_t = 0
+        var regions: [ExecutableRegion] = []
+
+        while true {
+            var regionAddress = nextAddress
+            var regionSize: vm_size_t = 0
+            var info = vm_region_basic_info_data_64_t()
+            var infoCount = mach_msg_type_number_t(
+                MemoryLayout<vm_region_basic_info_data_64_t>.size / MemoryLayout<integer_t>.size)
+            var objectName = mach_port_t(MACH_PORT_NULL)
+            let result = withUnsafeMutablePointer(to: &info) { pointer in
+                pointer.withMemoryRebound(to: integer_t.self, capacity: Int(infoCount)) {
+                    vm_region_64(
+                        mach_task_self_,
+                        &regionAddress,
+                        &regionSize,
+                        VM_REGION_BASIC_INFO_64,
+                        $0,
+                        &infoCount,
+                        &objectName)
+                }
+            }
+            if objectName != MACH_PORT_NULL {
+                mach_port_deallocate(mach_task_self_, objectName)
+            }
+            guard result == KERN_SUCCESS, regionSize > 0 else { break }
+
+            if info.protection & VM_PROT_READ != 0,
+               info.protection & VM_PROT_EXECUTE != 0,
+               regionSize >= vm_size_t(MemoryLayout<mach_header_64>.size) {
+                regions.append(ExecutableRegion(
+                    address: UInt64(regionAddress),
+                    size: UInt64(regionSize)))
+            }
+
+            let next = regionAddress.addingReportingOverflow(regionSize)
+            guard !next.overflow, next.partialValue > nextAddress else { break }
+            nextAddress = next.partialValue
+        }
+        return regions
+    }
+
     private static func executableRegionsUsingMachVMRegionRecurse() -> [ExecutableRegion] {
         var nextAddress: mach_vm_address_t = 0
         var depth: natural_t = 0
@@ -255,6 +310,51 @@ enum RuntimeImageReport {
                info.protection & VM_PROT_EXECUTE != 0,
                regionSize >= mach_vm_size_t(MemoryLayout<mach_header_64>.size) {
                 regions.append(ExecutableRegion(address: regionAddress, size: regionSize))
+            }
+
+            let next = regionAddress.addingReportingOverflow(regionSize)
+            guard !next.overflow, next.partialValue > nextAddress else { break }
+            nextAddress = next.partialValue
+        }
+        return regions
+    }
+
+    private static func executableRegionsUsingVMRegionRecurse64() -> [ExecutableRegion] {
+        var nextAddress: vm_address_t = 0
+        var depth: natural_t = 0
+        var regions: [ExecutableRegion] = []
+
+        while true {
+            var regionAddress = nextAddress
+            var regionSize: vm_size_t = 0
+            var info = vm_region_submap_info_data_64_t()
+            var infoCount = mach_msg_type_number_t(
+                MemoryLayout<vm_region_submap_info_data_64_t>.size / MemoryLayout<natural_t>.size)
+            let result = withUnsafeMutablePointer(to: &info) { pointer in
+                pointer.withMemoryRebound(to: integer_t.self, capacity: Int(infoCount)) {
+                    loupeVMRegionRecurse64(
+                        mach_task_self_,
+                        &regionAddress,
+                        &regionSize,
+                        &depth,
+                        $0,
+                        &infoCount)
+                }
+            }
+            guard result == KERN_SUCCESS, regionSize > 0 else { break }
+
+            if info.is_submap != 0 {
+                depth += 1
+                nextAddress = regionAddress
+                continue
+            }
+
+            if info.protection & VM_PROT_READ != 0,
+               info.protection & VM_PROT_EXECUTE != 0,
+               regionSize >= vm_size_t(MemoryLayout<mach_header_64>.size) {
+                regions.append(ExecutableRegion(
+                    address: UInt64(regionAddress),
+                    size: UInt64(regionSize)))
             }
 
             let next = regionAddress.addingReportingOverflow(regionSize)

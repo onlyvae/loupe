@@ -219,7 +219,23 @@ struct SecurityDetectionProvider: SignalProvider {
         RuntimeProbe(type: ProcessInfo.self, selector: NSSelectorFromString("isOperatingSystemAtLeastVersion:")),
         RuntimeProbe(type: ProcessInfo.self, selector: NSSelectorFromString("operatingSystemVersion")),
         RuntimeProbe(type: ProcessInfo.self, selector: NSSelectorFromString("operatingSystemVersionString")),
+        RuntimeProbe(type: ProcessInfo.self, selector: NSSelectorFromString("environment")),
         RuntimeProbe(type: UIDevice.self, selector: NSSelectorFromString("systemVersion")),
+    ]
+
+    private static let hookSensitiveAPISymbols = [
+        "getenv",
+        "_dyld_image_count",
+        "_dyld_get_image_name",
+        "_dyld_get_image_header",
+        "_dyld_get_image_vmaddr_slide",
+        "objc_copyImageNames",
+        "mach_vm_region",
+        "mach_vm_region_recurse",
+        "class_getMethodImplementation",
+        "method_getImplementation",
+        "object_getMethodImplementation",
+        "task_threads",
     ]
 
     func collect() async -> [FingerprintSignal] {
@@ -659,13 +675,16 @@ struct SecurityDetectionProvider: SignalProvider {
             }
         }
 
-        if let taskThreadsAddress = dlsym(
-            UnsafeMutableRawPointer(bitPattern: -2),
-            "task_threads"
-        ), let pattern = arm64BranchStubPattern(at: UnsafeRawPointer(taskThreadsAddress)) {
+        for symbol in Self.hookSensitiveAPISymbols {
+            guard let symbolAddress = dlsym(
+                UnsafeMutableRawPointer(bitPattern: -2),
+                symbol
+            ), let pattern = arm64BranchStubPattern(at: UnsafeRawPointer(symbolAddress)) else {
+                continue
+            }
             matches.insert(SignalEntry(
                 label: "API entry branch",
-                value: "task_threads: \(pattern)"))
+                value: "\(symbol): \(pattern)"))
         }
 
         for region in suspiciousExecutableRegions() {
@@ -982,19 +1001,45 @@ struct SecurityDetectionProvider: SignalProvider {
             let methodName = NSStringFromSelector(probe.selector)
             let label = "\(className).\(methodName)"
             let dladdrInfo = dynamicLinkerInfo(for: implementationAddress)
+            let methodListDladdrInfo = methodListImplementationAddress.map {
+                dynamicLinkerInfo(for: $0)
+            }
             let classImagePath = imagePath(for: probe.type)
             let isInClassImage = classImagePath.flatMap {
                 imageContainsExecutableAddress(implementationAddress, imagePath: $0)
             }
+            var methodListIsInClassImage: Bool?
+            if let methodListImplementationAddress, let classImagePath {
+                methodListIsInClassImage = imageContainsExecutableAddress(
+                    methodListImplementationAddress,
+                    imagePath: classImagePath)
+            }
             let isAnonymousExecutable = dladdrInfo.imagePath == nil
                 && isExecutableMemory(at: implementationAddress)
+            let methodListIsAnonymousExecutable = methodListImplementationAddress.map {
+                methodListDladdrInfo?.imagePath == nil && isExecutableMemory(at: $0)
+            } ?? false
             let possibleFridaHook = String(
                 localized: "Possible Frida hook",
                 comment: "Assessment shown when an Objective-C IMP points to executable memory that dladdr cannot associate with an image.")
             let suspiciousValue: String?
 
             if implementationAddressesMatch == false, let methodListImplementationAddress {
-                suspiciousValue = "method_getImplementation \(pointerString(implementationAddress)) ≠ method_list \(pointerString(methodListImplementationAddress))"
+                let methodListOwner = methodListDladdrInfo?.imagePath.map {
+                    URL(fileURLWithPath: $0).lastPathComponent
+                } ?? (methodListIsAnonymousExecutable ? possibleFridaHook : "unknown image")
+                suspiciousValue = "method_getImplementation \(pointerString(implementationAddress)) ≠ method_list \(pointerString(methodListImplementationAddress)) · \(methodListOwner)"
+            } else if methodListIsInClassImage == false,
+                      let methodListImplementationAddress,
+                      let classImagePath {
+                let actualName = methodListDladdrInfo?.imagePath.map {
+                    URL(fileURLWithPath: $0).lastPathComponent
+                } ?? (methodListIsAnonymousExecutable ? possibleFridaHook : "unknown image")
+                let expectedName = URL(fileURLWithPath: classImagePath).lastPathComponent
+                suspiciousValue = "method_list \(pointerString(methodListImplementationAddress)): \(actualName) ≠ \(expectedName)"
+            } else if let methodListImagePath = methodListDladdrInfo?.imagePath,
+                      !isAppleSystemImage(methodListImagePath) {
+                suspiciousValue = URL(fileURLWithPath: methodListImagePath).lastPathComponent
             } else if let imagePath = dladdrInfo.imagePath {
                 let actualImageName = URL(fileURLWithPath: imagePath).lastPathComponent
                 if isInClassImage == false, let classImagePath {
@@ -1019,10 +1064,15 @@ struct SecurityDetectionProvider: SignalProvider {
                 "imp_matches_method_list: \(implementationAddressesMatch.map(String.init) ?? missingValue)",
                 "class_image: \(classImagePath ?? missingValue)",
                 "in_class_image: \(isInClassImage.map(String.init) ?? missingValue)",
+                "method_list_in_class_image: \(methodListIsInClassImage.map(String.init) ?? missingValue)",
                 "dli_fname: \(dladdrInfo.imagePath ?? (isAnonymousExecutable ? possibleFridaHook : missingValue))",
                 "dli_fbase: \(pointerString(dladdrInfo.imageBase))",
                 "dli_sname: \(dladdrInfo.symbolName ?? missingValue)",
                 "dli_saddr: \(pointerString(dladdrInfo.symbolAddress))",
+                "method_list_dli_fname: \(methodListDladdrInfo?.imagePath ?? (methodListIsAnonymousExecutable ? possibleFridaHook : missingValue))",
+                "method_list_dli_fbase: \(pointerString(methodListDladdrInfo?.imageBase))",
+                "method_list_dli_sname: \(methodListDladdrInfo?.symbolName ?? missingValue)",
+                "method_list_dli_saddr: \(pointerString(methodListDladdrInfo?.symbolAddress))",
             ].joined(separator: "\n")
 
             return RuntimeProbeResult(
