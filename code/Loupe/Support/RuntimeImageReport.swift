@@ -24,6 +24,19 @@ private func loupeMachVMRegion(
     _ objectName: UnsafeMutablePointer<mach_port_t>
 ) -> kern_return_t
 
+// A separate MIG entry point that walks the VM map hierarchy. Keeping this
+// independent from mach_vm_region makes the report resilient when an injected
+// library intercepts only the flat region enumerator.
+@_silgen_name("mach_vm_region_recurse")
+private func loupeMachVMRegionRecurse(
+    _ targetTask: vm_map_read_t,
+    _ address: UnsafeMutablePointer<mach_vm_address_t>,
+    _ size: UnsafeMutablePointer<mach_vm_size_t>,
+    _ nestingDepth: UnsafeMutablePointer<natural_t>,
+    _ info: UnsafeMutablePointer<integer_t>,
+    _ infoCount: UnsafeMutablePointer<mach_msg_type_number_t>
+) -> kern_return_t
+
 enum RuntimeImageReport {
     struct Image: Hashable, Sendable {
         enum Source: String, Sendable {
@@ -138,18 +151,41 @@ enum RuntimeImageReport {
     }
 
     /// Some injection loaders remove images from dyld's public image array.
-    /// Walk executable VM mappings as a second source and parse Mach-O headers
-    /// directly, matching hidden images back to TweakInject paths by filename.
+    /// Walk executable VM mappings through two independent kernel entry points
+    /// and parse Mach-O headers directly. A hook that filters only one region
+    /// API cannot hide the mapping from both passes.
     private static func hiddenMappedBinaryImages(annotations: [String]) -> [Image] {
         let dyldHeaders = Set((0..<_dyld_image_count()).compactMap { index in
             _dyld_get_image_header(index).map { UInt64(UInt(bitPattern: $0)) }
         })
         let jailbreakRoots = jailbreakRootPaths(annotations: annotations)
 
-        var address: mach_vm_address_t = 0
-        var results: [Image] = []
+        let regions = executableRegionsUsingMachVMRegion()
+            + executableRegionsUsingMachVMRegionRecurse()
+        let regionSizes = regions.reduce(into: [UInt64: UInt64]()) { sizes, region in
+            sizes[region.address] = max(sizes[region.address] ?? 0, region.size)
+        }
+        let images = regionSizes.compactMap { address, size -> Image? in
+            guard !dyldHeaders.contains(address) else { return nil }
+            return mappedBinaryImage(
+                at: address,
+                regionSize: size,
+                jailbreakRoots: jailbreakRoots)
+        }
+        return images.sorted { $0.baseAddress < $1.baseAddress }
+    }
+
+    private struct ExecutableRegion {
+        let address: UInt64
+        let size: UInt64
+    }
+
+    private static func executableRegionsUsingMachVMRegion() -> [ExecutableRegion] {
+        var nextAddress: mach_vm_address_t = 0
+        var regions: [ExecutableRegion] = []
+
         while true {
-            var regionAddress = address
+            var regionAddress = nextAddress
             var regionSize: mach_vm_size_t = 0
             var info = vm_region_basic_info_data_64_t()
             var infoCount = mach_msg_type_number_t(
@@ -167,89 +203,140 @@ enum RuntimeImageReport {
                         &objectName)
                 }
             }
-            guard result == KERN_SUCCESS else { break }
-            defer {
-                let next = regionAddress.addingReportingOverflow(regionSize)
-                address = next.overflow ? UInt64.max : next.partialValue
+            if objectName != MACH_PORT_NULL {
+                mach_port_deallocate(mach_task_self_, objectName)
+            }
+            guard result == KERN_SUCCESS, regionSize > 0 else { break }
+
+            if info.protection & VM_PROT_READ != 0,
+               info.protection & VM_PROT_EXECUTE != 0,
+               regionSize >= mach_vm_size_t(MemoryLayout<mach_header_64>.size) {
+                regions.append(ExecutableRegion(address: regionAddress, size: regionSize))
             }
 
-            guard info.protection & VM_PROT_READ != 0,
-                  info.protection & VM_PROT_EXECUTE != 0,
-                  regionSize >= mach_vm_size_t(MemoryLayout<mach_header_64>.size),
-                  !dyldHeaders.contains(regionAddress),
-                  let rawHeader = UnsafeRawPointer(bitPattern: UInt(regionAddress)) else {
-                if address == UInt64.max { break }
-                continue
-            }
+            let next = regionAddress.addingReportingOverflow(regionSize)
+            guard !next.overflow, next.partialValue > nextAddress else { break }
+            nextAddress = next.partialValue
+        }
+        return regions
+    }
 
-            let header = rawHeader.load(as: mach_header_64.self)
-            guard header.magic == MH_MAGIC_64,
-                  header.filetype == MH_DYLIB || header.filetype == MH_BUNDLE || header.filetype == MH_EXECUTE,
-                  UInt64(MemoryLayout<mach_header_64>.size) + UInt64(header.sizeofcmds) <= regionSize else {
-                continue
-            }
+    private static func executableRegionsUsingMachVMRegionRecurse() -> [ExecutableRegion] {
+        var nextAddress: mach_vm_address_t = 0
+        var depth: natural_t = 0
+        var regions: [ExecutableRegion] = []
 
-            var preferredTextAddress: UInt64?
-            var upperBound = regionAddress
-            var uuid = "????????????????????????????????"
-            var installName: String?
-            var commandPointer = rawHeader.advanced(by: MemoryLayout<mach_header_64>.size)
-            let commandsEnd = commandPointer.advanced(by: Int(header.sizeofcmds))
-
-            for _ in 0..<header.ncmds {
-                guard commandPointer.advanced(by: MemoryLayout<load_command>.size) <= commandsEnd else { break }
-                let command = commandPointer.load(as: load_command.self)
-                guard command.cmdsize >= MemoryLayout<load_command>.size,
-                      commandPointer.advanced(by: Int(command.cmdsize)) <= commandsEnd else { break }
-                defer { commandPointer = commandPointer.advanced(by: Int(command.cmdsize)) }
-
-                if command.cmd == LC_SEGMENT_64 {
-                    let segment = commandPointer.load(as: segment_command_64.self)
-                    let segmentName = fixedMachOName(segment.segname)
-                    if segmentName == "__TEXT" {
-                        preferredTextAddress = segment.vmaddr
-                    }
-                    if segmentName != "__LINKEDIT",
-                       let preferredTextAddress,
-                       segment.vmaddr >= preferredTextAddress {
-                        upperBound = max(
-                            upperBound,
-                            regionAddress + (segment.vmaddr - preferredTextAddress) + segment.vmsize)
-                    }
-                } else if command.cmd == LC_UUID {
-                    uuid = uuidString(commandPointer.load(as: uuid_command.self).uuid)
-                } else if command.cmd == LC_ID_DYLIB {
-                    let dylibCommand = commandPointer.load(as: dylib_command.self)
-                    let stringOffset = Int(dylibCommand.dylib.name.offset)
-                    if stringOffset >= MemoryLayout<dylib_command>.size,
-                       stringOffset < Int(command.cmdsize) {
-                        let start = commandPointer.advanced(by: stringOffset)
-                        let capacity = Int(command.cmdsize) - stringOffset
-                        let bytes = UnsafeRawBufferPointer(start: start, count: capacity)
-                        let end = bytes.firstIndex(of: 0) ?? bytes.endIndex
-                        installName = String(decoding: bytes[..<end], as: UTF8.self)
-                    }
+        while true {
+            var regionAddress = nextAddress
+            var regionSize: mach_vm_size_t = 0
+            var info = vm_region_submap_info_data_64_t()
+            var infoCount = mach_msg_type_number_t(
+                MemoryLayout<vm_region_submap_info_data_64_t>.size / MemoryLayout<natural_t>.size)
+            let result = withUnsafeMutablePointer(to: &info) { pointer in
+                pointer.withMemoryRebound(to: integer_t.self, capacity: Int(infoCount)) {
+                    loupeMachVMRegionRecurse(
+                        mach_task_self_,
+                        &regionAddress,
+                        &regionSize,
+                        &depth,
+                        $0,
+                        &infoCount)
                 }
             }
+            guard result == KERN_SUCCESS, regionSize > 0 else { break }
 
-            let fallbackName = installName.map {
-                URL(fileURLWithPath: $0).lastPathComponent
-            }.flatMap { $0.isEmpty ? nil : $0 } ?? "mapped-image-\(String(regionAddress, radix: 16))"
-            let path = resolvedMappedImagePath(
-                installName: installName,
-                imageName: fallbackName,
-                jailbreakRoots: jailbreakRoots)
-            results.append(Image(
-                baseAddress: regionAddress,
-                upperBound: max(regionAddress + 1, upperBound) - 1,
-                name: fallbackName,
-                path: path,
-                uuid: uuid,
-                source: .hiddenVM))
+            if info.is_submap != 0 {
+                depth += 1
+                nextAddress = regionAddress
+                continue
+            }
 
-            if address == UInt64.max { break }
+            if info.protection & VM_PROT_READ != 0,
+               info.protection & VM_PROT_EXECUTE != 0,
+               regionSize >= mach_vm_size_t(MemoryLayout<mach_header_64>.size) {
+                regions.append(ExecutableRegion(address: regionAddress, size: regionSize))
+            }
+
+            let next = regionAddress.addingReportingOverflow(regionSize)
+            guard !next.overflow, next.partialValue > nextAddress else { break }
+            nextAddress = next.partialValue
         }
-        return results.sorted { $0.baseAddress < $1.baseAddress }
+        return regions
+    }
+
+    private static func mappedBinaryImage(
+        at regionAddress: UInt64,
+        regionSize: UInt64,
+        jailbreakRoots: [String]
+    ) -> Image? {
+        guard let rawHeader = UnsafeRawPointer(bitPattern: UInt(regionAddress)) else {
+            return nil
+        }
+
+        let header = rawHeader.load(as: mach_header_64.self)
+        guard header.magic == MH_MAGIC_64,
+              header.filetype == MH_DYLIB || header.filetype == MH_BUNDLE || header.filetype == MH_EXECUTE,
+              UInt64(MemoryLayout<mach_header_64>.size) + UInt64(header.sizeofcmds) <= regionSize else {
+            return nil
+        }
+
+        var preferredTextAddress: UInt64?
+        var upperBound = regionAddress
+        var uuid = "????????????????????????????????"
+        var installName: String?
+        var commandPointer = rawHeader.advanced(by: MemoryLayout<mach_header_64>.size)
+        let commandsEnd = commandPointer.advanced(by: Int(header.sizeofcmds))
+
+        for _ in 0..<header.ncmds {
+            guard commandPointer.advanced(by: MemoryLayout<load_command>.size) <= commandsEnd else { break }
+            let command = commandPointer.load(as: load_command.self)
+            guard command.cmdsize >= MemoryLayout<load_command>.size,
+                  commandPointer.advanced(by: Int(command.cmdsize)) <= commandsEnd else { break }
+            defer { commandPointer = commandPointer.advanced(by: Int(command.cmdsize)) }
+
+            if command.cmd == LC_SEGMENT_64 {
+                let segment = commandPointer.load(as: segment_command_64.self)
+                let segmentName = fixedMachOName(segment.segname)
+                if segmentName == "__TEXT" {
+                    preferredTextAddress = segment.vmaddr
+                }
+                if segmentName != "__LINKEDIT",
+                   let preferredTextAddress,
+                   segment.vmaddr >= preferredTextAddress {
+                    upperBound = max(
+                        upperBound,
+                        regionAddress + (segment.vmaddr - preferredTextAddress) + segment.vmsize)
+                }
+            } else if command.cmd == LC_UUID {
+                uuid = uuidString(commandPointer.load(as: uuid_command.self).uuid)
+            } else if command.cmd == LC_ID_DYLIB {
+                let dylibCommand = commandPointer.load(as: dylib_command.self)
+                let stringOffset = Int(dylibCommand.dylib.name.offset)
+                if stringOffset >= MemoryLayout<dylib_command>.size,
+                   stringOffset < Int(command.cmdsize) {
+                    let start = commandPointer.advanced(by: stringOffset)
+                    let capacity = Int(command.cmdsize) - stringOffset
+                    let bytes = UnsafeRawBufferPointer(start: start, count: capacity)
+                    let end = bytes.firstIndex(of: 0) ?? bytes.endIndex
+                    installName = String(decoding: bytes[..<end], as: UTF8.self)
+                }
+            }
+        }
+
+        let fallbackName = installName.map {
+            URL(fileURLWithPath: $0).lastPathComponent
+        }.flatMap { $0.isEmpty ? nil : $0 } ?? "mapped-image-\(String(regionAddress, radix: 16))"
+        let path = resolvedMappedImagePath(
+            installName: installName,
+            imageName: fallbackName,
+            jailbreakRoots: jailbreakRoots)
+        return Image(
+            baseAddress: regionAddress,
+            upperBound: max(regionAddress + 1, upperBound) - 1,
+            name: fallbackName,
+            path: path,
+            uuid: uuid,
+            source: .hiddenVM)
     }
 
     private static func uuidString<T>(_ value: T) -> String {
