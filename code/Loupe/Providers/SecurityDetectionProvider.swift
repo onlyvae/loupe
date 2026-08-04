@@ -240,7 +240,7 @@ struct SecurityDetectionProvider: SignalProvider {
         let runtimeProbeResults = objectiveCRuntimeProbeResults()
         let runtimeHookMatches = runtimeProbeResults.compactMap(\.suspiciousEntry)
 
-        return [
+        var signals: [FingerprintSignal] = [
             .make(
                 "debuggerAttached",
                 category: category,
@@ -313,6 +313,25 @@ struct SecurityDetectionProvider: SignalProvider {
                 entries: runtimeHookMatches.isEmpty ? nil : runtimeHookMatches,
                 details: runtimeProbeResults.map(\.detail)),
         ]
+
+        if !crashReporterAnnotations.isEmpty {
+            signals.insert(
+                .make(
+                    "crashReporterAnnotations",
+                    category: category,
+                    name: String(localized: "CrashReporter annotations", comment: "Signal card name in the Security Detection category — messages embedded by loaded Mach-O images for inclusion in a future crash report. CrashReporter is a system component name and must not be translated."),
+                    value: String(crashReporterAnnotations.count),
+                    rationale: String(localized: "Any app can quietly read CrashReporter messages in its own loaded code. The dynamic linker records accepted `DYLD_*` settings here, even if they are later removed from the process environment.", comment: "Signal card rationale beneath CrashReporter annotations. Explains that dyld leaves accepted DYLD environment settings in in-process crash-report annotations."),
+                    displayHint: .list,
+                    entries: crashReporterAnnotations.map {
+                        SignalEntry(
+                            label: "\($0.imagePath) · \($0.field) · v\($0.version)",
+                            value: $0.message)
+                    }),
+                at: 2)
+        }
+
+        return signals
     }
 
     private func knownPathMatches() -> [PathMatch] {

@@ -6251,7 +6251,6 @@
     },
     "Any app can quietly read CrashReporter messages in its own loaded code. The dynamic linker records accepted `DYLD_*` settings here, even if they are later removed from the process environment." : {
       "comment" : "Signal card rationale beneath CrashReporter annotations. Explains that dyld leaves accepted DYLD environment settings in in-process crash-report annotations.",
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -16255,7 +16254,6 @@
     },
     "CrashReporter annotations" : {
       "comment" : "Signal card name in the Security Detection category — messages embedded by loaded Mach-O images for inclusion in a future crash report. CrashReporter is a system component name and must not be translated.",
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
