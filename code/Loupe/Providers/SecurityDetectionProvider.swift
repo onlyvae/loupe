@@ -14,6 +14,19 @@ import MachO
 import ObjectiveC.runtime
 import UIKit
 
+private let loupeDyldImageLock = NSLock()
+nonisolated(unsafe) private var loupeDyldImageHeaders: [UInt: Int] = [:]
+
+private func loupeRecordAddedImage(
+    _ header: UnsafePointer<mach_header>?,
+    _ slide: Int
+) {
+    guard let header else { return }
+    loupeDyldImageLock.lock()
+    loupeDyldImageHeaders[UInt(bitPattern: header)] = slide
+    loupeDyldImageLock.unlock()
+}
+
 struct SecurityDetectionProvider: SignalProvider {
     let category: SignalCategory = .securityDetection
 
@@ -238,6 +251,19 @@ struct SecurityDetectionProvider: SignalProvider {
         "task_threads",
     ]
 
+    private static let hookRuntimeSymbols = [
+        "MSHookFunction",
+        "MSHookMessageEx",
+        "SubstrateHookFunction",
+        "LHHookFunctions",
+        "LHHookMessage",
+        "EKHookFunction",
+    ]
+
+    private static let installDyldImageCallback: Void = {
+        _dyld_register_func_for_add_image(loupeRecordAddedImage)
+    }()
+
     func collect() async -> [FingerprintSignal] {
         let debuggerState = Self.debuggerState()
         let insertedLibrariesValue = Self.insertedLibrariesValue()
@@ -250,7 +276,9 @@ struct SecurityDetectionProvider: SignalProvider {
         }
         let pathMatches = knownPathMatches()
         let hookMatches = loadedHookFrameworkMatches(in: runtimeImageReport.images)
+            + hookRuntimeSymbolMatches()
         let tweakPluginMatches = loadedTweakPluginMatches(in: runtimeImageReport.images)
+            + hiddenRuntimeMetadataMatches()
         let fridaMatches = fridaIndicatorMatches(in: runtimeImageReport.images)
         let osVersionConsistency = operatingSystemVersionConsistency()
         let runtimeProbeResults = objectiveCRuntimeProbeResults()
@@ -659,6 +687,123 @@ struct SecurityDetectionProvider: SignalProvider {
         }.sorted { $0.label.localizedStandardCompare($1.label) == .orderedAscending }
     }
 
+    /// Hook frameworks can remain reachable through the dynamic symbol table
+    /// even when their Mach-O image is removed from dyld's public image list.
+    private func hookRuntimeSymbolMatches() -> [String] {
+        var matches = Set<String>()
+        for symbol in Self.hookRuntimeSymbols {
+            guard let address = dlsym(UnsafeMutableRawPointer(bitPattern: -2), symbol) else {
+                continue
+            }
+            let info = dynamicLinkerInfo(for: UnsafeRawPointer(address))
+            let owner = info.imagePath ?? pointerString(UnsafeRawPointer(address))
+            matches.insert("\(symbol) → \(owner)")
+        }
+        return matches.sorted()
+    }
+
+    /// Cross-checks three runtime registries that are independent of the
+    /// public dyld index APIs: TASK_DYLD_INFO, dyld add-image callbacks, and
+    /// Objective-C's registered class table.
+    private func hiddenRuntimeMetadataMatches() -> [SignalEntry] {
+        var matches = Set<SignalEntry>()
+        let publicHeaders = Set((0..<_dyld_image_count()).compactMap { index in
+            _dyld_get_image_header(index).map { UInt(bitPattern: $0) }
+        })
+
+        for image in rawTaskDyldImages()
+        where !publicHeaders.contains(image.header) && isSuspiciousRuntimeImagePath(image.path) {
+            matches.insert(SignalEntry(
+                label: "TASK_DYLD_INFO",
+                value: "\(image.path)\n0x\(String(image.header, radix: 16))"))
+        }
+
+        for image in registeredDyldImages()
+        where !publicHeaders.contains(image.header) && isSuspiciousRuntimeImagePath(image.path) {
+            matches.insert(SignalEntry(
+                label: "dyld add-image callback",
+                value: "\(image.path)\n0x\(String(image.header, radix: 16))"))
+        }
+
+        let requestedClassCount = objc_getClassList(nil, 0)
+        if requestedClassCount > 0 {
+            let classes = UnsafeMutablePointer<AnyClass?>.allocate(
+                capacity: Int(requestedClassCount))
+            defer { classes.deallocate() }
+            let classCount = objc_getClassList(
+                AutoreleasingUnsafeMutablePointer<AnyClass>(classes),
+                requestedClassCount)
+            let populatedClassCount = min(classCount, requestedClassCount)
+            for index in 0..<Int(populatedClassCount) {
+                guard let type = classes[index] else { continue }
+                guard let imageName = class_getImageName(type) else { continue }
+                let path = String(cString: imageName)
+                guard isSuspiciousRuntimeImagePath(path) else { continue }
+                matches.insert(SignalEntry(
+                    label: "Objective-C class · \(NSStringFromClass(type))",
+                    value: path))
+            }
+        }
+
+        return matches.sorted {
+            $0.label == $1.label ? $0.value < $1.value : $0.label < $1.label
+        }
+    }
+
+    private func rawTaskDyldImages() -> [(header: UInt, path: String)] {
+        var taskDyldInfo = task_dyld_info_data_t()
+        var count = mach_msg_type_number_t(
+            MemoryLayout<task_dyld_info_data_t>.size / MemoryLayout<natural_t>.size)
+        let result = withUnsafeMutablePointer(to: &taskDyldInfo) { pointer in
+            pointer.withMemoryRebound(to: integer_t.self, capacity: Int(count)) {
+                task_info(
+                    mach_task_self_,
+                    task_flavor_t(TASK_DYLD_INFO),
+                    $0,
+                    &count)
+            }
+        }
+        guard result == KERN_SUCCESS,
+              taskDyldInfo.all_image_info_addr != 0,
+              let allInfos = UnsafePointer<dyld_all_image_infos>(
+                  bitPattern: UInt(taskDyldInfo.all_image_info_addr)) else { return [] }
+
+        let imageCount = Int(allInfos.pointee.infoArrayCount)
+        guard imageCount > 0, imageCount <= 16_384,
+              let imageArray = allInfos.pointee.infoArray else { return [] }
+
+        return (0..<imageCount).compactMap { index in
+            let image = imageArray[index]
+            guard let header = image.imageLoadAddress else { return nil }
+            let path = image.imageFilePath.map { String(cString: $0) }
+                ?? imagePathForMappedHeader(UnsafeRawPointer(header))
+                ?? "mapped-image-\(String(UInt(bitPattern: header), radix: 16))"
+            return (UInt(bitPattern: header), path)
+        }
+    }
+
+    private func registeredDyldImages() -> [(header: UInt, path: String)] {
+        _ = Self.installDyldImageCallback
+        loupeDyldImageLock.lock()
+        let headers = Array(loupeDyldImageHeaders.keys)
+        loupeDyldImageLock.unlock()
+
+        return headers.map { header in
+            let pointer = UnsafeRawPointer(bitPattern: header)!
+            let path = imagePathForMappedHeader(pointer)
+                ?? "mapped-image-\(String(header, radix: 16))"
+            return (header, path)
+        }
+    }
+
+    private func isSuspiciousRuntimeImagePath(_ path: String) -> Bool {
+        let lowercasePath = path.lowercased()
+        return Self.hookFrameworkMarkers.contains(where: lowercasePath.contains)
+            || lowercasePath.contains("/tweakinject/")
+            || lowercasePath.contains("/mobilesubstrate/dynamiclibraries/")
+            || lowercasePath.contains("/.jbroot/")
+    }
+
     private func fridaIndicatorMatches(
         in images: [RuntimeImageReport.Image]
     ) -> [SignalEntry] {
@@ -1004,6 +1149,13 @@ struct SecurityDetectionProvider: SignalProvider {
             let methodListDladdrInfo = methodListImplementationAddress.map {
                 dynamicLinkerInfo(for: $0)
             }
+            let methodListMappedImage = methodListImplementationAddress.flatMap {
+                methodListDladdrInfo?.imagePath == nil
+                    ? mappedMachOImageContaining($0)
+                    : nil
+            }
+            let methodListImagePath = methodListDladdrInfo?.imagePath
+                ?? methodListMappedImage?.path
             let classImagePath = imagePath(for: probe.type)
             let isInClassImage = classImagePath.flatMap {
                 imageContainsExecutableAddress(implementationAddress, imagePath: $0)
@@ -1017,7 +1169,7 @@ struct SecurityDetectionProvider: SignalProvider {
             let isAnonymousExecutable = dladdrInfo.imagePath == nil
                 && isExecutableMemory(at: implementationAddress)
             let methodListIsAnonymousExecutable = methodListImplementationAddress.map {
-                methodListDladdrInfo?.imagePath == nil && isExecutableMemory(at: $0)
+                methodListImagePath == nil && isExecutableMemory(at: $0)
             } ?? false
             let possibleFridaHook = String(
                 localized: "Possible Frida hook",
@@ -1025,19 +1177,19 @@ struct SecurityDetectionProvider: SignalProvider {
             let suspiciousValue: String?
 
             if implementationAddressesMatch == false, let methodListImplementationAddress {
-                let methodListOwner = methodListDladdrInfo?.imagePath.map {
+                let methodListOwner = methodListImagePath.map {
                     URL(fileURLWithPath: $0).lastPathComponent
                 } ?? (methodListIsAnonymousExecutable ? possibleFridaHook : "unknown image")
                 suspiciousValue = "method_getImplementation \(pointerString(implementationAddress)) ≠ method_list \(pointerString(methodListImplementationAddress)) · \(methodListOwner)"
             } else if methodListIsInClassImage == false,
                       let methodListImplementationAddress,
                       let classImagePath {
-                let actualName = methodListDladdrInfo?.imagePath.map {
+                let actualName = methodListImagePath.map {
                     URL(fileURLWithPath: $0).lastPathComponent
                 } ?? (methodListIsAnonymousExecutable ? possibleFridaHook : "unknown image")
                 let expectedName = URL(fileURLWithPath: classImagePath).lastPathComponent
                 suspiciousValue = "method_list \(pointerString(methodListImplementationAddress)): \(actualName) ≠ \(expectedName)"
-            } else if let methodListImagePath = methodListDladdrInfo?.imagePath,
+            } else if let methodListImagePath,
                       !isAppleSystemImage(methodListImagePath) {
                 suspiciousValue = URL(fileURLWithPath: methodListImagePath).lastPathComponent
             } else if let imagePath = dladdrInfo.imagePath {
@@ -1069,10 +1221,12 @@ struct SecurityDetectionProvider: SignalProvider {
                 "dli_fbase: \(pointerString(dladdrInfo.imageBase))",
                 "dli_sname: \(dladdrInfo.symbolName ?? missingValue)",
                 "dli_saddr: \(pointerString(dladdrInfo.symbolAddress))",
-                "method_list_dli_fname: \(methodListDladdrInfo?.imagePath ?? (methodListIsAnonymousExecutable ? possibleFridaHook : missingValue))",
+                "method_list_dli_fname: \(methodListDladdrInfo?.imagePath ?? missingValue)",
                 "method_list_dli_fbase: \(pointerString(methodListDladdrInfo?.imageBase))",
                 "method_list_dli_sname: \(methodListDladdrInfo?.symbolName ?? missingValue)",
                 "method_list_dli_saddr: \(pointerString(methodListDladdrInfo?.symbolAddress))",
+                "method_list_vm_image: \(methodListMappedImage?.path ?? missingValue)",
+                "method_list_vm_base: \(pointerString(methodListMappedImage?.base))",
             ].joined(separator: "\n")
 
             return RuntimeProbeResult(
@@ -1148,6 +1302,139 @@ struct SecurityDetectionProvider: SignalProvider {
             info.dli_fbase.map(UnsafeRawPointer.init),
             info.dli_sname.map { String(cString: $0) },
             info.dli_saddr.map(UnsafeRawPointer.init))
+    }
+
+    private func imagePathForMappedHeader(_ header: UnsafeRawPointer) -> String? {
+        let linkedInfo = dynamicLinkerInfo(for: header)
+        if let path = linkedInfo.imagePath { return path }
+
+        let machHeader = header.load(as: mach_header_64.self)
+        guard machHeader.magic == MH_MAGIC_64 else { return nil }
+        var commandPointer = header.advanced(by: MemoryLayout<mach_header_64>.size)
+        let commandsEnd = commandPointer.advanced(by: Int(machHeader.sizeofcmds))
+
+        for _ in 0..<machHeader.ncmds {
+            guard commandPointer.advanced(by: MemoryLayout<load_command>.size) <= commandsEnd else {
+                break
+            }
+            let command = commandPointer.load(as: load_command.self)
+            guard command.cmdsize >= MemoryLayout<load_command>.size,
+                  commandPointer.advanced(by: Int(command.cmdsize)) <= commandsEnd else { break }
+            defer { commandPointer = commandPointer.advanced(by: Int(command.cmdsize)) }
+            guard command.cmd == LC_ID_DYLIB,
+                  command.cmdsize >= MemoryLayout<dylib_command>.size else { continue }
+
+            let dylibCommand = commandPointer.load(as: dylib_command.self)
+            let offset = Int(dylibCommand.dylib.name.offset)
+            guard offset >= MemoryLayout<dylib_command>.size,
+                  offset < Int(command.cmdsize) else { continue }
+            let start = commandPointer.advanced(by: offset)
+            let capacity = Int(command.cmdsize) - offset
+            let bytes = UnsafeRawBufferPointer(start: start, count: capacity)
+            let end = bytes.firstIndex(of: 0) ?? bytes.endIndex
+            return String(decoding: bytes[..<end], as: UTF8.self)
+        }
+        return nil
+    }
+
+    /// Starts from a raw IMP address and walks the nearby VM map through the
+    /// legacy vm_region_64 entry point. This does not depend on dyld's image
+    /// arrays or the mach_vm_region hooks used by common hidden-image scans.
+    private func mappedMachOImageContaining(
+        _ pointer: UnsafeRawPointer
+    ) -> (base: UnsafeRawPointer, path: String?)? {
+        let target = UInt(bitPattern: pointer)
+        let searchDistance = min(target, 64 * 1_024 * 1_024)
+        var nextAddress = vm_address_t(target - searchDistance)
+
+        while UInt(nextAddress) <= target {
+            var regionAddress = nextAddress
+            var regionSize: vm_size_t = 0
+            var info = vm_region_basic_info_data_64_t()
+            var infoCount = mach_msg_type_number_t(
+                MemoryLayout<vm_region_basic_info_data_64_t>.size / MemoryLayout<integer_t>.size)
+            var objectName = mach_port_t(MACH_PORT_NULL)
+            let result = withUnsafeMutablePointer(to: &info) { infoPointer in
+                infoPointer.withMemoryRebound(to: integer_t.self, capacity: Int(infoCount)) {
+                    vm_region_64(
+                        mach_task_self_,
+                        &regionAddress,
+                        &regionSize,
+                        VM_REGION_BASIC_INFO_64,
+                        $0,
+                        &infoCount,
+                        &objectName)
+                }
+            }
+            if objectName != MACH_PORT_NULL {
+                mach_port_deallocate(mach_task_self_, objectName)
+            }
+            guard result == KERN_SUCCESS, regionSize > 0,
+                  UInt(regionAddress) <= target else { break }
+
+            if info.protection & VM_PROT_READ != 0,
+               regionSize >= vm_size_t(MemoryLayout<mach_header_64>.size),
+               let image = mappedMachOImage(
+                   at: UInt(regionAddress),
+                   regionSize: UInt(regionSize),
+                   containing: target) {
+                return image
+            }
+
+            let next = regionAddress.addingReportingOverflow(regionSize)
+            guard !next.overflow, next.partialValue > nextAddress else { break }
+            nextAddress = next.partialValue
+        }
+        return nil
+    }
+
+    private func mappedMachOImage(
+        at baseAddress: UInt,
+        regionSize: UInt,
+        containing targetAddress: UInt
+    ) -> (base: UnsafeRawPointer, path: String?)? {
+        guard let base = UnsafeRawPointer(bitPattern: baseAddress),
+              regionSize >= UInt(MemoryLayout<mach_header_64>.size) else { return nil }
+        let header = base.load(as: mach_header_64.self)
+        guard header.magic == MH_MAGIC_64,
+              UInt(MemoryLayout<mach_header_64>.size) + UInt(header.sizeofcmds) <= regionSize else {
+            return nil
+        }
+
+        var preferredTextAddress: UInt64?
+        var executableSegments: [(address: UInt64, size: UInt64)] = []
+        var commandPointer = base.advanced(by: MemoryLayout<mach_header_64>.size)
+        let commandsEnd = commandPointer.advanced(by: Int(header.sizeofcmds))
+        for _ in 0..<header.ncmds {
+            guard commandPointer.advanced(by: MemoryLayout<load_command>.size) <= commandsEnd else {
+                break
+            }
+            let command = commandPointer.load(as: load_command.self)
+            guard command.cmdsize >= MemoryLayout<load_command>.size,
+                  commandPointer.advanced(by: Int(command.cmdsize)) <= commandsEnd else { break }
+            defer { commandPointer = commandPointer.advanced(by: Int(command.cmdsize)) }
+            guard command.cmd == LC_SEGMENT_64 else { continue }
+            let segment = commandPointer.load(as: segment_command_64.self)
+            if Self.fixedMachOName(segment.segname) == "__TEXT" {
+                preferredTextAddress = segment.vmaddr
+            }
+            if segment.initprot & VM_PROT_EXECUTE != 0, segment.vmsize > 0 {
+                executableSegments.append((segment.vmaddr, segment.vmsize))
+            }
+        }
+
+        guard let preferredTextAddress else { return nil }
+        let target = UInt64(targetAddress)
+        let base64 = UInt64(baseAddress)
+        let containsTarget = executableSegments.contains { segment in
+            guard segment.address >= preferredTextAddress else { return false }
+            let offset = segment.address - preferredTextAddress
+            let start = base64.addingReportingOverflow(offset)
+            guard !start.overflow, target >= start.partialValue else { return false }
+            return target - start.partialValue < segment.size
+        }
+        guard containsTarget else { return nil }
+        return (base, imagePathForMappedHeader(base))
     }
 
     private func imagePath(for type: AnyClass) -> String? {
