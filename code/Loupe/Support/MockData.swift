@@ -97,7 +97,7 @@ enum MockData {
             NarrativeItem(
                 id: "pasteboard",
                 symbol: "doc.on.clipboard",
-                headline: String(localized: .youveCopiedOrCutSomethingTimesSinceThisWasSetUp(count: 3256, device: PlatformDevice.localizedModel)),
+                headline: FingerprintNarrative.pasteboardHeadline(count: 3256, device: PlatformDevice.localizedModel),
                 basis: String(localized: "Read from the clipboard's change counter, a shared number any app can read.")
             ),
         ]

@@ -19,7 +19,7 @@ struct FingerprintSummaryView: View {
     private let appInferences: [NarrativeItem] = AppInferenceEngine.detectedInferences()
 
     var body: some View {
-        NavigationStack {
+        CompatibleNavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
                     header

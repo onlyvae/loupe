@@ -16,45 +16,13 @@ struct HomeView: View {
     @State private var showingSummary = false
     @Namespace private var transitionNamespace
 
+    @ViewBuilder
     var body: some View {
-        NavigationSplitView {
-            List {
-                Section {
-                    IntroCardView(
-                        onShowSummary: { showingSummary = true },
-                        transitionNamespace: transitionNamespace
-                    )
-                        .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
-                        .listRowBackground(Color.clear)
-                        .listRowSeparator(.hidden)
-                }
-                section(title: .passive, caption: Sensitivity.passive.blurb)
-                section(title: .permissioned, caption: Sensitivity.permissioned.blurb)
-                section(title: .advanced, caption: Sensitivity.advanced.blurb)
-                Section {
-                    PsyloPromotionView()
-                        .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
-                        .listRowBackground(Color.clear)
-                        .listRowSeparator(.hidden)
-                }
-            }
-            .navigationDestination(for: SignalCategory.self) { category in
-                CategoryDetailView(category: category, store: store)
-            }
-            .navigationTitle("Loupe")
-            .platformInsetGroupedListStyle()
-            .toolbar { toolbarContent }
-            .refreshable { await refreshPassive() }
-            #if os(macOS)
-            .navigationSplitViewColumnWidth(min: 320, ideal: 380, max: 500)
-            #endif
-        } detail: {
-            VStack(spacing: 12) {
-                Image(systemName: "doc.text.image.fill")
-                    .font(.largeTitle)
-                    .foregroundStyle(.secondary)
-                Text("Select a category from the sidebar")
-                    .foregroundStyle(.secondary)
+        Group {
+            if #available(iOS 16.0, macOS 13.0, *) {
+                modernNavigation
+            } else {
+                legacyNavigation
             }
         }
         .platformInlineNavigationBarTitle()
@@ -69,6 +37,68 @@ struct HomeView: View {
         }
     }
 
+    @available(iOS 16.0, macOS 13.0, *)
+    private var modernNavigation: some View {
+        NavigationSplitView {
+            categoryList
+            .navigationDestination(for: SignalCategory.self) { category in
+                CategoryDetailView(category: category, store: store)
+            }
+            #if os(macOS)
+            .navigationSplitViewColumnWidth(min: 320, ideal: 380, max: 500)
+            #endif
+        } detail: {
+            detailPlaceholder
+        }
+    }
+
+    private var legacyNavigation: some View {
+        NavigationView {
+            categoryList
+            detailPlaceholder
+        }
+        #if os(iOS)
+        .navigationViewStyle(.stack)
+        #endif
+    }
+
+    private var categoryList: some View {
+        List {
+            Section {
+                IntroCardView(
+                    onShowSummary: { showingSummary = true },
+                    transitionNamespace: transitionNamespace
+                )
+                    .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+                    .listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
+            }
+            section(title: .passive, caption: Sensitivity.passive.blurb)
+            section(title: .permissioned, caption: Sensitivity.permissioned.blurb)
+            section(title: .advanced, caption: Sensitivity.advanced.blurb)
+            Section {
+                PsyloPromotionView()
+                    .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+                    .listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
+            }
+        }
+        .navigationTitle("Loupe")
+        .platformInsetGroupedListStyle()
+        .toolbar { toolbarContent }
+        .refreshable { await refreshPassive() }
+    }
+
+    private var detailPlaceholder: some View {
+        VStack(spacing: 12) {
+            Image(systemName: "doc.text.image.fill")
+                .font(.largeTitle)
+                .foregroundStyle(.secondary)
+            Text("Select a category from the sidebar")
+                .foregroundStyle(.secondary)
+        }
+    }
+
     // MARK: - Sections
 
     @ViewBuilder
@@ -76,12 +106,16 @@ struct HomeView: View {
         let categories = store.categories(for: tier)
         Section {
             ForEach(categories) { category in
-                NavigationLink(value: category) {
-                    CategoryRowView(
-                        category: category,
-                        state: store.loadState(for: category),
-                        count: store.count(for: category)
-                    )
+                if #available(iOS 16.0, macOS 13.0, *) {
+                    NavigationLink(value: category) {
+                        categoryRow(category)
+                    }
+                } else {
+                    NavigationLink {
+                        CategoryDetailView(category: category, store: store)
+                    } label: {
+                        categoryRow(category)
+                    }
                 }
             }
         } header: {
@@ -90,6 +124,14 @@ struct HomeView: View {
             Text(caption)
                 .font(.caption)
         }
+    }
+
+    private func categoryRow(_ category: SignalCategory) -> some View {
+        CategoryRowView(
+            category: category,
+            state: store.loadState(for: category),
+            count: store.count(for: category)
+        )
     }
 
     private func sectionHeader(for tier: Sensitivity) -> some View {

@@ -8,6 +8,28 @@
 
 import SwiftUI
 
+/// Uses NavigationStack where it exists and the iOS 15 NavigationView
+/// equivalent everywhere else.
+struct CompatibleNavigationStack<Content: View>: View {
+    @ViewBuilder private let content: () -> Content
+
+    init(@ViewBuilder content: @escaping () -> Content) {
+        self.content = content
+    }
+
+    @ViewBuilder
+    var body: some View {
+        if #available(iOS 16.0, macOS 13.0, *) {
+            NavigationStack(root: content)
+        } else {
+            NavigationView(content: content)
+                #if os(iOS)
+                .navigationViewStyle(.stack)
+                #endif
+        }
+    }
+}
+
 extension View {
     @ViewBuilder
     func compatibleBorderedButtonStyle() -> some View {

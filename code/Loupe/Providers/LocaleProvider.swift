@@ -31,14 +31,14 @@ struct LocaleProvider: SignalProvider {
                 "firstDayOfWeek",
                 category: category,
                 name: String(localized: "First day of week", comment: "Signal card name in the Locale & Region category — Locale.firstDayOfWeek."),
-                value: locale.firstDayOfWeek.rawValue,
+                value: LocaleCompatibility.weekdayIdentifier(LocaleCompatibility.firstWeekday(for: locale)),
                 rationale: String(localized: "Your preferred first day of the week. May differ from your region's default.", comment: "Signal card rationale beneath the First day of week value.")))
         signals.append(
             .make(
                 "hourCycle",
                 category: category,
                 name: String(localized: "Hour cycle", comment: "Signal card name in the Locale & Region category — Locale.hourCycle (12h or 24h preference)."),
-                value: locale.hourCycle.rawValue,
+                value: LocaleCompatibility.hourCycleIdentifier(for: locale),
                 rationale: String(localized: "Your preferred time format: 12-hour or 24-hour.", comment: "Signal card rationale beneath the Hour cycle value.")))
         let prefLanguages = Locale.preferredLanguages
         signals.append(

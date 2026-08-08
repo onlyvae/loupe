@@ -48,7 +48,7 @@ struct VoicesProvider: SignalProvider {
                 displayHint: languageEntries.isEmpty ? .plain : .keyValue,
                 entries: languageEntries.isEmpty ? nil : languageEntries))
 
-        let downloaded = voices.filter { $0.quality == .enhanced || $0.quality == .premium }
+        let downloaded = voices.filter { $0.quality == .enhanced || isPremium($0.quality) }
         let downloadedEntries = downloaded.map { voice in
             SignalEntry(label: "\(voice.name) (\(voice.language))", value: qualityName(voice.quality))
         }
@@ -84,12 +84,23 @@ struct VoicesProvider: SignalProvider {
     }
 
     private func qualityName(_ quality: AVSpeechSynthesisVoiceQuality) -> String {
-        switch quality {
-        case .default: return String(localized: "Default", comment: "Voice quality")
-        case .enhanced: return String(localized: "Enhanced", comment: "Voice quality")
-        case .premium: return String(localized: "Premium", comment: "Voice quality")
-        @unknown default: return String(describing: quality)
+        if #available(iOS 16.0, macOS 13.0, *), quality == .premium {
+            return String(localized: "Premium", comment: "Voice quality")
         }
+        if quality == .default {
+            return String(localized: "Default", comment: "Voice quality")
+        }
+        if quality == .enhanced {
+            return String(localized: "Enhanced", comment: "Voice quality")
+        }
+        return String(describing: quality)
+    }
+
+    private func isPremium(_ quality: AVSpeechSynthesisVoiceQuality) -> Bool {
+        if #available(iOS 16.0, macOS 13.0, *) {
+            return quality == .premium
+        }
+        return false
     }
 
     private func genderName(_ gender: AVSpeechSynthesisVoiceGender) -> String {

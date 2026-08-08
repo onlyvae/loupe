@@ -89,18 +89,18 @@ enum FingerprintNarrative {
         let os = ProcessInfo.processInfo.operatingSystemVersion
         parts.append("\(PlatformDevice.systemName) \(os.majorVersion).\(os.minorVersion).\(os.patchVersion)")
 
-        if let region = Locale.current.region?.identifier {
+        if let region = LocaleCompatibility.regionIdentifier(for: .current) {
             parts.append(region)
         }
-        if let currency = Locale.current.currency?.identifier {
+        if let currency = LocaleCompatibility.currencyIdentifier(for: .current) {
             parts.append(currency)
         }
         let langs = PlatformTextInput.keyboardLanguageCodes()
         if !langs.isEmpty {
             parts.append(langs.joined(separator: ","))
         }
-        let firstDay = shortWeekday(Locale.current.firstDayOfWeek)
-        let clock = is24Hour(Locale.current.hourCycle) ? "24h" : "12h"
+        let firstDay = shortWeekday(LocaleCompatibility.firstWeekday(for: .current))
+        let clock = LocaleCompatibility.uses24HourClock(.current) ? "24h" : "12h"
         parts.append("\(firstDay)/\(clock)")
 
         parts.append(TimeZone.current.identifier)
@@ -127,16 +127,16 @@ enum FingerprintNarrative {
         return tiers.min(by: { abs(Double($0) - gb) < abs(Double($1) - gb) })
     }
 
-    private static func shortWeekday(_ day: Locale.Weekday) -> String {
+    private static func shortWeekday(_ day: Int) -> String {
         switch day {
-        case .sunday: return "Sun"
-        case .monday: return "Mon"
-        case .tuesday: return "Tue"
-        case .wednesday: return "Wed"
-        case .thursday: return "Thu"
-        case .friday: return "Fri"
-        case .saturday: return "Sat"
-        @unknown default: return "?"
+        case 1: return "Sun"
+        case 2: return "Mon"
+        case 3: return "Tue"
+        case 4: return "Wed"
+        case 5: return "Thu"
+        case 6: return "Fri"
+        case 7: return "Sat"
+        default: return "?"
         }
     }
 
@@ -144,7 +144,7 @@ enum FingerprintNarrative {
 
     private static func country() -> NarrativeItem? {
         guard
-            let region = Locale.current.region?.identifier,
+            let region = LocaleCompatibility.regionIdentifier(for: .current),
             let name = Locale.current.localizedString(forRegionCode: region)
         else { return nil }
         return NarrativeItem(
@@ -170,7 +170,7 @@ enum FingerprintNarrative {
 
     private static func travel() -> NarrativeItem? {
         guard
-            let homeRegion = Locale.current.region?.identifier,
+            let homeRegion = LocaleCompatibility.regionIdentifier(for: .current),
             let tzRegion = country(forTimeZone: TimeZone.current),
             tzRegion != homeRegion,
             let tzCountryName = Locale.current.localizedString(forRegionCode: tzRegion)
@@ -234,12 +234,12 @@ enum FingerprintNarrative {
     }
 
     private static func regionMismatch() -> NarrativeItem? {
-        guard let region = Locale.current.region else { return nil }
+        guard let region = LocaleCompatibility.regionIdentifier(for: .current) else { return nil }
         let countryName =
-            Locale.current.localizedString(forRegionCode: region.identifier) ?? region.identifier
+            Locale.current.localizedString(forRegionCode: region) ?? region
 
-        let langCode = Locale.current.language.languageCode?.identifier ?? "en"
-        let baseline = Locale(identifier: "\(langCode)_\(region.identifier)")
+        let langCode = LocaleCompatibility.languageIdentifier(for: .current)
+        let baseline = Locale(identifier: "\(langCode)_\(region)")
         let current = Locale.current
 
         var clauses: [String] = []
@@ -250,23 +250,27 @@ enum FingerprintNarrative {
             )
         }
 
-        let curIs24 = is24Hour(current.hourCycle)
-        let baseIs24 = is24Hour(baseline.hourCycle)
+        let curIs24 = LocaleCompatibility.uses24HourClock(current)
+        let baseIs24 = LocaleCompatibility.uses24HourClock(baseline)
         if curIs24 != baseIs24 {
             let cur = curIs24 ? String(localized: "24-hour clock", comment: "Clock format label — the user's current setting in the region-mismatch narrative.") : String(localized: "12-hour clock", comment: "Clock format label — the user's current setting in the region-mismatch narrative.")
             let base = baseIs24 ? String(localized: "24-hour clock", comment: "Clock format baseline — the region's default clock format in the region-mismatch narrative.") : String(localized: "12-hour clock", comment: "Clock format baseline — the region's default clock format in the region-mismatch narrative.")
             clauses.append(String(localized: "prefer \(cur) instead of \(base)", comment: "Region-mismatch sub-clause about clock format on the fingerprint summary sheet. First %@ is the user's chosen clock format; second %@ is the regional baseline. Will be joined with other clauses by Oxford comma."))
         }
 
-        if current.firstDayOfWeek != baseline.firstDayOfWeek {
+        let currentFirstWeekday = LocaleCompatibility.firstWeekday(for: current)
+        let baselineFirstWeekday = LocaleCompatibility.firstWeekday(for: baseline)
+        if currentFirstWeekday != baselineFirstWeekday {
             clauses.append(
-                String(localized: "your week starts \(weekdayName(current.firstDayOfWeek)) instead of \(weekdayName(baseline.firstDayOfWeek))", comment: "Region-mismatch sub-clause about first day of week on the fingerprint summary sheet. First %@ is the user's chosen weekday name; second %@ is the regional default. Will be joined with other clauses by Oxford comma.")
+                String(localized: "your week starts \(weekdayName(currentFirstWeekday)) instead of \(weekdayName(baselineFirstWeekday))", comment: "Region-mismatch sub-clause about first day of week on the fingerprint summary sheet. First %@ is the user's chosen weekday name; second %@ is the regional default. Will be joined with other clauses by Oxford comma.")
             )
         }
 
-        if current.measurementSystem != baseline.measurementSystem {
+        let currentMeasurement = LocaleCompatibility.measurementSystem(for: current)
+        let baselineMeasurement = LocaleCompatibility.measurementSystem(for: baseline)
+        if currentMeasurement != baselineMeasurement {
             clauses.append(
-                String(localized: "prefer \(measurementName(current.measurementSystem)) units instead of \(measurementName(baseline.measurementSystem))", comment: "Region-mismatch sub-clause about measurement system on the fingerprint summary sheet. First %@ is the user's chosen measurement system (e.g., 'metric'); second %@ is the regional baseline. Will be joined with other clauses by Oxford comma.")
+                String(localized: "prefer \(measurementName(currentMeasurement)) units instead of \(measurementName(baselineMeasurement))", comment: "Region-mismatch sub-clause about measurement system on the fingerprint summary sheet. First %@ is the user's chosen measurement system (e.g., 'metric'); second %@ is the regional baseline. Will be joined with other clauses by Oxford comma.")
             )
         }
 
@@ -276,8 +280,8 @@ enum FingerprintNarrative {
             clauses.append(String(localized: "prefer \(curTemp) over \(baseTemp)", comment: "Region-mismatch sub-clause about preferred temperature unit on the fingerprint summary sheet. First %@ is the user's chosen temperature unit name; second %@ is the regional baseline. Will be joined with other clauses by Oxford comma."))
         }
 
-        if let curCur = current.currency?.identifier,
-           let baseCur = baseline.currency?.identifier,
+        if let curCur = LocaleCompatibility.currencyIdentifier(for: current),
+           let baseCur = LocaleCompatibility.currencyIdentifier(for: baseline),
            curCur != baseCur {
             let cName = current.localizedString(forCurrencyCode: curCur) ?? curCur
             let bName = current.localizedString(forCurrencyCode: baseCur) ?? baseCur
@@ -353,11 +357,18 @@ enum FingerprintNarrative {
         return NarrativeItem(
             id: "pasteboard",
             symbol: "doc.on.clipboard",
-            headline:
-                String(localized: .youveCopiedOrCutSomethingTimesSinceThisWasSetUp(count: count, device: PlatformDevice.localizedModel)),
+            headline: pasteboardHeadline(count: count, device: PlatformDevice.localizedModel),
             basis:
                 String(localized: "Read from the clipboard's change counter, a shared number any app can read.", comment: "Caption beneath the pasteboard narrative card on the fingerprint summary sheet — explains where the claim came from.")
         )
+    }
+
+    static func pasteboardHeadline(count: Int, device: String) -> String {
+        let format = NSLocalizedString(
+            "You've copied or cut something %lld times since this %@ was set up.",
+            comment: "Plain-English claim about pasteboard activity shown as a card on the fingerprint summary sheet. %lld is the number of pasteboard changes; %@ is the device model name."
+        )
+        return String.localizedStringWithFormat(format, count, device)
     }
 
     // MARK: - Helpers
@@ -418,14 +429,6 @@ enum FingerprintNarrative {
         return captured.isEmpty ? nil : captured
     }
 
-    private static func is24Hour(_ cycle: Locale.HourCycle) -> Bool {
-        switch cycle {
-        case .zeroToTwentyThree, .oneToTwentyFour: return true
-        case .zeroToEleven, .oneToTwelve: return false
-        @unknown default: return false
-        }
-    }
-
     private static func calendarName(_ id: Calendar.Identifier) -> String {
         switch id {
         case .gregorian: return String(localized: "Gregorian", comment: "Calendar name used inside the region-mismatch narrative card on the fingerprint summary sheet.")
@@ -445,25 +448,24 @@ enum FingerprintNarrative {
         }
     }
 
-    private static func weekdayName(_ day: Locale.Weekday) -> String {
+    private static func weekdayName(_ day: Int) -> String {
         switch day {
-        case .sunday: return String(localized: "Sunday", comment: "Weekday name used inside the region-mismatch narrative card on the fingerprint summary sheet.")
-        case .monday: return String(localized: "Monday", comment: "Weekday name used inside the region-mismatch narrative card on the fingerprint summary sheet.")
-        case .tuesday: return String(localized: "Tuesday", comment: "Weekday name used inside the region-mismatch narrative card on the fingerprint summary sheet.")
-        case .wednesday: return String(localized: "Wednesday", comment: "Weekday name used inside the region-mismatch narrative card on the fingerprint summary sheet.")
-        case .thursday: return String(localized: "Thursday", comment: "Weekday name used inside the region-mismatch narrative card on the fingerprint summary sheet.")
-        case .friday: return String(localized: "Friday", comment: "Weekday name used inside the region-mismatch narrative card on the fingerprint summary sheet.")
-        case .saturday: return String(localized: "Saturday", comment: "Weekday name used inside the region-mismatch narrative card on the fingerprint summary sheet.")
-        @unknown default: return String(describing: day)
+        case 1: return String(localized: "Sunday", comment: "Weekday name used inside the region-mismatch narrative card on the fingerprint summary sheet.")
+        case 2: return String(localized: "Monday", comment: "Weekday name used inside the region-mismatch narrative card on the fingerprint summary sheet.")
+        case 3: return String(localized: "Tuesday", comment: "Weekday name used inside the region-mismatch narrative card on the fingerprint summary sheet.")
+        case 4: return String(localized: "Wednesday", comment: "Weekday name used inside the region-mismatch narrative card on the fingerprint summary sheet.")
+        case 5: return String(localized: "Thursday", comment: "Weekday name used inside the region-mismatch narrative card on the fingerprint summary sheet.")
+        case 6: return String(localized: "Friday", comment: "Weekday name used inside the region-mismatch narrative card on the fingerprint summary sheet.")
+        case 7: return String(localized: "Saturday", comment: "Weekday name used inside the region-mismatch narrative card on the fingerprint summary sheet.")
+        default: return String(describing: day)
         }
     }
 
-    private static func measurementName(_ ms: Locale.MeasurementSystem) -> String {
+    private static func measurementName(_ ms: LocaleCompatibility.MeasurementSystem) -> String {
         switch ms {
         case .metric: return String(localized: "metric", comment: "Measurement-system name used inside the region-mismatch narrative card on the fingerprint summary sheet.")
         case .us: return String(localized: "imperial", comment: "Measurement-system name used inside the region-mismatch narrative card on the fingerprint summary sheet.")
         case .uk: return String(localized: "imperial (UK)", comment: "Measurement-system name used inside the region-mismatch narrative card on the fingerprint summary sheet.")
-        default: return String(describing: ms)
         }
     }
 

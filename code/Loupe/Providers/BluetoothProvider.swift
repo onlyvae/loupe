@@ -89,7 +89,7 @@ final class BluetoothSampler: NSObject, CBCentralManagerDelegate {
         central.delegate = self
         central.scanForPeripherals(withServices: nil, options: [CBCentralManagerScanOptionAllowDuplicatesKey: false])
         timeoutTask = Task { @MainActor [weak self] in
-            try? await Task.sleep(for: .seconds(duration))
+            try? await Task.sleep(nanoseconds: UInt64(max(0, duration) * 1_000_000_000))
             self?.finishSweep()
         }
     }

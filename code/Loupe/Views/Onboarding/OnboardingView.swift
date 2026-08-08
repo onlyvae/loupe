@@ -17,7 +17,7 @@ struct OnboardingView: View {
     private let pages = OnboardingContent.pages
 
     var body: some View {
-        NavigationStack {
+        CompatibleNavigationStack {
             ZStack {
                 OnboardingGradientBackground()
                 VStack(spacing: 0) {

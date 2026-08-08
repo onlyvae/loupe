@@ -33,13 +33,15 @@ struct MetalProvider: SignalProvider {
                 name: String(localized: "GPU name", comment: "Signal card name in the Graphics & Metal category — MTLDevice.name."),
                 value: device.name,
                 rationale: String(localized: "GPU name as Metal reports it (e.g., `Apple A18 Pro GPU`).", comment: "Signal card rationale beneath the GPU name value.")))
-        signals.append(
-            .make(
-                "recommendedMax",
-                category: category,
-                name: String(localized: "Recommended max working set", comment: "Signal card name in the Graphics & Metal category — MTLDevice.recommendedMaxWorkingSetSize."),
-                value: ByteCountFormatter.string(fromByteCount: Int64(device.recommendedMaxWorkingSetSize), countStyle: .memory),
-                rationale: String(localized: "How much GPU memory the system suggests apps target.", comment: "Signal card rationale beneath the Recommended max working set value.")))
+        if #available(iOS 16.0, macOS 13.0, *) {
+            signals.append(
+                .make(
+                    "recommendedMax",
+                    category: category,
+                    name: String(localized: "Recommended max working set", comment: "Signal card name in the Graphics & Metal category — MTLDevice.recommendedMaxWorkingSetSize."),
+                    value: ByteCountFormatter.string(fromByteCount: Int64(device.recommendedMaxWorkingSetSize), countStyle: .memory),
+                    rationale: String(localized: "How much GPU memory the system suggests apps target.", comment: "Signal card rationale beneath the Recommended max working set value.")))
+        }
         signals.append(
             .make(
                 "raytracing",
@@ -48,7 +50,10 @@ struct MetalProvider: SignalProvider {
                 value: String(device.supportsRaytracing),
                 rationale: String(localized: "Whether your \(PlatformDevice.localizedModel)'s GPU supports hardware ray tracing.", comment: "Signal card rationale beneath the Supports raytracing value. %@ is the device model name (e.g., iPhone, iPad).")))
 
-        let families: [MTLGPUFamily] = [.apple1, .apple2, .apple3, .apple4, .apple5, .apple6, .apple7, .apple8, .apple9, .common1, .common2, .common3, .metal3]
+        var families: [MTLGPUFamily] = [.apple1, .apple2, .apple3, .apple4, .apple5, .apple6, .apple7, .apple8, .apple9, .common1, .common2, .common3]
+        if #available(iOS 16.0, macOS 13.0, *) {
+            families.append(.metal3)
+        }
         let supported = families.filter { device.supportsFamily($0) }.map(describe)
         signals.append(
             .make(

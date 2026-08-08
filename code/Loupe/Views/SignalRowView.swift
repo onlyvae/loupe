@@ -120,14 +120,14 @@ struct SignalRowView: View {
     private func keyValueContent(_ entries: [SignalEntry]) -> some View {
         VStack(alignment: .leading, spacing: 4) {
             ForEach(entries, id: \.self) { entry in
-                LabeledContent {
-                    Text(entry.value)
-                        .font(.system(.caption, design: .monospaced))
-                        .foregroundStyle(.primary)
-                } label: {
+                HStack(alignment: .firstTextBaseline) {
                     Text(entry.label)
                         .font(.caption)
                         .foregroundStyle(.secondary)
+                    Spacer(minLength: 12)
+                    Text(entry.value)
+                        .font(.system(.caption, design: .monospaced))
+                        .foregroundStyle(.primary)
                 }
             }
         }
@@ -156,7 +156,11 @@ struct SignalRowView: View {
     // MARK: - Tags / Chips
 
     private func tagsContent(_ entries: [SignalEntry]) -> some View {
-        FlowLayout(spacing: 6) {
+        LazyVGrid(
+            columns: [GridItem(.adaptive(minimum: 88), spacing: 6, alignment: .leading)],
+            alignment: .leading,
+            spacing: 6
+        ) {
             ForEach(entries, id: \.self) { entry in
                 Text(entry.label)
                     .font(.system(.caption, design: .monospaced))
@@ -239,7 +243,7 @@ private struct SignalDetailsSheet: View {
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        NavigationStack {
+        CompatibleNavigationStack {
             List(signal.details ?? [], id: \.self) { entry in
                 VStack(alignment: .leading, spacing: 8) {
                     Text(entry.label)
@@ -262,67 +266,5 @@ private struct SignalDetailsSheet: View {
                 }
             }
         }
-    }
-}
-
-// MARK: - Flow Layout
-
-/// A simple wrapping horizontal layout for tag chips.
-struct FlowLayout: Layout {
-    var spacing: CGFloat = 6
-
-    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
-        let rows = computeRows(proposal: proposal, subviews: subviews)
-        guard !rows.isEmpty else { return .zero }
-        let height = rows.reduce(CGFloat.zero) { total, row in
-            total + row.height + (total > 0 ? spacing : 0)
-        }
-        let width = rows.map(\.width).max() ?? 0
-        return CGSize(width: width, height: height)
-    }
-
-    func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
-        let rows = computeRows(proposal: proposal, subviews: subviews)
-        var y = bounds.minY
-        var subviewIndex = 0
-        for row in rows {
-            var x = bounds.minX
-            for _ in 0..<row.count {
-                let size = subviews[subviewIndex].sizeThatFits(.unspecified)
-                subviews[subviewIndex].place(at: CGPoint(x: x, y: y), proposal: .unspecified)
-                x += size.width + spacing
-                subviewIndex += 1
-            }
-            y += row.height + spacing
-        }
-    }
-
-    private struct Row {
-        var count: Int
-        var width: CGFloat
-        var height: CGFloat
-    }
-
-    private func computeRows(proposal: ProposedViewSize, subviews: Subviews) -> [Row] {
-        let maxWidth = proposal.width ?? .infinity
-        var rows: [Row] = []
-        var currentRow = Row(count: 0, width: 0, height: 0)
-
-        for subview in subviews {
-            let size = subview.sizeThatFits(.unspecified)
-            let newWidth = currentRow.width + (currentRow.count > 0 ? spacing : 0) + size.width
-            if currentRow.count > 0 && newWidth > maxWidth {
-                rows.append(currentRow)
-                currentRow = Row(count: 1, width: size.width, height: size.height)
-            } else {
-                currentRow.count += 1
-                currentRow.width = newWidth
-                currentRow.height = max(currentRow.height, size.height)
-            }
-        }
-        if currentRow.count > 0 {
-            rows.append(currentRow)
-        }
-        return rows
     }
 }

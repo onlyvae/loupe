@@ -27,8 +27,10 @@ struct CameraProvider: SignalProvider {
             .builtInDualWideCamera,
             .builtInTripleCamera,
             .builtInTrueDepthCamera,
-            .builtInLiDARDepthCamera,
         ])
+        if #available(iOS 15.4, *) {
+            types.append(.builtInLiDARDepthCamera)
+        }
         #endif
         let discovery = AVCaptureDevice.DiscoverySession(
             deviceTypes: types,
